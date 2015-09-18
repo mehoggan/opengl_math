@@ -15,7 +15,7 @@
  * limitations under the License.
  *
  */
-namespace gl_wrapper
+namespace opengl_math
 {
   namespace
   {

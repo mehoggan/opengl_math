@@ -18,42 +18,36 @@
 #ifndef CLAMP_H_INCLUDED
 #define CLAMP_H_INCLUDED
 
-namespace gl_wrapper
+namespace opengl_math
 {
-  namespace core
+  template<typename T>
+  void clamp(T &a, const T min, const T max)
   {
-    namespace math
-    {
-      template<typename T>
-      void clamp(T &a, const T min, const T max)
-      {
-        (a < min) ? (a = min) : (a > max) ? (a = max) : (a = a);
-      }
+    (a < min) ? (a = min) : (a > max) ? (a = max) : (a = a);
+  }
 
-      template<typename T>
-      void clamp_pair(T &a, T &b, const T min, const T max)
-      {
-        clamp(a, min, max);
-        clamp(b, min, max);
-      }
+  template<typename T>
+  void clamp_pair(T &a, T &b, const T min, const T max)
+  {
+    clamp(a, min, max);
+    clamp(b, min, max);
+  }
 
-      template<typename T>
-      void clamp_triplet(T &a, T &b, T &c, const T min, const T max)
-      {
-        clamp(a, min, max);
-        clamp(b, min, max);
-        clamp(c, min, max);
-      }
+  template<typename T>
+  void clamp_triplet(T &a, T &b, T &c, const T min, const T max)
+  {
+    clamp(a, min, max);
+    clamp(b, min, max);
+    clamp(c, min, max);
+  }
 
-      template<typename T>
-      void clamp_quad(T &a, T &b, T &c, T &d, const T min, const T max)
-      {
-        clamp(a, min, max);
-        clamp(b, min, max);
-        clamp(c, min, max);
-        clamp(d, min, max);
-      }
-    }
+  template<typename T>
+  void clamp_quad(T &a, T &b, T &c, T &d, const T min, const T max)
+  {
+    clamp(a, min, max);
+    clamp(b, min, max);
+    clamp(c, min, max);
+    clamp(d, min, max);
   }
 }
 #endif//CLAMP_H

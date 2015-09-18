@@ -20,7 +20,7 @@
 
 #include <cassert>
 
-namespace gl_wrapper
+namespace opengl_math
 {
   /*! \class Point 2D class geometry based
    *  \brief This class defines a 2D vector

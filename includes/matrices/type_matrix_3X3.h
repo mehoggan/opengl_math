@@ -18,12 +18,12 @@
 #ifndef TYPE_MATRIX_3X3_H_INCLUDED
 #define TYPE_MATRIX_3X3_H_INCLUDED
 
-#include <gl_wrapper.h>
-#include <graphics/matrices/type_matrix_2X2.h>
-#include <graphics/primitives/vectors/type_vector_3d.h>
-#include <graphics/primitives/vectors/type_vector_3d.h>
+#include "core/enumerations.h"
+#include "matrices/type_matrix_2X2.h"
+#include "primitives/vectors/type_vector_3d.h"
+#include "primitives/vectors/type_vector_3d.h"
 
-namespace gl_wrapper
+namespace opengl_math
 {
   /*! \class Matrix 3X3 a CG based representation of a matrix which supports
    * both row and column based representations.

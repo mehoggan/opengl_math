@@ -18,19 +18,19 @@
 #ifndef MATRIX_H_INCLUDED
 #define MATRIX_H_INCLUDED
 
-#include <graphics/math/vector.h>
-#include <graphics/matrices/type_matrix_3X3.h>
-#include <graphics/matrices/type_matrix_4X4.h>
-#include <graphics/primitives/points/type_point_2d.h>
-#include <graphics/primitives/points/type_point_3d.h>
-#include <graphics/primitives/vectors/type_vector_2d.h>
-#include <graphics/primitives/vectors/type_vector_3d.h>
-#include <graphics/primitives/vectors/type_vector_4d.h>
+#include "math/vector.h"
+#include "matrices/type_matrix_3X3.h"
+#include "matrices/type_matrix_4X4.h"
+#include "primitives/points/type_point_2d.h"
+#include "primitives/points/type_point_3d.h"
+#include "primitives/vectors/type_vector_2d.h"
+#include "primitives/vectors/type_vector_3d.h"
+#include "primitives/vectors/type_vector_4d.h"
 
-#include <core/math/trig.h>
-#include <core/math/numbers.h>
+#include "math/trig.h"
+#include "math/numbers.h"
 
-namespace gl_wrapper
+namespace opengl_math
 {
   /*! \brief This function returns a 3X3 matrix translated to point p
    */

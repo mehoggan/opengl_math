@@ -26,7 +26,7 @@
 
 #include <cmath>
 
-namespace gl_wrapper
+namespace opengl_math
 {
   /*! \brief method that returns a normalized 2d vector
    */

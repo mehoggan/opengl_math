@@ -18,11 +18,11 @@
 #ifndef COLORRGBA_H_INCLUDED
 #define COLORRGBA_H_INCLUDED
 
-#include <core/math/clamp.h>
+#include "math/clamp.h"
 
 #include <cassert>
 
-namespace gl_wrapper
+namespace opengl_math
 {
   /*! \class Color 3D class abstract class to rerpesnt a rgba or bgr color
    * 3D space.

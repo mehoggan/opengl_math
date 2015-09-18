@@ -1,14 +1,12 @@
-bin_PROGRAMS = test_opengl_core
+bin_PROGRAMS = test_opengl_math
 
 AM_CPPFLAGS = -I../../includes -I../../ -I../
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS} -I m4
 AM_CXXFLAGS = -std=gnu++11
 
-test_opengl_core_SOURCES = \
+test_opengl_math_SOURCES = \
 	../main.cpp \
-	../test_x11_display.cpp \
-	../test_x11_render_system.cpp
+	../test_mesh_types.cpp
 
-test_opengl_core_LDFLAGS = -no-install \
-	-L$(abs_top_builddir)/../../build/.libs -L/usr/lib64/nvidia \
-	-lopengl_core -lGL -lX11 -glx
+test_opengl_math_LDFLAGS = -no-install \
+	-L$(abs_top_builddir)/../../build/.libs

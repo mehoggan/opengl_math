@@ -20,18 +20,12 @@
 
 #include <cmath>
 
-namespace gl_wrapper
+namespace opengl_math
 {
-  namespace core
+  template<typename T>
+  inline T sqrt(const T &val)
   {
-    namespace math
-    {
-      template<typename T>
-      inline T sqrt(const T &val)
-      {
-        return std::sqrt(val);
-      }
-    }
+    return std::sqrt(val);
   }
 }
 #endif

@@ -18,7 +18,7 @@
 #ifndef POINT3D_H_INCLUDED
 #define POINT3D_H_INCLUDED
 
-namespace gl_wrapper
+namespace opengl_math
 {
   /*! \class Point 3D class geometry based
    *  \brief This class defines a 3D point

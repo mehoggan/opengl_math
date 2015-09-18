@@ -1,15 +1,15 @@
 #ifndef GRAPHICS_TESTS
 #define GRAPHICS_TESTS
 
-#include <cxxtest/TestSuite.h>
+#include "test_base.h"
 
-#include <graphics/math/matrix.h>
-#include <core/math/numbers.h>
-#include <core/math/trig.h>
-#include <graphics/matrices/type_matrix_4X4.h>
-#include <graphics/primitives/points/type_point_3d.h>
-#include <graphics/primitives/vectors/type_vector_3d.h>
-#include <graphics/primitives/vectors/type_vector_4d.h>
+#include "math/matrix.h"
+#include "math/numbers.h"
+#include "math/trig.h"
+#include "matrices/type_matrix_4X4.h"
+#include "primitives/points/type_point_3d.h"
+#include "primitives/vectors/type_vector_3d.h"
+#include "primitives/vectors/type_vector_4d.h"
 
 #include <iostream>
 #include <vector>
@@ -24,7 +24,7 @@
 // TODO: Test operator- (point2, point2)
 // TODO: Test operator- (point3, point3)
 
-class graphics_tests : public CxxTest::TestSuite
+class test_math : public test_base
 {
 public:
   /*! \brief Unit tests for translate to and from functions

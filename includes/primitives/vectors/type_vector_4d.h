@@ -18,11 +18,11 @@
 #ifndef VECTOR4D_H_INCLUDED
 #define VECTOR4D_H_INCLUDED
 
-#include <core/math/sqrt.h>
+#include "math/sqrt.h"
 
 #include <cassert>
 
-namespace gl_wrapper
+namespace opengl_math
 {
   /*! \class Point 3D class geometry based
    *  \brief This class defines a 3D vector

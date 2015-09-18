@@ -18,10 +18,10 @@
 #ifndef TYPE_MATRIX_2X2_H_INCLUDED
 #define TYPE_MATRIX_2X2_H_INCLUDED
 
-#include <gl_wrapper.h>
-#include <graphics/primitives/vectors/type_vector_2d.h>
+#include "core/enumerations.h"
+#include "graphics/primitives/vectors/type_vector_2d.h"
 
-namespace gl_wrapper
+namespace opengl_math
 {
   /*! \class Matrix 2X2 a CG based representation of a matrix which supports
    * both row and column based representations.

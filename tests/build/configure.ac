@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.63])
-AC_INIT([test_opengl_core], [0.1], [mehoggan@gmail.com])
+AC_INIT([test_opengl_math], [0.1], [mehoggan@gmail.com])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects])
 m4_pattern_allow([AM_PROG_AR])
 AM_PROG_AR
