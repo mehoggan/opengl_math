@@ -34,31 +34,31 @@
 namespace opengl_math
 {
   template<typename T>
-  T squared(const T &val)
+  inline T squared(const T &val)
   {
     return val * val;
   }
 
   template<typename T>
-  T min(const T &lhs, const T &rhs)
+  inline T min(const T &lhs, const T &rhs)
   {
     return (lhs >= rhs) ? rhs : lhs;
   }
 
   template<typename T>
-  T max(const T &lhs, const T &rhs)
+  inline T max(const T &lhs, const T &rhs)
   {
     return (lhs < rhs) ? rhs : lhs;
   }
 
   template<typename T>
-  T abs(const T &lhs, const T &rhs)
+  inline T abs(const T &lhs, const T &rhs)
   {
     return max(lhs, rhs) - min(lhs, rhs);
   }
 
   template<typename T>
-  T abs(const T &val)
+  inline T abs(const T &val)
   {
     return (val < 0) ? -val : val;
   }
@@ -292,20 +292,23 @@ namespace opengl_math
   template<>
   inline bool float_equals<float>(float val1, float val2, float epsilon)
   {
-    return abs(val1, val2) < epsilon;
+    float diff = abs(val1, val2);
+    return (val1 == val2) || diff <= epsilon;
   }
 
   template<>
   inline bool float_equals<double>(double val1, double val2, double epsilon)
   {
-    return abs(val1, val2) < epsilon;
+    double diff = abs(val1, val2);
+    return (val1 == val2) || diff <= epsilon;
   }
 
   template<>
   inline bool float_equals<long double>(long double val1, long double val2,
     long double epsilon)
   {
-    return abs(val1, val2) < epsilon;
+    long double diff = abs(val1, val2);
+    return (val1 == val2) || diff <= epsilon;
   }
 
   template<typename T>

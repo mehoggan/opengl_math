@@ -7,6 +7,8 @@ include_directories(${CMAKE_SOURCE_DIR}/../)
 
 set(src ${CMAKE_SOURCE_DIR}/../tests/main.cpp
   ${CMAKE_SOURCE_DIR}/../tests/test_base.h
+  ${CMAKE_SOURCE_DIR}/../tests/test_curves.cpp
+  ${CMAKE_SOURCE_DIR}/../tests/test_curves.h
   ${CMAKE_SOURCE_DIR}/../tests/test_math.cpp
   ${CMAKE_SOURCE_DIR}/../tests/test_math.h
   ${CMAKE_SOURCE_DIR}/../tests/test_numbers.cpp

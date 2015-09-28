@@ -12,20 +12,14 @@ set(src ${CMAKE_SOURCE_DIR}/../src/dummy.cpp
   ${CMAKE_SOURCE_DIR}/../includes/core/enumerations.h
   ${CMAKE_SOURCE_DIR}/../includes/core/memory_leaks.h
   ${CMAKE_SOURCE_DIR}/../includes/core/platform.h
-#  ${CMAKE_SOURCE_DIR}/../includes/curves/CubicCurve.cpp
-#  ${CMAKE_SOURCE_DIR}/../includes/curves/CubicCurve.h
-#  ${CMAKE_SOURCE_DIR}/../includes/curves/CubicCurveConnectDecl.h
-#  ${CMAKE_SOURCE_DIR}/../includes/curves/CubicCurveDecl.h
-#  ${CMAKE_SOURCE_DIR}/../includes/curves/Curve.cpp
-#  ${CMAKE_SOURCE_DIR}/../includes/curves/Curve.h
-#  ${CMAKE_SOURCE_DIR}/../includes/curves/CurveSample.cpp
-#  ${CMAKE_SOURCE_DIR}/../includes/curves/CurveSample.h
-#  ${CMAKE_SOURCE_DIR}/../includes/curves/LinearCurve.cpp
-#  ${CMAKE_SOURCE_DIR}/../includes/curves/LinearCurve.h
-#  ${CMAKE_SOURCE_DIR}/../includes/curves/TessellationQuality.cpp
-#  ${CMAKE_SOURCE_DIR}/../includes/curves/TessellationQuality.h
-#  ${CMAKE_SOURCE_DIR}/../includes/curves/Tessellator.cpp
-#  ${CMAKE_SOURCE_DIR}/../includes/curves/Tessellator.h
+  ${CMAKE_SOURCE_DIR}/../includes/curves/cubic_curve.inl
+  ${CMAKE_SOURCE_DIR}/../includes/curves/cubic_curve.h
+  ${CMAKE_SOURCE_DIR}/../includes/curves/curve_3d.inl
+  ${CMAKE_SOURCE_DIR}/../includes/curves/curve_3d.h
+  ${CMAKE_SOURCE_DIR}/../includes/curves/curve_sample_3d.inl
+  ${CMAKE_SOURCE_DIR}/../includes/curves/curve_sample_3d.h
+  ${CMAKE_SOURCE_DIR}/../includes/curves/tessellation_quality.inl
+  ${CMAKE_SOURCE_DIR}/../includes/curves/tessellation_quality.h
   ${CMAKE_SOURCE_DIR}/../includes/math/clamp.h
   ${CMAKE_SOURCE_DIR}/../includes/math/matrix.h
   ${CMAKE_SOURCE_DIR}/../includes/math/numbers.h
@@ -42,6 +36,7 @@ set(src ${CMAKE_SOURCE_DIR}/../src/dummy.cpp
   ${CMAKE_SOURCE_DIR}/../includes/primitives/colors/type_color_rgb.inl
   ${CMAKE_SOURCE_DIR}/../includes/primitives/colors/type_color_rgba.h
   ${CMAKE_SOURCE_DIR}/../includes/primitives/colors/type_color_rgba.inl
+  ${CMAKE_SOURCE_DIR}/../includes/primitives/conversions.h
   ${CMAKE_SOURCE_DIR}/../includes/primitives/points/type_point_2d.h
   ${CMAKE_SOURCE_DIR}/../includes/primitives/points/type_point_2d.inl
   ${CMAKE_SOURCE_DIR}/../includes/primitives/points/type_point_3d.h

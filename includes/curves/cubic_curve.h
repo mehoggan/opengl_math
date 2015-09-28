@@ -1,78 +1,56 @@
-#pragma once
+#ifndef CUBIC_CURVE_H_INCLUDED
+#define CUBIC_CURVE_H_INCLUDED
+
+#include "curves/curve_3d.h"
+
+#include "curves/tessellation_quality.h"
+#include "curves/curve_sample_3d.h"
+
+#include "matrices/type_matrix_4X4.h"
+#include "primitives/points/type_point_3d.h"
+#include "primitives/vectors/type_vector_3d.h"
+#include "primitives/vectors/type_vector_4d.h"
 
 #include <vector>
-#include <NavCore/Math/Geometry/AlignedBox3Decl.h>
-#include <NavCore/Math/Vector/Matrix34.h>
-#include <NavCore/Math/Vector/Vector3Decl.h>
-#include "curve/core/Curve.h"
-#include "curve/core/CurveSampleDecl.h"
-#include "curve/core/TessellationQualityDecl.h"
-#include "curve/cubic/CubicCurveDecl.h"
 
-namespace curve
+namespace opengl_math
 {
+  template<typename realT>
+  class cubic_curve : public curve_3d<realT>
+  {
+  public:
+    cubic_curve();
 
-template<typename RealT>
-class CURVE_API CubicCurveImpl : public CurveImpl<RealT>
-{
-public:
-    using RealType = RealT;
+    void set_hermite(
+      const point_3d<realT> &p0, const point_3d<realT> &p1,
+      const vector_3d<realT> &t0, const vector_3d<realT> &t1);
 
-    CubicCurveImpl();
+    void set_bezier(
+      const point_3d<realT> &p0, const point_3d<realT> &p1,
+      const point_3d<realT> &p2, const point_3d<realT> &p3);
 
-    /**
-     * @brief Sets cubic curve using Hermite parameters.
-     * @param p0 The start position.
-     * @param p1 The end position.
-     * @param t0 The start tangent.
-     * @param t1 The end tangent.
-     */
-    void setHermite(
-        const NavCore::Math::Vector3Impl<RealType>& p0, const NavCore::Math::Vector3Impl<RealType>& p1,
-        const NavCore::Math::Vector3Impl<RealType>& t0, const NavCore::Math::Vector3Impl<RealType>& t1);
+    void set_catmull_rom(
+      const point_3d<realT> &p0, const point_3d<realT> &p1,
+      const point_3d<realT> &p2, const point_3d<realT> &p3);
 
-    /**
-    * @brief Sets cubic curve using Bezier parameters.
-    * @param p0 The start position.
-    * @param p1 The first control point.
-    * @param p2 The second control point.
-    * @param p3 The end position.
-    */
-    void setBezier(
-        const NavCore::Math::Vector3Impl<RealType>& p0, const NavCore::Math::Vector3Impl<RealType>& p1,
-        const NavCore::Math::Vector3Impl<RealType>& p2, const NavCore::Math::Vector3Impl<RealType>& p3);
+    const matrix_4X4<realT, column> &get_matrix() const { return m_cubic; }
 
-    /**
-    * @brief Sets cubic curve using Catmull-Rom parameters.
-    * @param p0 The start control point.
-    * @param p1 The start position.
-    * @param p2 The end position.
-    * @param p3 The end control point.
-    */
-    void setCatmullRom(
-        const NavCore::Math::Vector3Impl<RealType>& p0, const NavCore::Math::Vector3Impl<RealType>& p1,
-        const NavCore::Math::Vector3Impl<RealType>& p2, const NavCore::Math::Vector3Impl<RealType>& p3);
+    virtual point_3d<realT> evaluate_position(realT t) const;
 
-    /**
-     * @brief Gets the underlying matrix representing this cubic curve.
-     */
-    const NavCore::Math::Matrix34Impl<RealType>& getMatrix() const { return m_cubic; }
+    virtual vector_3d<realT> evaluate_tangent(realT t) const;
 
-    virtual NavCore::Math::Vector3Impl<RealType> evaluatePosition(RealType t) const override;
-    virtual NavCore::Math::Vector3Impl<RealType> evaluateTangent(RealType t) const override;
-    virtual CurveSampleImpl<RealType> evaluate(RealType t) const override;
+    virtual curve_sample_3d<realT> evaluate(realT t) const;
 
-    virtual NavCore::Math::AlignedBox3Impl<RealType> computeBoundingBox() const override;
+    virtual std::vector<realT> compute_sample_values(
+      std::size_t sample_count = 2) const;
 
-    virtual std::vector<RealType> computeSampleValues(size_t sampleCount = 2) const override;
-    virtual std::vector<CurveSampleImpl<RealType>> computeSamplesAdaptive(
-        const TessellationQualityImpl<RealType>& quality =
-            TessellationQualityImpl<RealType>::cDefault) const override;
+    virtual std::vector<curve_sample_3d<realT>> compute_samples_adaptive(
+      const tessellation_quality<realT>& quality =
+      tessellation_quality<realT>::default_quality) const;
 
-private:
-    void ComputeRangeForDimension(RealType& outMin, RealType& outMax, int dimension) const;
-
-    NavCore::Math::Matrix34Impl<RealType> m_cubic;
-};
-
-} // namespace curve
+  private:
+    matrix_4X4<realT, column> m_cubic;
+  };
+}
+#include "cubic_curve.inl"
+#endif

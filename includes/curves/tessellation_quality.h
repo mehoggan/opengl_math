@@ -1,33 +1,19 @@
-#pragma once
+#ifndef TESSELLATION_QUALITY_H_INCLUDED
+#define TESSELLATION_QUALITY_H_INCLUDED
 
-#include <stdlib.h>
-#include "curve/CurveApi.h"
-#include "curve/core/TessellationQualityDecl.h"
-
-namespace curve
+namespace opengl_math
 {
+  template<typename realT>
+  struct tessellation_quality
+  {
+  public:
+    tessellation_quality();
 
-/**
- * @brief Contains a set of quality parameters used to tessellate a curve.
- */
-template<typename RealT>
-class CURVE_API TessellationQualityImpl
-{
-public:
-    using RealType = RealT;
+    realT _chordal_tol;
 
-    TessellationQualityImpl();
-
-    /**
-     * @brief The desired maximum distance between the resulting polyline and the original curve.
-     * The adaptive tessellation process is not guaranteed to achieve this tolerance, as other
-     * parameters, such as m_maxDepth, can terminate recursive subdivision before the tolerance is
-     * met.
-     */
-    RealType m_chordalTolerance;
-
-    static const TessellationQualityImpl cDefault;
-    static const TessellationQualityImpl cPrecise;
-};
-
-} // namespace curve
+    static const tessellation_quality default_quality;
+    static const tessellation_quality precise_quality;
+  };
+}
+#include "tessellation_quality.inl"
+#endif
