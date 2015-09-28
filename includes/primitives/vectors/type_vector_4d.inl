@@ -147,7 +147,7 @@ namespace opengl_math
   template <typename T>
   T vector_4d<T>::magnitude() const
   {
-    return core::math::sqrt(_x * _x + _y * _y + _z * _z + _w * _w);
+    return opengl_math::sqrt(_x * _x + _y * _y + _z * _z + _w * _w);
   }
 
   template <typename T>

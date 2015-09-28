@@ -18,11 +18,11 @@
 #ifndef VECTOR_H_INCLUDED
 #define VECTOR_H_INCLUDED
 
-#include <graphics/primitives/vectors/type_vector_4d.h>
-#include <graphics/primitives/vectors/type_vector_3d.h>
-#include <graphics/primitives/vectors/type_vector_2d.h>
-#include <graphics/primitives/points/type_point_2d.h>
-#include <graphics/primitives/points/type_point_3d.h>
+#include "primitives/vectors/type_vector_4d.h"
+#include "primitives/vectors/type_vector_3d.h"
+#include "primitives/vectors/type_vector_2d.h"
+#include "primitives/points/type_point_2d.h"
+#include "primitives/points/type_point_3d.h"
 
 #include <cmath>
 

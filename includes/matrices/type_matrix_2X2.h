@@ -19,7 +19,7 @@
 #define TYPE_MATRIX_2X2_H_INCLUDED
 
 #include "core/enumerations.h"
-#include "graphics/primitives/vectors/type_vector_2d.h"
+#include "primitives/vectors/type_vector_2d.h"
 
 namespace opengl_math
 {

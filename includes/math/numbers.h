@@ -26,7 +26,7 @@
 
 #include <cmath>
 
-#ifdef __GL_WRAPPER_WINDOWS__
+#ifdef __OPENGL_MATH_WINDOWS__
     #undef min
     #undef max
 #endif
@@ -67,7 +67,7 @@ namespace opengl_math
   T gcd(T lhs, T rhs);
 
   template<>
-  short gcd<short>(short lhs, short rhs)
+  inline short gcd<short>(short lhs, short rhs)
   {
     short zero = static_cast<short>(0);
     short result = 1;
@@ -89,7 +89,7 @@ namespace opengl_math
   }
 
   template<>
-  unsigned short gcd<unsigned short>(unsigned short lhs,
+  inline unsigned short gcd<unsigned short>(unsigned short lhs,
     unsigned short rhs)
   {
     if (lhs && rhs) {
@@ -122,7 +122,7 @@ namespace opengl_math
   }
 
   template<>
-  int gcd<int>(int lhs, int rhs)
+  inline int gcd<int>(int lhs, int rhs)
   {
     int zero = static_cast<int>(0);
     int result = 1;
@@ -144,7 +144,7 @@ namespace opengl_math
   }
 
   template<>
-  unsigned int gcd<unsigned int>(unsigned int lhs,
+  inline unsigned int gcd<unsigned int>(unsigned int lhs,
     unsigned int rhs)
   {
     if (lhs && rhs) {
@@ -177,7 +177,7 @@ namespace opengl_math
   }
 
   template<>
-  long gcd<long>(long lhs, long rhs)
+  inline long gcd<long>(long lhs, long rhs)
   {
     long zero = static_cast<long>(0l);
     long result = 1l;
@@ -199,7 +199,7 @@ namespace opengl_math
   }
 
   template<>
-  unsigned long gcd<unsigned long>(unsigned long lhs,
+  inline unsigned long gcd<unsigned long>(unsigned long lhs,
     unsigned long rhs)
   {
     if (lhs && rhs) {
@@ -232,7 +232,7 @@ namespace opengl_math
   }
 
   template<>
-  long long gcd<long long>(long long lhs, long long rhs)
+  inline long long gcd<long long>(long long lhs, long long rhs)
   {
     long long zero = static_cast<long long>(0ll);
     long long result = 1ll;
@@ -254,7 +254,7 @@ namespace opengl_math
   }
 
   template<>
-  unsigned long long  gcd<unsigned long long>(unsigned long long lhs,
+  inline unsigned long long  gcd<unsigned long long>(unsigned long long lhs,
     unsigned long long rhs)
   {
     if (lhs && rhs) {
@@ -290,19 +290,19 @@ namespace opengl_math
   bool float_equals(T val1, T val2, T epsilon);
 
   template<>
-  bool float_equals<float>(float val1, float val2, float epsilon)
+  inline bool float_equals<float>(float val1, float val2, float epsilon)
   {
     return abs(val1, val2) < epsilon;
   }
 
   template<>
-  bool float_equals<double>(double val1, double val2, double epsilon)
+  inline bool float_equals<double>(double val1, double val2, double epsilon)
   {
     return abs(val1, val2) < epsilon;
   }
 
   template<>
-  bool float_equals<long double>(long double val1, long double val2,
+  inline bool float_equals<long double>(long double val1, long double val2,
     long double epsilon)
   {
     return abs(val1, val2) < epsilon;
@@ -340,8 +340,6 @@ namespace opengl_math
     ret &= float_equals<T>(lhs.w(), rhs.w(), epsilon);
     return ret;
   }
-}
-
 }
 
 #endif

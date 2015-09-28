@@ -84,14 +84,14 @@ namespace opengl_math
    */
   template <typename T, matrix_layout ML>
   matrix_3X3<T, ML> rotate_to(const matrix_3X3<T, ML> &m, const T &angle,
-    core::math::angle_mode mode = core::math::radians)
+    opengl_math::angle_mode mode = opengl_math::radians)
   {
     T a = angle;
-    if (mode == core::math::degrees) {
-      a = core::math::degrees_to_radians(angle);
+    if (mode == opengl_math::degrees) {
+      a = opengl_math::degrees_to_radians(angle);
     }
-    T c = core::math::cos<T, (core::math::radians)>(a);
-    T s = core::math::sin<T, (core::math::radians)>(a);
+    T c = opengl_math::cos<T, (opengl_math::radians)>(a);
+    T s = opengl_math::sin<T, (opengl_math::radians)>(a);
 
     // Because of matrix indexing column and row matries are treated the same.
     matrix_3X3<T, ML> result(m);
@@ -108,14 +108,14 @@ namespace opengl_math
    */
   template <typename T, matrix_layout ML>
   matrix_4X4<T, ML> rotate_to(const matrix_4X4<T, ML> &m, const T &angle,
-    const vector_3d<T> &v, core::math::angle_mode mode = core::math::radians)
+    const vector_3d<T> &v, opengl_math::angle_mode mode = opengl_math::radians)
   {
     T a = angle;
-    if (mode == core::math::degrees) {
-      a = core::math::degrees_to_radians(angle);
+    if (mode == opengl_math::degrees) {
+      a = opengl_math::degrees_to_radians(angle);
     }
-    const T c = core::math::cos<T, core::math::radians>(a);
-    const T s = core::math::sin<T, core::math::radians>(a);
+    const T c = opengl_math::cos<T, opengl_math::radians>(a);
+    const T s = opengl_math::sin<T, opengl_math::radians>(a);
     const T k = (T(1) - c);
 
     vector_3d<T> axis(v);
@@ -153,14 +153,14 @@ namespace opengl_math
    */
   template <typename T, matrix_layout ML>
   matrix_3X3<T, ML> rotate_by(const matrix_3X3<T, ML> &m, const T &angle,
-    core::math::angle_mode mode = core::math::radians)
+    opengl_math::angle_mode mode = opengl_math::radians)
   {
     T a = angle;
-    if (mode == core::math::degrees) {
-      a = core::math::degrees_to_radians(angle);
+    if (mode == opengl_math::degrees) {
+      a = opengl_math::degrees_to_radians(angle);
     }
-    T c = core::math::cos<T, core::math::radians>(a);
-    T s = core::math::sin<T, core::math::radians>(a);
+    T c = opengl_math::cos<T, opengl_math::radians>(a);
+    T s = opengl_math::sin<T, opengl_math::radians>(a);
 
     matrix_3X3<T, ML> rotate(null);
 
@@ -181,14 +181,14 @@ namespace opengl_math
    */
   template <typename T, matrix_layout ML>
   matrix_4X4<T, ML> rotate_by(const matrix_4X4<T, ML> &m, const T &angle,
-    const vector_3d<T> &v, core::math::angle_mode mode = core::math::radians)
+    const vector_3d<T> &v, opengl_math::angle_mode mode = opengl_math::radians)
   {
     T a = angle;
-    if (mode == core::math::degrees) {
-      a = core::math::degrees_to_radians(angle);
+    if (mode == opengl_math::degrees) {
+      a = opengl_math::degrees_to_radians(angle);
     }
-    const T c = core::math::cos<T, core::math::radians>(a);
-    const T s = core::math::sin<T, core::math::radians>(a);
+    const T c = opengl_math::cos<T, opengl_math::radians>(a);
+    const T s = opengl_math::sin<T, opengl_math::radians>(a);
     const T k = (T(1) - c);
 
     vector_3d<T> axis(v);
@@ -304,14 +304,14 @@ namespace opengl_math
   template <typename T, matrix_layout ML>
   matrix_4X4<T, ML> perspective(const T &fovy, const T &aspect,
     const T &znear, const T &zfar,
-    core::math::angle_mode mode = core::math::radians)
+    opengl_math::angle_mode mode = opengl_math::radians)
   {
     T rad = fovy;
-    if (mode == core::math::degrees) {
-      rad = core::math::degrees_to_radians(fovy);
+    if (mode == opengl_math::degrees) {
+      rad = opengl_math::degrees_to_radians(fovy);
     }
 
-    T tan_half_fovy = core::math::tan<T, core::math::radians>(rad / T(2));
+    T tan_half_fovy = opengl_math::tan<T, opengl_math::radians>(rad / T(2));
 
     matrix_4X4<T, ML> result(null);
     result[0][0] = T(1) / (aspect * tan_half_fovy);
@@ -327,15 +327,15 @@ namespace opengl_math
   template <typename T, matrix_layout ML>
   matrix_4X4<T, ML> perspective_fov(const T &fov, const T &width,
     const T &height, const T &znear, const T &zfar,
-    core::math::angle_mode mode = core::math::radians)
+    opengl_math::angle_mode mode = opengl_math::radians)
   {
     const T rad = fov;
-    if (mode == core::math::degrees) {
-      rad = core::math::degrees_to_radians(fov);
+    if (mode == opengl_math::degrees) {
+      rad = opengl_math::degrees_to_radians(fov);
     }
 
-    T h = core::math::cos<T, core::math::radians>(T(0.5) * rad) /
-      core::math::sin<T, core::math::radians>(T(0.5) * rad);
+    T h = opengl_math::cos<T, opengl_math::radians>(T(0.5) * rad) /
+      opengl_math::sin<T, opengl_math::radians>(T(0.5) * rad);
     T w = h * height / width;
 
     matrix_4X4<T, ML> result(null);

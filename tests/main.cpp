@@ -18,7 +18,7 @@
 int main(int argc, char *argv[])
 {
   MEMORY_LEAK_DETECTION_START();
-  std::array<std::shared_ptr<test_base>, 1> tests = {
+  std::array<std::shared_ptr<test_base>, 8> tests = {
     std::shared_ptr<test_base>(new test_math()),
     std::shared_ptr<test_base>(new test_numbers()),
     std::shared_ptr<test_base>(new test_operations()),

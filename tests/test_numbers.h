@@ -1,9 +1,9 @@
-#ifndef COLOR_TESTS
-#define COLOR_TESTS
+#ifndef NUMBER_TESTS
+#define NUMBER_TESTS
 
-#include <cxxtest/TestSuite.h>
+#include "test_base.h"
 
-#include <core/math/numbers.h>
+#include "math/numbers.h"
 
 #include <iostream>
 #include <vector>
@@ -17,15 +17,11 @@
 // TODO: Test vector_3d_float_equals
 // TODO: Test vector_4d_float_equals
 
-class number_tests : public CxxTest::TestSuite
+class test_numbers : public test_base
 {
 public:
-  void test_float_equals()
-  {
-    TS_ASSERT(gl_wrapper::core::math::float_equals(1.0f, 1.0f, 1e-006f));
-    TS_ASSERT(gl_wrapper::core::math::float_equals(1.0, 1.0, 1e-012));
-    TS_ASSERT(gl_wrapper::core::math::float_equals(1.0L, 1.0L, 1e-012L));
-  }
+  virtual bool run();
+  virtual const char *name() { return "test_numbers"; }
 };
 
 #endif

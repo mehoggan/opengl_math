@@ -1,9 +1,9 @@
-#ifndef MEMORY_LEAKS_H_INCLUDED
-#define MEMORY_LEAKS_H_INCLUDED
+#ifndef MATH_MEMORY_LEAKS_H_INCLUDED
+#define MATH_MEMORY_LEAKS_H_INCLUDED
 
 #include "core/platform.h"
 
-#ifdef __OPENGL_CORE_WINDOWS__
+#ifdef __OPENGL_MATH_WINDOWS__
   #define _CRTDBG_MAP_ALLOC
   #include <stdlib.h>
   #include <crtdbg.h>
