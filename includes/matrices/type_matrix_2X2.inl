@@ -222,7 +222,7 @@ namespace opengl_math
     }
   }
 
-  /*! \brief This functoin returns the product of a 2d vector multiplied by a
+  /*! \brief This function returns the product of a 2d vector multiplied by a
    * 2 X 2 matrix
    */
   template <typename T, matrix_layout ML>
@@ -238,6 +238,26 @@ namespace opengl_math
       return vector_2d<T>(
         m[0][0] * v[0] + m[0][1] * v[1],
         m[1][0] * v[0] + m[1][1] * v[1]);
+    }
+  }
+
+  /*! \brief This function returns the product of a 2d vector multiplied by a
+  * 2 X 2 matrix
+  */
+  template <typename T, matrix_layout ML>
+  vector_2d<T> operator*(const vector_2d<T> &v, const matrix_2X2<T, ML> &m)
+  {
+    if (ML == column) {
+      /* [col][row] */
+      return vector_2d<T>(
+        v[0] * m[0][0] + v[1] * m[0][1],
+        v[0] * m[1][0] + v[1] * m[1][1]);;
+    }
+    else {
+      /* [row][col] */
+      return vector_2d<T>(
+        v[0] * m[0][0] + v[1] * m[1][0],
+        v[0] * m[0][1] + v[1] * m[1][1]);
     }
   }
 

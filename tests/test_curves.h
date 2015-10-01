@@ -6,6 +6,8 @@
 #include "curves/cubic_curve.h"
 #include "math/numbers.h"
 #include "primitives/conversions.h"
+#include "primitives/points/type_point_3d.h"
+#include "primitives/vectors/type_vector_3d.h"
 
 #include <iostream>
 #include <vector>
