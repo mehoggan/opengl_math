@@ -1,12 +1,12 @@
 #ifndef CURVE_H_INCLUDED
 #define CURVE_H_INCLUDED
 
-#include "primitives/points/type_point_3d.h"
-#include "primitives/vectors/type_vector_3d.h"
 #include "curves/curve_sample_3d.h"
 #include "curves/tessellation_quality.h"
-
-//#include <NavCore/Math/Geometry/AlignedBox3.h>
+#include "math/algebra.h"
+#include "math/vector.h"
+#include "primitives/points/type_point_3d.h"
+#include "primitives/vectors/type_vector_3d.h"
 
 #include <cassert>
 #include <cstdint>
@@ -24,7 +24,7 @@ namespace opengl_math
 
     virtual point_3d<realT> evaluate_position(realT t) const = 0;
 
-    virtual vector_3d<realT> evaluate_tangent(realT t) const;
+    virtual vector_3d<realT> evaluate_tangent(realT t) const = 0;
 
     virtual curve_sample_3d<realT> evaluate(realT t) const;
 

@@ -20,6 +20,8 @@
 
 #include "core/platform.h"
 #include "math/trig.h"
+#include "primitives/points/type_point_2d.h"
+#include "primitives/points/type_point_3d.h"
 #include "primitives/vectors/type_vector_2d.h"
 #include "primitives/vectors/type_vector_3d.h"
 #include "primitives/vectors/type_vector_4d.h"
@@ -341,6 +343,27 @@ namespace opengl_math
     ret &= float_equals<T>(lhs.y(), rhs.y(), epsilon);
     ret &= float_equals<T>(lhs.z(), rhs.z(), epsilon);
     ret &= float_equals<T>(lhs.w(), rhs.w(), epsilon);
+    return ret;
+  }
+
+  template<typename T>
+  bool point_2d_float_equals(const point_2d<T> &lhs,
+    const point_2d<T> &rhs, T epsilon)
+  {
+    bool ret = true;
+    ret &= float_equals<T>(lhs.x(), rhs.x(), epsilon);
+    ret &= float_equals<T>(lhs.y(), rhs.y(), epsilon);
+    return ret;
+  }
+
+  template<typename T>
+  bool point_3d_float_equals(const point_3d<T> &lhs,
+    const point_3d<T> &rhs, T epsilon)
+  {
+    bool ret = true;
+    ret &= float_equals<T>(lhs.x(), rhs.x(), epsilon);
+    ret &= float_equals<T>(lhs.y(), rhs.y(), epsilon);
+    ret &= float_equals<T>(lhs.z(), rhs.z(), epsilon);
     return ret;
   }
 }

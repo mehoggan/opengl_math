@@ -5,6 +5,8 @@
 #include <primitives/vectors/type_vector_3d.h>
 #include <primitives/points/type_point_3d.h>
 
+#include <limits>
+
 namespace opengl_math
 {
   template<typename realT>

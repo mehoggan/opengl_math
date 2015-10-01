@@ -271,7 +271,7 @@ namespace opengl_math
     }
   }
 
-  /*! \brief This functoin returns the product of a 3d vector multiplied by a
+  /*! \brief This function returns the product of a 3d vector multiplied by a
    * 3 X 3 matrix
    */
   template <typename T, matrix_layout ML>
@@ -289,6 +289,27 @@ namespace opengl_math
         m[0][0] * v[0] + m[0][1] * v[1] + m[0][2] * v[2],
         m[1][0] * v[0] + m[1][1] * v[1] + m[1][2] * v[2],
         m[2][1] * v[0] + m[2][1] * v[1] + m[2][2] * v[2]);
+    }
+  }
+
+  /*! \brief This function returns the product of a 3 X 3 matrix multiplied by a
+  * 3d vector
+  */
+  template <typename T, matrix_layout ML>
+  vector_3d<T> operator*(const vector_3d<T> &v, const matrix_3X3<T, ML> &m)
+  {
+    if (ML == column) {
+      /* [col][row] */
+      return vector_3d<T>(
+        v[0] * m[0][0] + v[1] * m[0][1] * + v[2] * m[0][2],
+        v[0] * m[1][0] + v[1] * m[1][1] * + v[2] * m[1][2],
+        v[0] * m[2][0] + v[1] * m[2][1] * + v[2] * m[2][2]);
+    } else {
+      /* [row][col] */
+      return vector_3d<T>(
+        v[0] * m[0][0] + v[1] * m[1][0] + v[2] * m[2][0],
+        v[0] * m[0][1] + v[1] * m[1][1] + v[2] * m[2][1],
+        v[0] * m[0][2] + v[1] * m[1][2] + v[2] * m[2][2]);
     }
   }
 

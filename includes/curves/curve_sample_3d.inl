@@ -18,7 +18,8 @@ namespace opengl_math
   template<typename realT>
   void curve_sample_3d<realT>::normalize_tangent()
   {
-    if (!float_equals(_tangent.magnitude(), realT(0))) {
+    if (!float_equals(_tangent.magnitude(), realT(0),
+      std::numeric_limits<float>::epsilon())) {
       _tangent.normalize();
     }
   }
