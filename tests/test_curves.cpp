@@ -60,13 +60,10 @@ void test_cubic_curve_catmul_rom()
   opengl_math::matrix_4X4<float, opengl_math::row> catmul_rom_row =
     opengl_math::catmul_rom<float, opengl_math::row>();
 
-  opengl_math::matrix_4X4<float, opengl_math::row> transposed =
-    catmul_rom_row.transposed();
-
   for (unsigned short col = 0; col < 4u; ++col) {
     for (unsigned short row = 0; row < 4u; ++row) {
       OPENGL_MATH_ASSERT(opengl_math::float_equals<float>(
-        transposed[col][row], catmul_rom_col[col][row],
+        catmul_rom_row[col][row], catmul_rom_col[col][row],
         std::numeric_limits<float>::epsilon()));
     }
   }
@@ -163,16 +160,74 @@ void test_cubic_curve_default_ctor()
 
 void test_cubic_curve_set_hermite()
 {
+  {
+    opengl_math::point_3d<float> p0(+0.00f, +0.00f, +0.00f);
+    opengl_math::point_3d<float> p3(+2.00f, -2.00f, +3.20f);
+    opengl_math::vector_3d<float> t0(+1.00f, +0.50f, +1.00f);
+    opengl_math::vector_3d<float> t3(-2.00f, +0.70f, +1.50f);
 
+    opengl_math::cubic_curve<float, opengl_math::column> hermite;
+    hermite.set_hermite(p0, p3, t0, t3);
+
+    opengl_math::curve_sample_3d<float> start_sample =
+      hermite.evaluate(0.0f);
+    opengl_math::curve_sample_3d<float> end_sample =
+      hermite.evaluate(1.0f);
+
+    float epsilon = 1e-6f;
+    OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals<float>(
+      p0, start_sample._position, epsilon));
+    OPENGL_MATH_ASSERT(opengl_math::vector_3d_float_equals<float>(
+      opengl_math::vector_3d<float>(+1.00f, +0.50f, +1.00f),
+      start_sample._tangent, epsilon));
+    OPENGL_MATH_ASSERT_EQ(0.0, start_sample._parameter);
+
+    OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals<float>(
+      p3, end_sample._position, epsilon));
+    OPENGL_MATH_ASSERT(opengl_math::vector_3d_float_equals<float>(
+      opengl_math::vector_3d<float>(-2.00f, +0.70f, +1.50f),
+      end_sample._tangent, epsilon));
+    OPENGL_MATH_ASSERT_EQ(1.0, end_sample._parameter)
+  }
+
+  {
+    opengl_math::point_3d<float> p0(+0.00f, +0.00f, +0.00f);
+    opengl_math::point_3d<float> p3(+2.00f, -2.00f, +3.20f);
+    opengl_math::vector_3d<float> t0(+1.00f, +0.50f, +1.00f);
+    opengl_math::vector_3d<float> t3(-2.00f, +0.70f, +1.50f);
+
+    opengl_math::cubic_curve<float, opengl_math::row> hermite;
+    hermite.set_hermite(p0, p3, t0, t3);
+
+    opengl_math::curve_sample_3d<float> start_sample =
+      hermite.evaluate(0.0f);
+    opengl_math::curve_sample_3d<float> end_sample =
+      hermite.evaluate(1.0f);
+
+    float epsilon = 1e-6f;
+    OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals<float>(
+      p0, start_sample._position, epsilon));
+    OPENGL_MATH_ASSERT(opengl_math::vector_3d_float_equals<float>(
+      opengl_math::vector_3d<float>(+1.00f, +0.50f, +1.00f),
+      start_sample._tangent, epsilon));
+    OPENGL_MATH_ASSERT_EQ(0.0, start_sample._parameter);
+
+    OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals<float>(
+      p3, end_sample._position, epsilon));
+    OPENGL_MATH_ASSERT(opengl_math::vector_3d_float_equals<float>(
+      opengl_math::vector_3d<float>(-2.00f, +0.70f, +1.50f),
+      end_sample._tangent, epsilon));
+    OPENGL_MATH_ASSERT_EQ(1.0, end_sample._parameter)
+  }
 }
 
 void test_cubic_curve_set_bezier()
 {
   {
-    opengl_math::point_3d<float> p0(0.0f, 0.0f, 0.0f);
-    opengl_math::point_3d<float> p1(-2.0f, 1.0f, 0.0f);
-    opengl_math::point_3d<float> p2(2.0f, 3.0f, 1.0f);
-    opengl_math::point_3d<float> p3(2.5f, 5.67f, 3.4f);
+    opengl_math::point_3d<float> p0(+0.00f, +0.00f, +0.00f);
+    opengl_math::point_3d<float> p1(-2.00f, +1.00f, +0.00f);
+    opengl_math::point_3d<float> p2(+2.00f, +3.00f, +1.00f);
+    opengl_math::point_3d<float> p3(+2.50f, +5.67f, +3.40f);
 
     opengl_math::cubic_curve<float, opengl_math::column> bezier;
     bezier.set_bezier(p0, p1, p2, p3);
@@ -191,10 +246,10 @@ void test_cubic_curve_set_bezier()
   }
 
   {
-    opengl_math::point_3d<float> p0(0.0f, 0.0f, 0.0f);
-    opengl_math::point_3d<float> p1(-2.0f, 1.0f, 0.0f);
-    opengl_math::point_3d<float> p2(2.0f, 3.0f, 1.0f);
-    opengl_math::point_3d<float> p3(2.5f, 5.67f, 3.4f);
+    opengl_math::point_3d<float> p0(+0.00f, +0.00f, +0.00f);
+    opengl_math::point_3d<float> p1(-2.00f, +1.00f, +0.00f);
+    opengl_math::point_3d<float> p2(+2.00f, +3.00f, +1.00f);
+    opengl_math::point_3d<float> p3(+2.50f, +5.67f, +3.40f);
 
     opengl_math::cubic_curve<float, opengl_math::row> bezier;
     bezier.set_bezier(p0, p1, p2, p3);
@@ -211,6 +266,148 @@ void test_cubic_curve_set_bezier()
     OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals<float>(
       p3, end, epsilon));
   }
+
+  {
+    opengl_math::point_3d<float> p0(+0.0f, -1.0f, +0.0f);
+    opengl_math::point_3d<float> p1(+0.0f, +0.0f, +0.0f);
+    opengl_math::point_3d<float> p2(+0.0f, +0.0f, +0.0f);
+    opengl_math::point_3d<float> p3(+0.0f, +1.0f, +0.0f);
+
+    opengl_math::cubic_curve<float, opengl_math::column> bezier;
+    bezier.set_bezier(p0, p1, p2, p3);
+
+    opengl_math::curve_sample_3d<float> start_sample =
+      bezier.evaluate(0.0f);
+    start_sample.normalize_tangent();
+    opengl_math::curve_sample_3d<float> end_sample =
+      bezier.evaluate(1.0f);
+    end_sample.normalize_tangent();
+
+    float epsilon = 1e-6f;
+    OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals<float>(
+      p0, start_sample._position, epsilon));
+    OPENGL_MATH_ASSERT(opengl_math::vector_3d_float_equals<float>(
+      opengl_math::vector_3d<float>(0.0f, 1.0f, 0.0f), start_sample._tangent,
+      epsilon));
+    OPENGL_MATH_ASSERT_EQ(0.0, start_sample._parameter);
+
+    OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals<float>(
+      p3, end_sample._position, epsilon));
+    OPENGL_MATH_ASSERT(opengl_math::vector_3d_float_equals<float>(
+      opengl_math::vector_3d<float>(0.0f, 1.0f, 0.0f), end_sample._tangent,
+      epsilon));
+    OPENGL_MATH_ASSERT_EQ(1.0, end_sample._parameter);
+  }
+
+  {
+    opengl_math::point_3d<float> p0(+0.0f, -1.0f, +0.0f);
+    opengl_math::point_3d<float> p1(+0.0f, +0.0f, +0.0f);
+    opengl_math::point_3d<float> p2(+0.0f, +0.0f, +0.0f);
+    opengl_math::point_3d<float> p3(+0.0f, +1.0f, +0.0f);
+
+    opengl_math::cubic_curve<float, opengl_math::row> bezier;
+    bezier.set_bezier(p0, p1, p2, p3);
+
+    opengl_math::curve_sample_3d<float> start_sample =
+      bezier.evaluate(0.0f);
+    start_sample.normalize_tangent();
+    opengl_math::curve_sample_3d<float> end_sample =
+      bezier.evaluate(1.0f);
+    end_sample.normalize_tangent();
+
+    float epsilon = std::numeric_limits<float>::epsilon();
+    OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals<float>(
+      p0, start_sample._position, epsilon));
+    OPENGL_MATH_ASSERT(opengl_math::vector_3d_float_equals<float>(
+      opengl_math::vector_3d<float>(0.0f, 1.0f, 0.0f), start_sample._tangent,
+      epsilon));
+    OPENGL_MATH_ASSERT_EQ(0.0, start_sample._parameter);
+
+    OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals<float>(
+      p3, end_sample._position, epsilon));
+    OPENGL_MATH_ASSERT(opengl_math::vector_3d_float_equals<float>(
+      opengl_math::vector_3d<float>(0.0f, 1.0f, 0.0f), end_sample._tangent,
+      epsilon));
+    OPENGL_MATH_ASSERT_EQ(1.0, end_sample._parameter);
+  }
+}
+
+void test_curve3d_compute_sample_values()
+{
+  opengl_math::cubic_curve<float, opengl_math::row> bezier;
+  std::vector<float> params;
+  params = bezier.compute_sample_values(11);
+
+  OPENGL_MATH_ASSERT_EQ(11u, params.size());
+  OPENGL_MATH_ASSERT((std::find(params.begin(), params.end(), 0.0f) !=
+    params.end()));
+  OPENGL_MATH_ASSERT((std::find(params.begin(), params.end(), 0.1f) !=
+    params.end()));
+  OPENGL_MATH_ASSERT((std::find(params.begin(), params.end(), 0.2f) !=
+    params.end()));
+  OPENGL_MATH_ASSERT((std::find(params.begin(), params.end(), 0.3f) !=
+    params.end()));
+  OPENGL_MATH_ASSERT((std::find(params.begin(), params.end(), 0.4f) !=
+    params.end()));
+  OPENGL_MATH_ASSERT((std::find(params.begin(), params.end(), 0.5f) !=
+    params.end()));
+  OPENGL_MATH_ASSERT((std::find(params.begin(), params.end(), 0.6f) !=
+    params.end()));
+  OPENGL_MATH_ASSERT((std::find(params.begin(), params.end(), 0.7f) !=
+    params.end()));
+  OPENGL_MATH_ASSERT((std::find(params.begin(), params.end(), 0.8f) !=
+    params.end()));
+  OPENGL_MATH_ASSERT((std::find(params.begin(), params.end(), 0.9f) !=
+    params.end()));
+  OPENGL_MATH_ASSERT((std::find(params.begin(), params.end(), 1.0f) !=
+    params.end()));
+}
+
+void test_curve3d_compute_samples_uniform()
+{
+}
+
+void test_curve3d_compute_samples_adaptive()
+{
+  {
+    opengl_math::point_3d<float> p0(-3.00f, -6.00f, +0.00f);
+    opengl_math::point_3d<float> p1(-3.00f, -1.50f, +0.00f);
+    opengl_math::point_3d<float> p2(+3.00f, +1.50f, +0.00f);
+    opengl_math::point_3d<float> p3(+3.00f, +6.00f, +0.00f);
+
+    opengl_math::cubic_curve<float, opengl_math::column> bezier;
+    bezier.set_bezier(p0, p1, p2, p3);
+
+    opengl_math::tessellation_quality<float> quality;
+    quality._chordal_tol = 0.0011f;
+    std::vector<opengl_math::curve_sample_3d<float>> samples =
+      bezier.compute_samples_adaptive(quality);
+    OPENGL_MATH_ASSERT_EQ(53u, samples.size());
+    OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals(p0,
+      samples.front()._position, std::numeric_limits<float>::epsilon()));
+    OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals(p3,
+      samples.back()._position, std::numeric_limits<float>::epsilon()));
+  }
+
+  {
+    opengl_math::point_3d<float> p0(-3.00f, -6.00f, +0.00f);
+    opengl_math::point_3d<float> p1(-3.00f, -1.50f, +0.00f);
+    opengl_math::point_3d<float> p2(+3.00f, +1.50f, +0.00f);
+    opengl_math::point_3d<float> p3(+3.00f, +6.00f, +0.00f);
+
+    opengl_math::cubic_curve<float, opengl_math::row> bezier;
+    bezier.set_bezier(p0, p1, p2, p3);
+
+    opengl_math::tessellation_quality<float> quality;
+    quality._chordal_tol = 0.0011f;
+    std::vector<opengl_math::curve_sample_3d<float>> samples =
+      bezier.compute_samples_adaptive(quality);
+    OPENGL_MATH_ASSERT_EQ(53u, samples.size());
+    OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals(p0,
+      samples.front()._position, std::numeric_limits<float>::epsilon()));
+    OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals(p3,
+      samples.back()._position, std::numeric_limits<float>::epsilon()));
+  }
 }
 
 bool test_curves::run()
@@ -223,6 +420,9 @@ bool test_curves::run()
   test_cubic_curve_default_ctor();
   test_cubic_curve_set_hermite();
   test_cubic_curve_set_bezier();
+  test_curve3d_compute_sample_values();
+  test_curve3d_compute_samples_uniform();
+  test_curve3d_compute_samples_adaptive();
 
   return true;
 }

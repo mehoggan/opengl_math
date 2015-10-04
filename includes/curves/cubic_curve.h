@@ -33,14 +33,14 @@ namespace opengl_math
       const point_3d<realT> &p0, const point_3d<realT> &p1,
       const point_3d<realT> &p2, const point_3d<realT> &p3);
 
-    const matrix_4X4<realT, ML> &get_matrix() const {return m_cubic;}
+    const matrix_4X4<realT, ML> &get_matrix() const {return _cubic;}
 
     virtual point_3d<realT> evaluate_position(realT t) const;
 
     virtual vector_3d<realT> evaluate_tangent(realT t) const;
 
   private:
-    matrix_4X4<realT, ML> m_cubic;
+    matrix_4X4<realT, ML> _cubic;
   };
 }
 #include "cubic_curve.inl"
