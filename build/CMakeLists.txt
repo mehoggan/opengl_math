@@ -20,6 +20,7 @@ set(src ${CMAKE_SOURCE_DIR}/../src/dummy.cpp
   ${CMAKE_SOURCE_DIR}/../includes/curves/curve_sample_3d.h
   ${CMAKE_SOURCE_DIR}/../includes/curves/tessellation_quality.inl
   ${CMAKE_SOURCE_DIR}/../includes/curves/tessellation_quality.h
+  ${CMAKE_SOURCE_DIR}/../includes/math/algebra.h
   ${CMAKE_SOURCE_DIR}/../includes/math/clamp.h
   ${CMAKE_SOURCE_DIR}/../includes/math/matrix.h
   ${CMAKE_SOURCE_DIR}/../includes/math/numbers.h
