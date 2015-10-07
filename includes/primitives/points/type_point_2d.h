@@ -1,4 +1,4 @@
-/* Copyright (C)
+﻿/* Copyright (C)
  *
  * Copyright 2013 Matthew Everett Hoggan
  *
@@ -17,6 +17,8 @@
  */
 #ifndef POINT2D_H_INCLUDED
 #define POINT2D_H_INCLUDED
+
+#include <ostream>
 
 namespace opengl_math
 {
