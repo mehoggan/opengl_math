@@ -1,5 +1,7 @@
 #include "test_type_vector.h"
 
+#include "math/numbers.h"
+
 /*! \brief This is a test to see if default constructor for
 * 2d, 3d, and 4d vectors initializes all of its components to 0.0f
 */
@@ -641,7 +643,8 @@ void test_extrenuous_type_vector_usecases()
 void test_magnitude_2d()
 {
   const opengl_math::vector_2d<float> vf(20.0f, 10.0f);
-  OPENGL_MATH_ASSERT(opengl_math::float_equals(sqrt(500.0f), vf.magnitude(),
+  OPENGL_MATH_ASSERT(opengl_math::float_equals(
+    static_cast<float>(sqrt(500.0f)), vf.magnitude(),
     1e-006f));
 
   const opengl_math::vector_2d<double> vd(20.0, 10.0);

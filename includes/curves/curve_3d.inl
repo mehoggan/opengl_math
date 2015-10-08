@@ -23,7 +23,7 @@ namespace opengl_math
   std::vector<realT>
   curve_3d<realT>::compute_sample_values(std::size_t sample_count) const
   {
-    sample_count = max(sample_count, static_cast<size_t>(2));
+    sample_count = max<std::size_t>(sample_count, static_cast<size_t>(2));
 
     std::vector<realT> out_samples;
     out_samples.reserve(sample_count);

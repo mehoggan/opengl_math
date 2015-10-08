@@ -1,4 +1,4 @@
-﻿/* Copyright (C)
+/* Copyright (C)
  *
  * Copyright 2013 Matthew Everett Hoggan
  *

@@ -4,6 +4,7 @@
 #include "curves/curve_sample_3d.h"
 #include "curves/tessellation_quality.h"
 #include "math/algebra.h"
+#include "math/numbers.h"
 #include "math/vector.h"
 #include "primitives/points/type_point_3d.h"
 #include "primitives/vectors/type_vector_3d.h"

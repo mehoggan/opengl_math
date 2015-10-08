@@ -9,9 +9,10 @@
 #include "primitives/points/type_point_3d.h"
 #include "primitives/vectors/type_vector_3d.h"
 
+#include <algorithm>
+#include <cassert>
 #include <iostream>
 #include <vector>
-#include <cassert>
 
 class test_curves : public test_base
 {

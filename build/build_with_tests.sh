@@ -22,12 +22,10 @@ if [[ ${DEBUG} == 'true' ]]; then
       if [[ ${VALGRIND} == 'true' ]]; then
         valgrind --leak-check=full \
           --gen-suppressions=all \
-          --track-origins=yes \
-          --suppressions=${SCRIPTPATH}/suppressions/fedora-21-nvidia-346.47.supp \
-          --suppressions=${SCRIPTPATH}/suppressions/c++11-stdlib-GLIBC_2.2.5.supp \
-          ./test_opengl_core
+          --track-origins=yes
+          ./test_opengl_math
       else
-        ./test_opengl_core
+        ./test_opengl_math
       fi
       if [[ ${?} != "0" ]]; then
         popd > /dev/null
@@ -61,9 +59,7 @@ if [[ ${RELEASE} == 'true' ]]; then
       if [[ ${VALGRIND} == 'true' ]]; then
         valgrind --leak-check=full \
           --gen-suppressions=all \
-          --track-origins=yes \
-          --suppressions=${SCRIPTPATH}/suppressions/fedora-21-nvidia-346.47.supp \
-          --suppressions=${SCRIPTPATH}/suppressions/c++11-stdlib-GLIBC_2.2.5.supp \
+          --track-origins=yes
           ./test_opengl_core
       else
         ./test_opengl_core

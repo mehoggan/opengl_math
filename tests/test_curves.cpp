@@ -5,9 +5,9 @@ void test_tessellation_quality()
   opengl_math::tessellation_quality<float> blank;
   OPENGL_MATH_ASSERT_EQ(0.01f, blank._chordal_tol)
 
-  opengl_math::tessellation_quality<float> default =
+  opengl_math::tessellation_quality<float> def =
     opengl_math::tessellation_quality<float>::default_quality;
-  OPENGL_MATH_ASSERT_EQ(0.01f, default._chordal_tol);
+  OPENGL_MATH_ASSERT_EQ(0.01f, def._chordal_tol);
 
   opengl_math::tessellation_quality<float> precise =
     opengl_math::tessellation_quality<float>::precise_quality;

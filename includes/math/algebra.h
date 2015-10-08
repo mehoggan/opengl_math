@@ -25,7 +25,7 @@
 
 #include <string>
 #include <type_traits>
-#include <typeinfo.h>
+//#include <typeinfo.h>
 
 namespace opengl_math
 {
@@ -71,7 +71,7 @@ namespace opengl_math
     T p = max(min(percent, T(1)), T(0));
     return point_2d<T>(
       lerp(p, a.x(), b.x()),
-      lerp(p, a.y(), b.y())h);
+      lerp(p, a.y(), b.y()));
   }
 
   template<typename T>
