@@ -329,7 +329,7 @@ namespace opengl_math
     const T &height, const T &znear, const T &zfar,
     opengl_math::angle_mode mode = opengl_math::radians)
   {
-    const T rad = fov;
+    T rad = fov;
     if (mode == opengl_math::degrees) {
       rad = opengl_math::degrees_to_radians(fov);
     }

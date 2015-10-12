@@ -20,7 +20,9 @@
 
 #include "math/sqrt.h"
 
+#include <algorithm>
 #include <cassert>
+#include <cstdint>
 #include <cmath>
 
 namespace opengl_math

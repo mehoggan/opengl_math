@@ -21,6 +21,8 @@
 #include "core/enumerations.h"
 #include "primitives/vectors/type_vector_2d.h"
 
+#include <iostream>
+
 namespace opengl_math
 {
   /*! \class Matrix 2X2 a CG based representation of a matrix which supports
