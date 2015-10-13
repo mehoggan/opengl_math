@@ -63,9 +63,9 @@ namespace opengl_math
      */
     matrix_4X4(const matrix_4X4 &rhs);
 
-    /*! \brief assignment uses copy-swap idiom
+    /*! \brief assignment
      */
-    matrix_4X4 &operator=(matrix_4X4 rhs);
+    matrix_4X4 &operator=(const matrix_4X4 &rhs);
 
     /*! \brief index operator which returns a reference to one of the inner
      * vector_4d<T>s

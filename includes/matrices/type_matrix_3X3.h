@@ -60,9 +60,9 @@ namespace opengl_math
      */
     matrix_3X3(const matrix_3X3 &rhs);
 
-    /*! \brief assignment uses copy-swap idiom
+    /*! \brief assignment
      */
-    matrix_3X3 &operator=(matrix_3X3 rhs);
+    matrix_3X3 &operator=(const matrix_3X3 &rhs);
 
     /*! \brief index operator which returns a reference to one of the inner
      * vector_3d<T>s

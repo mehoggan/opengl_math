@@ -52,11 +52,13 @@ namespace opengl_math
     _v3(rhs._v3)
   {}
 
-  /// Assignment operator
   template <typename T, matrix_layout ML>
-  matrix_4X4<T, ML> &matrix_4X4<T, ML>::operator=(matrix_4X4<T, ML> rhs)
+  matrix_4X4<T, ML> &matrix_4X4<T, ML>::operator=(const matrix_4X4 &rhs)
   {
-    swap((*this), rhs);
+    _v0 = rhs._v0;
+    _v1 = rhs._v1;
+    _v2 = rhs._v2;
+    _v3 = rhs._v3;
 
     return (*this);
   }
