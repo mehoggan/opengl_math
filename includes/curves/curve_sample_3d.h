@@ -1,8 +1,8 @@
 #ifndef CURVE_SAMPLE_3D_H_INCLUDED
 #define CURVE_SAMPLE_3D_H_INCLUDED
 
-#include "matrices/type_matrix_4X4.h"
 #include "math/numbers.h"
+#include "matrices/type_matrix_4X4.h"
 #include "primitives/vectors/type_vector_3d.h"
 #include "primitives/points/type_point_3d.h"
 

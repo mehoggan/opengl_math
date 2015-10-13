@@ -1,19 +1,5 @@
 #include "test_curves.h"
 
-void test_tessellation_quality()
-{
-  opengl_math::tessellation_quality<float> blank;
-  OPENGL_MATH_ASSERT_EQ(0.01f, blank._chordal_tol)
-
-  opengl_math::tessellation_quality<float> def =
-    opengl_math::tessellation_quality<float>::default_quality;
-  OPENGL_MATH_ASSERT_EQ(0.01f, def._chordal_tol);
-
-  opengl_math::tessellation_quality<float> precise =
-    opengl_math::tessellation_quality<float>::precise_quality;
-  OPENGL_MATH_ASSERT_EQ(0.0005f, precise._chordal_tol);
-}
-
 void test_curve_samples()
 {
   {
@@ -55,10 +41,10 @@ void test_curve_samples()
 void test_cubic_curve_catmul_rom()
 {
   opengl_math::matrix_4X4<float, opengl_math::column> catmul_rom_col =
-    opengl_math::catmul_rom<float, opengl_math::column>();
+    opengl_math::catmulrom<float, opengl_math::column>();
 
   opengl_math::matrix_4X4<float, opengl_math::row> catmul_rom_row =
-    opengl_math::catmul_rom<float, opengl_math::row>();
+    opengl_math::catmulrom<float, opengl_math::row>();
 
   for (unsigned short col = 0; col < 4u; ++col) {
     for (unsigned short row = 0; row < 4u; ++row) {
@@ -378,10 +364,8 @@ void test_curve3d_compute_samples_adaptive()
     opengl_math::cubic_curve<float, opengl_math::column> bezier;
     bezier.set_bezier(p0, p1, p2, p3);
 
-    opengl_math::tessellation_quality<float> quality;
-    quality._chordal_tol = 0.0011f;
     std::vector<opengl_math::curve_sample_3d<float>> samples =
-      bezier.compute_samples_adaptive(quality);
+      bezier.compute_samples_adaptive(0.0011f);
     OPENGL_MATH_ASSERT_EQ(53u, samples.size());
     OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals(p0,
       samples.front()._position, std::numeric_limits<float>::epsilon()));
@@ -398,10 +382,8 @@ void test_curve3d_compute_samples_adaptive()
     opengl_math::cubic_curve<float, opengl_math::row> bezier;
     bezier.set_bezier(p0, p1, p2, p3);
 
-    opengl_math::tessellation_quality<float> quality;
-    quality._chordal_tol = 0.0011f;
     std::vector<opengl_math::curve_sample_3d<float>> samples =
-      bezier.compute_samples_adaptive(quality);
+      bezier.compute_samples_adaptive(0.0011f);
     OPENGL_MATH_ASSERT_EQ(53u, samples.size());
     OPENGL_MATH_ASSERT(opengl_math::point_3d_float_equals(p0,
       samples.front()._position, std::numeric_limits<float>::epsilon()));
@@ -412,7 +394,6 @@ void test_curve3d_compute_samples_adaptive()
 
 bool test_curves::run()
 {
-  test_tessellation_quality();
   test_curve_samples();
   test_cubic_curve_catmul_rom();
   test_cubic_curve_bezier();
