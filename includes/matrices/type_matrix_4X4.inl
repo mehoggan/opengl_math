@@ -53,12 +53,12 @@ namespace opengl_math
   {}
 
   template <typename T, matrix_layout ML>
-  matrix_4X4<T, ML> &matrix_4X4<T, ML>::operator=(const matrix_4X4 &rhs)
+  matrix_4X4<T, ML> &matrix_4X4<T, ML>::operator=(matrix_4X4 rhs)
   {
-    _v0 = rhs._v0;
-    _v1 = rhs._v1;
-    _v2 = rhs._v2;
-    _v3 = rhs._v3;
+    std::swap(_v0, rhs._v0);
+    std::swap(_v1, rhs._v1);
+    std::swap(_v2, rhs._v2);
+    std::swap(_v3, rhs._v3);
 
     return (*this);
   }

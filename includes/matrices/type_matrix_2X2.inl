@@ -46,10 +46,10 @@ namespace opengl_math
 
   /// Assignment operator
   template <typename T, matrix_layout ML>
-  matrix_2X2<T, ML> &matrix_2X2<T, ML>::operator=(const matrix_2X2<T, ML> &rhs)
+  matrix_2X2<T, ML> &matrix_2X2<T, ML>::operator=(matrix_2X2<T, ML> rhs)
   {
-    _v0 = rhs._v0;
-    _v1 = rhs._v1;
+    std::swap(_v0, rhs._v0);
+    std::swap(_v1, rhs._v1);
 
     return (*this);
   }

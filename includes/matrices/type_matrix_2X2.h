@@ -58,7 +58,7 @@ namespace opengl_math
 
     /*! \brief assignment uses copy-swap idiom
      */
-    matrix_2X2 &operator=(const matrix_2X2 &rhs);
+    matrix_2X2 &operator=(matrix_2X2 rhs);
 
     /*! \brief index operator which returns a reference to one of the inner
      * vector_3d<T>s

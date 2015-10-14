@@ -50,11 +50,11 @@ namespace opengl_math
 
   /// Assignment operator
   template <typename T, matrix_layout ML>
-  matrix_3X3<T, ML> &matrix_3X3<T, ML>::operator=(const matrix_3X3<T, ML> &rhs)
+  matrix_3X3<T, ML> &matrix_3X3<T, ML>::operator=(matrix_3X3<T, ML> rhs)
   {
-    _v0 = rhs._v0;
-    _v1 = rhs._v1;
-    _v2 = rhs._v2;
+    std::swap(_v0, rhs._v0);
+    std::swap(_v1, rhs._v1);
+    std::swap(_v2, rhs._v2);
 
     return (*this);
   }
