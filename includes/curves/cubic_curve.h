@@ -7,6 +7,7 @@
 #include "math/numbers.h"
 #include "math/vector.h"
 #include "matrices/type_matrix_4X4.h"
+#include "primitives/conversions.h"
 #include "primitives/points/type_point_3d.h"
 #include "primitives/vectors/type_vector_3d.h"
 #include "primitives/vectors/type_vector_4d.h"

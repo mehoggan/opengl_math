@@ -1,4 +1,4 @@
-namespace opengl_math
+﻿namespace opengl_math
 {
   namespace
   {
@@ -16,7 +16,7 @@ namespace opengl_math
           vector_4d<realT>(realT(-0.5), realT(+1.5), realT(-1.5), realT(+0.5)),
           vector_4d<realT>(realT(+1.0), realT(-2.5), realT(+2.0), realT(-0.5)),
           vector_4d<realT>(realT(-0.5), realT(+0.0), realT(+0.5), realT(+0.0)),
-          vector_4d<realT>(realT(+0.0), realT(+1.0), realT(+0.0), realT(+0.0)));;
+          vector_4d<realT>(realT(+0.0), realT(+1.0), realT(+0.0), realT(+0.0)));
       }
     }
 
@@ -376,7 +376,7 @@ namespace opengl_math
     curve_sample_3d<realT> end = this->evaluate(tvals[1]);
 
     out_samples.push_back(begin);
-    subdivide<realT, ML>(out_samples, (*this), out_samples[0], end, chordalTol);
+    subdivide<realT, ML>(out_samples, (*this), begin, end, chordalTol);
     out_samples.push_back(end);
 
     return out_samples;
