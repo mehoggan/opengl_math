@@ -16,17 +16,17 @@ void test_translate_to_2d_identity()
     OPENGL_MATH_ASSERT_EQ(expected, trans[2]);
   }
 
-    {
-      opengl_math::matrix_3X3<float, opengl_math::row> mat(
-        opengl_math::identity);
-      opengl_math::matrix_3X3<float, opengl_math::row> trans;
+  {
+    opengl_math::matrix_3X3<float, opengl_math::row> mat(
+      opengl_math::identity);
+    opengl_math::matrix_3X3<float, opengl_math::row> trans;
 
-      trans = opengl_math::translate_to(mat,
-        opengl_math::point_2d<float>(5.0f, 10.0f));
+    trans = opengl_math::translate_to(mat,
+      opengl_math::point_2d<float>(5.0f, 10.0f));
 
-      OPENGL_MATH_ASSERT_EQ(opengl_math::vector_3d<float>(5.0f, 10.0f, 1.0f),
-        trans[2]);
-    }
+    OPENGL_MATH_ASSERT_EQ(opengl_math::vector_3d<float>(5.0f, 10.0f, 1.0f),
+      trans[2]);
+  }
 }
 
 void test_translate_to_3d_identity()
@@ -43,16 +43,28 @@ void test_translate_to_3d_identity()
       trans[3]);
   }
 
-    {
-      opengl_math::matrix_4X4<float, opengl_math::row> mat(opengl_math::identity);
-      opengl_math::matrix_4X4<float, opengl_math::row> trans;
+  {
+    opengl_math::matrix_4X4<float, opengl_math::row> mat(opengl_math::identity);
+    opengl_math::matrix_4X4<float, opengl_math::row> trans;
 
-      trans = opengl_math::translate_to(mat,
-        opengl_math::point_3d<float>(5.0f, 5.0f, 5.0f));
+    trans = opengl_math::translate_to(mat,
+      opengl_math::point_3d<float>(5.0f, 5.0f, 5.0f));
 
-      OPENGL_MATH_ASSERT_EQ(opengl_math::vector_4d<float>(5.0f, 5.0f, 5.0f, 1.0f),
-        trans[3]);
-    }
+    OPENGL_MATH_ASSERT_EQ(opengl_math::vector_4d<float>(5.0f, 5.0f, 5.0f, 1.0f),
+      trans[3]);
+  }
+
+  {
+    opengl_math::matrix_4X4<float, opengl_math::column> mat(
+      opengl_math::identity);
+    mat = opengl_math::scale_by(mat, 2.5f, 2.0f, 1.0f);
+    mat = opengl_math::translate_to(mat,
+      opengl_math::point_3d<float>(1.0f, 1.0f, 1000.0f));
+
+    // Position is affected by scaling.
+    OPENGL_MATH_ASSERT_EQ(
+      opengl_math::vector_4d<float>(2.5f, 2.0f, 1000.0f, 1.0f), mat[3]);
+  }
 }
 
 void test_translate_to_2d_no_rotation()
