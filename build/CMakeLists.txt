@@ -9,17 +9,16 @@ include_directories(${CMAKE_SOURCE_DIR}/../)
 
 set(src ${CMAKE_SOURCE_DIR}/../src/dummy.cpp
   ${CMAKE_SOURCE_DIR}/../declspec.h
+  ${CMAKE_SOURCE_DIR}/../includes/combinatorics/algorithms.h
   ${CMAKE_SOURCE_DIR}/../includes/core/enumerations.h
   ${CMAKE_SOURCE_DIR}/../includes/core/memory_leaks.h
   ${CMAKE_SOURCE_DIR}/../includes/core/platform.h
   ${CMAKE_SOURCE_DIR}/../includes/curves/cubic_curve.inl
   ${CMAKE_SOURCE_DIR}/../includes/curves/cubic_curve.h
-  ${CMAKE_SOURCE_DIR}/../includes/curves/curve_3d.inl
-  ${CMAKE_SOURCE_DIR}/../includes/curves/curve_3d.h
   ${CMAKE_SOURCE_DIR}/../includes/curves/curve_sample_3d.inl
   ${CMAKE_SOURCE_DIR}/../includes/curves/curve_sample_3d.h
-  ${CMAKE_SOURCE_DIR}/../includes/curves/tessellation_quality.inl
-  ${CMAKE_SOURCE_DIR}/../includes/curves/tessellation_quality.h
+  ${CMAKE_SOURCE_DIR}/../includes/planes/plane_3d.inl
+  ${CMAKE_SOURCE_DIR}/../includes/planes/plane_3d.h
   ${CMAKE_SOURCE_DIR}/../includes/math/algebra.h
   ${CMAKE_SOURCE_DIR}/../includes/math/clamp.h
   ${CMAKE_SOURCE_DIR}/../includes/math/matrix.h

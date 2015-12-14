@@ -21,7 +21,6 @@
 #include "core/enumerations.h"
 #include "matrices/type_matrix_2X2.h"
 #include "primitives/vectors/type_vector_3d.h"
-#include "primitives/vectors/type_vector_3d.h"
 
 namespace opengl_math
 {

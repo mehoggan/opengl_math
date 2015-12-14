@@ -1,5 +1,5 @@
-#ifndef MEMORY_LEAKS_H_INCLUDED
-#define MEMORY_LEAKS_H_INCLUDED
+#ifndef ENUMERATIONS_H_INCLUDED
+#define ENUMERATIONS_H_INCLUDED
 
 namespace opengl_math
 {

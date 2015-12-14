@@ -32,16 +32,29 @@
 
 namespace opengl_math
 {
-  template<typename T>
+  template <typename T>
   inline vector_3d<T> vector3d_from_point3d(const point_3d<T> &in)
   {
     return vector_3d<T>(in.x(), in.y(), in.z());
   }
 
-  template<typename T>
+  template <typename T>
   inline point_3d<T> point3d_from_vector3d(const vector_3d<T> &in)
   {
     return point_3d<T>(in.x(), in.y(), in.z());
+  }
+
+  template <typename T>
+  inline point_3d<T> point3d_from_vector4d(const vector_4d<T> &in)
+  {
+    return point_3d<T>(in.x(), in.y(), in.z());
+  }
+
+  template <typename T>
+  inline vector_4d<T> vector4d_from_point3d(const point_3d<T> &in,
+    const T w = 1.0)
+  {
+    return vector_4d<T>(in.x(), in.y(), in.z(), w);
   }
 };
 #endif
