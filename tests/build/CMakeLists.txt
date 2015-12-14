@@ -7,6 +7,8 @@ include_directories(${CMAKE_SOURCE_DIR}/../)
 
 set(src ${CMAKE_SOURCE_DIR}/../tests/main.cpp
   ${CMAKE_SOURCE_DIR}/../tests/test_base.h
+  ${CMAKE_SOURCE_DIR}/../tests/test_combinatorics.cpp
+  ${CMAKE_SOURCE_DIR}/../tests/test_combinatorics.h
   ${CMAKE_SOURCE_DIR}/../tests/test_curves.cpp
   ${CMAKE_SOURCE_DIR}/../tests/test_curves.h
   ${CMAKE_SOURCE_DIR}/../tests/test_math.cpp
@@ -15,6 +17,8 @@ set(src ${CMAKE_SOURCE_DIR}/../tests/main.cpp
   ${CMAKE_SOURCE_DIR}/../tests/test_numbers.h
   ${CMAKE_SOURCE_DIR}/../tests/test_operations.cpp
   ${CMAKE_SOURCE_DIR}/../tests/test_operations.h
+  ${CMAKE_SOURCE_DIR}/../tests/test_planes.cpp
+  ${CMAKE_SOURCE_DIR}/../tests/test_planes.h
   ${CMAKE_SOURCE_DIR}/../tests/test_type_color.cpp
   ${CMAKE_SOURCE_DIR}/../tests/test_type_color.h
   ${CMAKE_SOURCE_DIR}/../tests/test_type_matrix.cpp

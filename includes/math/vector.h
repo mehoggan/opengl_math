@@ -48,6 +48,16 @@ namespace opengl_math
     return u;
   }
 
+  /*! \brief method that returns a normalized 3d vector
+  */
+  template <typename T>
+  vector_4d<T> norm(const vector_4d<T> &v)
+  {
+    vector_4d<T> u = v;
+    u.normalize();
+    return u;
+  }
+
   /*! \brief method that returns the angle between two 2d vectors
    */
   template <typename T>
@@ -82,6 +92,39 @@ namespace opengl_math
   vector_3d<T> operator-(const point_3d<T> &p1, const point_3d<T> &p2)
   {
     return vector_3d<T>(p1.x() - p2.x(), p1.y() - p2.y(), p1.z() - p2.z());
+  }
+
+  /*!\brief compute the euclidean distance between two vectors.
+   */
+  template <typename T>
+  T distance(const vector_2d<T> &v1, const vector_2d<T> &v2)
+  {
+    T a = v1.x() - v2.x();
+    T b = v1.y() - v2.y();
+    return std::sqrt(a * a + b * b);
+  }
+
+  /*!\brief compute the euclidean distance between two vectors.
+   */
+  template <typename T>
+  T distance(const vector_3d<T> &v1, const vector_3d<T> &v2)
+  {
+    T a = v1.x() - v2.x();
+    T b = v1.y() - v2.y();
+    T c = v1.z() - v2.z();
+    return std::sqrt(a * a + b * b + c * c);
+  }
+
+  /*!\brief compute the euclidean distance between two vectors.
+   */
+  template <typename T>
+  T distance(const vector_4d<T> &v1, const vector_4d<T> &v2)
+  {
+    T a = v1.x() - v2.x();
+    T b = v1.y() - v2.y();
+    T c = v1.z() - v2.z();
+    T d = v1.w() - v2.w();
+    return std::sqrt(a * a + b * b + c * c + d * d);
   }
 }
 #endif

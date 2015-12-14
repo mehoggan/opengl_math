@@ -8,6 +8,8 @@
 #include "test_type_texcoord.h"
 #include "test_type_vector.h"
 #include "test_curves.h"
+#include "test_combinatorics.h"
+#include "test_planes.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include "core/memory_leaks.h"
@@ -19,7 +21,7 @@
 int main(int argc, char *argv[])
 {
   MEMORY_LEAK_DETECTION_START();
-  std::array<std::shared_ptr<test_base>, 9> tests = {
+  std::array<std::shared_ptr<test_base>, 11> tests = {
     std::shared_ptr<test_base>(new test_math()),
     std::shared_ptr<test_base>(new test_numbers()),
     std::shared_ptr<test_base>(new test_operations()),
@@ -28,7 +30,9 @@ int main(int argc, char *argv[])
     std::shared_ptr<test_base>(new test_type_point()),
     std::shared_ptr<test_base>(new test_type_texcoord()),
     std::shared_ptr<test_base>(new test_type_vector()),
-    std::shared_ptr<test_base>(new test_curves())
+    std::shared_ptr<test_base>(new test_curves()),
+    std::shared_ptr<test_base>(new test_combinatorics()),
+    std::shared_ptr<test_base>(new test_planes())
   };
 
   std::cout << "Going to run " << tests.size() << " tests." << std::endl;
