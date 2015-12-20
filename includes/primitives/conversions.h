@@ -1,4 +1,4 @@
-/* Copyright (C)
+﻿/* Copyright (C)
 *
 * Copyright 2013 Matthew Everett Hoggan
 *
@@ -55,6 +55,12 @@ namespace opengl_math
     const T w = 1.0)
   {
     return vector_4d<T>(in.x(), in.y(), in.z(), w);
+  }
+
+  template <typename T>
+  inline vector_3d<T> vector3d_from_vector4d(const vector_4d<T> &in)
+  {
+    return vector_3d<T>(in.x(), in.y(), in.z());
   }
 };
 #endif
