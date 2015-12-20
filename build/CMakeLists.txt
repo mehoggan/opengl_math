@@ -9,6 +9,8 @@ include_directories(${CMAKE_SOURCE_DIR}/../)
 
 set(src ${CMAKE_SOURCE_DIR}/../src/dummy.cpp
   ${CMAKE_SOURCE_DIR}/../declspec.h
+  ${CMAKE_SOURCE_DIR}/../includes/bounds/axis_aligned_2d.inl
+  ${CMAKE_SOURCE_DIR}/../includes/bounds/axis_aligned_2d.h
   ${CMAKE_SOURCE_DIR}/../includes/combinatorics/algorithms.h
   ${CMAKE_SOURCE_DIR}/../includes/core/enumerations.h
   ${CMAKE_SOURCE_DIR}/../includes/core/memory_leaks.h

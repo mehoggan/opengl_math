@@ -6,6 +6,8 @@ include_directories(${CMAKE_SOURCE_DIR}/../includes)
 include_directories(${CMAKE_SOURCE_DIR}/../)
 
 set(src ${CMAKE_SOURCE_DIR}/../tests/main.cpp
+  ${CMAKE_SOURCE_DIR}/../tests/test_axis_aligned_2d.cpp
+  ${CMAKE_SOURCE_DIR}/../tests/test_axis_aligned_2d.h
   ${CMAKE_SOURCE_DIR}/../tests/test_base.h
   ${CMAKE_SOURCE_DIR}/../tests/test_combinatorics.cpp
   ${CMAKE_SOURCE_DIR}/../tests/test_combinatorics.h
