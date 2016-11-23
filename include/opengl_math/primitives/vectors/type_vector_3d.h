@@ -41,7 +41,8 @@ namespace opengl_math
     T _z;
 
   public:
-    /*! \brief default constructor sets three elements using default constructor
+    /*! \brief default constructor sets three elements using default
+     * constructor.
      */
     vector_3d();
 

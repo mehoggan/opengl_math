@@ -1,15 +1,30 @@
-#include "test_numbers.h"
+#include "opengl_math/math/numbers.h"
 
-void test_float_equals()
+#include "suite.h"
+
+START_TEST(test_float_equals)
 {
-  OPENGL_MATH_ASSERT(opengl_math::float_equals(1.0f, 1.0f, 1e-006f));
-  OPENGL_MATH_ASSERT(opengl_math::float_equals(1.0, 1.0, 1e-012));
-  OPENGL_MATH_ASSERT(opengl_math::float_equals(1.0L, 1.0L, 1e-012L));
+  ck_assert(opengl_math::float_equals(1.0f, 1.0f, 1e-006f));
+  ck_assert(opengl_math::float_equals(1.0, 1.0, 1e-012));
+  ck_assert(opengl_math::float_equals(1.0L, 1.0L, 1e-012L));
 }
+END_TEST
 
-bool test_numbers::run()
+int
+main(int argc, char *argv[])
 {
-  test_float_equals();
+  Suite *s;
+  SRunner *sr;
+  TCase *tc;
+  int result;
 
-  return true;
+  s = suite_create("Unit Tests");
+  tc = tcase_create(__FILE__);
+
+  tcase_add_test(tc, test_float_equals);
+
+  suite_add_tcase(s, tc);
+  sr = suite_runner_create(s);
+  result = (run_and_report(sr) == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
+  return result;
 }

@@ -18,7 +18,9 @@
 #ifndef TEXCOORD4D_H_INCLUDED
 #define TEXCOORD4D_H_INCLUDED
 
+#include <algorithm>
 #include <cassert>
+#include <ostream>
 
 namespace opengl_math
 {
@@ -42,7 +44,8 @@ namespace opengl_math
     T _q;
 
   public:
-    /*! \brief default constructor sets three elements using default constructor
+    /*! \brief default constructor sets three elements using default
+     * constructor.
      */
     texcoord_4d();
 

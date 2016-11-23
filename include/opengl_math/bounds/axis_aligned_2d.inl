@@ -112,7 +112,7 @@ namespace opengl_math
   template <typename T>
   point_2d<T> axis_aligned_2d<T>::center() const
   {
-    return opengl_math::point_2d<T>((_lower_left.x() + _upper_right.x()) / 2.0f,
-      (_lower_left.y() + _upper_right.y()) / 2.0f);
+    return opengl_math::point_2d<T>((_lower_left.x() + _upper_right.x()) /
+      2.0f, (_lower_left.y() + _upper_right.y()) / 2.0f);
   }
 }

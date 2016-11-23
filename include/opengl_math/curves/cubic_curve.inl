@@ -5,92 +5,102 @@
     template<typename realT, matrix_layout ML>
     matrix_4X4<realT, ML> catmulrom()
     {
+      using RT = realT;
+
       if (ML == column) {
         return matrix_4X4<realT, ML>(
-          vector_4d<realT>(realT(-0.5), realT(+1.5), realT(-1.5), realT(+0.5)),
-          vector_4d<realT>(realT(+1.0), realT(-2.5), realT(+2.0), realT(-0.5)),
-          vector_4d<realT>(realT(-0.5), realT(+0.0), realT(+0.5), realT(+0.0)),
-          vector_4d<realT>(realT(+0.0), realT(+1.0), realT(+0.0), realT(+0.0)));
+          vector_4d<RT>(RT(-0.5), RT(+1.5), RT(-1.5), RT(+0.5)),
+          vector_4d<RT>(RT(+1.0), RT(-2.5), RT(+2.0), RT(-0.5)),
+          vector_4d<RT>(RT(-0.5), RT(+0.0), RT(+0.5), RT(+0.0)),
+          vector_4d<RT>(RT(+0.0), RT(+1.0), RT(+0.0), RT(+0.0)));
       } else {
-        return matrix_4X4<realT, ML>(
-          vector_4d<realT>(realT(-0.5), realT(+1.5), realT(-1.5), realT(+0.5)),
-          vector_4d<realT>(realT(+1.0), realT(-2.5), realT(+2.0), realT(-0.5)),
-          vector_4d<realT>(realT(-0.5), realT(+0.0), realT(+0.5), realT(+0.0)),
-          vector_4d<realT>(realT(+0.0), realT(+1.0), realT(+0.0), realT(+0.0)));
+        return matrix_4X4<RT, ML>(
+          vector_4d<RT>(RT(-0.5), RT(+1.5), RT(-1.5), RT(+0.5)),
+          vector_4d<RT>(RT(+1.0), RT(-2.5), RT(+2.0), RT(-0.5)),
+          vector_4d<RT>(RT(-0.5), RT(+0.0), RT(+0.5), RT(+0.0)),
+          vector_4d<RT>(RT(+0.0), RT(+1.0), RT(+0.0), RT(+0.0)));
       }
     }
 
     template<typename realT, matrix_layout ML>
     matrix_4X4<realT, ML> bezier()
     {
+      using RT = realT;
+
       if (ML == column) {
-        return matrix_4X4<realT, ML>(
-          vector_4d<realT>(realT(-1.0), realT(+3.0), realT(-3.0), realT(+1.0)),
-          vector_4d<realT>(realT(+3.0), realT(-6.0), realT(+3.0), realT(+0.0)),
-          vector_4d<realT>(realT(-3.0), realT(+3.0), realT(+0.0), realT(+0.0)),
-          vector_4d<realT>(realT(+1.0), realT(+0.0), realT(+0.0), realT(+0.0)));
+        return matrix_4X4<RT, ML>(
+          vector_4d<RT>(RT(-1.0), RT(+3.0), RT(-3.0), RT(+1.0)),
+          vector_4d<RT>(RT(+3.0), RT(-6.0), RT(+3.0), RT(+0.0)),
+          vector_4d<RT>(RT(-3.0), RT(+3.0), RT(+0.0), RT(+0.0)),
+          vector_4d<RT>(RT(+1.0), RT(+0.0), RT(+0.0), RT(+0.0)));
       } else {
-        return matrix_4X4<realT, ML>(
-          vector_4d<realT>(realT(-1.0), realT(+3.0), realT(-3.0), realT(+1.0)),
-          vector_4d<realT>(realT(+3.0), realT(-6.0), realT(+3.0), realT(+0.0)),
-          vector_4d<realT>(realT(-3.0), realT(+3.0), realT(+0.0), realT(+0.0)),
-          vector_4d<realT>(realT(+1.0), realT(+0.0), realT(+0.0), realT(+0.0)));
+        return matrix_4X4<RT, ML>(
+          vector_4d<RT>(RT(-1.0), RT(+3.0), RT(-3.0), RT(+1.0)),
+          vector_4d<RT>(RT(+3.0), RT(-6.0), RT(+3.0), RT(+0.0)),
+          vector_4d<RT>(RT(-3.0), RT(+3.0), RT(+0.0), RT(+0.0)),
+          vector_4d<RT>(RT(+1.0), RT(+0.0), RT(+0.0), RT(+0.0)));
       }
     }
 
     template<typename realT, matrix_layout ML>
     matrix_4X4<realT, ML> bezier_inverse()
     {
+      using RT = realT;
+
       const realT val0 = 1 / realT(3.0);
       const realT val1 = 2 / realT(3.0);
       if (ML == column) {
-        return matrix_4X4<realT, ML>(
-          vector_4d<realT>(realT(+0.0), realT(+0.0), realT(+0.0), realT(+1.0)),
-          vector_4d<realT>(realT(+0.0), realT(+0.0), realT(val0), realT(+1.0)),
-          vector_4d<realT>(realT(+0.0), realT(val0), realT(val1), realT(+1.0)),
-          vector_4d<realT>(realT(+1.0), realT(+1.0), realT(+1.0), realT(+1.0)));
+        return matrix_4X4<RT, ML>(
+          vector_4d<RT>(RT(+0.0), RT(+0.0), RT(+0.0), RT(+1.0)),
+          vector_4d<RT>(RT(+0.0), RT(+0.0), RT(val0), RT(+1.0)),
+          vector_4d<RT>(RT(+0.0), RT(val0), RT(val1), RT(+1.0)),
+          vector_4d<RT>(RT(+1.0), RT(+1.0), RT(+1.0), RT(+1.0)));
       } else {
-        return matrix_4X4<realT, ML>(
-          vector_4d<realT>(realT(+0.0), realT(+0.0), realT(+0.0), realT(+1.0)),
-          vector_4d<realT>(realT(+0.0), realT(+0.0), realT(val0), realT(+1.0)),
-          vector_4d<realT>(realT(+0.0), realT(val0), realT(val1), realT(+1.0)),
-          vector_4d<realT>(realT(+1.0), realT(+1.0), realT(+1.0), realT(+1.0)));
+        return matrix_4X4<RT, ML>(
+          vector_4d<RT>(RT(+0.0), RT(+0.0), RT(+0.0), RT(+1.0)),
+          vector_4d<RT>(RT(+0.0), RT(+0.0), RT(val0), RT(+1.0)),
+          vector_4d<RT>(RT(+0.0), RT(val0), RT(val1), RT(+1.0)),
+          vector_4d<RT>(RT(+1.0), RT(+1.0), RT(+1.0), RT(+1.0)));
       }
     }
 
     template<typename realT, matrix_layout ML>
     matrix_4X4<realT, ML> hermite()
     {
+      using RT = realT;
+
       if (ML == column) {
-        return matrix_4X4<realT, ML>(
-          vector_4d<realT>(realT(+2.0), realT(-2.0), realT(+1.0), realT(+1.0)),
-          vector_4d<realT>(realT(-3.0), realT(+3.0), realT(-2.0), realT(-1.0)),
-          vector_4d<realT>(realT(+0.0), realT(+0.0), realT(+1.0), realT(+0.0)),
-          vector_4d<realT>(realT(+1.0), realT(+0.0), realT(+0.0), realT(+0.0)));
+        return matrix_4X4<RT, ML>(
+          vector_4d<RT>(RT(+2.0), RT(-2.0), RT(+1.0), RT(+1.0)),
+          vector_4d<RT>(RT(-3.0), RT(+3.0), RT(-2.0), RT(-1.0)),
+          vector_4d<RT>(RT(+0.0), RT(+0.0), RT(+1.0), RT(+0.0)),
+          vector_4d<RT>(RT(+1.0), RT(+0.0), RT(+0.0), RT(+0.0)));
       } else {
-        return matrix_4X4<realT, ML>(
-          vector_4d<realT>(realT(+2.0), realT(-2.0), realT(+1.0), realT(+1.0)),
-          vector_4d<realT>(realT(-3.0), realT(+3.0), realT(-2.0), realT(-1.0)),
-          vector_4d<realT>(realT(+0.0), realT(+0.0), realT(+1.0), realT(+0.0)),
-          vector_4d<realT>(realT(+1.0), realT(+0.0), realT(+0.0), realT(+0.0)));
+        return matrix_4X4<RT, ML>(
+          vector_4d<RT>(RT(+2.0), RT(-2.0), RT(+1.0), RT(+1.0)),
+          vector_4d<RT>(RT(-3.0), RT(+3.0), RT(-2.0), RT(-1.0)),
+          vector_4d<RT>(RT(+0.0), RT(+0.0), RT(+1.0), RT(+0.0)),
+          vector_4d<RT>(RT(+1.0), RT(+0.0), RT(+0.0), RT(+0.0)));
       }
     }
 
     template<typename realT, matrix_layout ML>
     matrix_4X4<realT, ML> hermite_inverse()
     {
+      using RT = realT;
+
       if (ML == column) {
-        return matrix_4X4<realT, ML>(
-          vector_4d<realT>(realT(+0.0), realT(+0.0), realT(+0.0), realT(+1.0)),
-          vector_4d<realT>(realT(+1.0), realT(+1.0), realT(+1.0), realT(+1.0)),
-          vector_4d<realT>(realT(+0.0), realT(+0.0), realT(+1.0), realT(+0.0)),
-          vector_4d<realT>(realT(+3.0), realT(+2.0), realT(+1.0), realT(+0.0)));
+        return matrix_4X4<RT, ML>(
+          vector_4d<RT>(RT(+0.0), RT(+0.0), RT(+0.0), RT(+1.0)),
+          vector_4d<RT>(RT(+1.0), RT(+1.0), RT(+1.0), RT(+1.0)),
+          vector_4d<RT>(RT(+0.0), RT(+0.0), RT(+1.0), RT(+0.0)),
+          vector_4d<RT>(RT(+3.0), RT(+2.0), RT(+1.0), RT(+0.0)));
       } else {
-        return matrix_4X4<realT, ML>(
-          vector_4d<realT>(realT(+0.0), realT(+0.0), realT(+0.0), realT(+1.0)),
-          vector_4d<realT>(realT(+1.0), realT(+1.0), realT(+1.0), realT(+1.0)),
-          vector_4d<realT>(realT(+0.0), realT(+0.0), realT(+1.0), realT(+0.0)),
-          vector_4d<realT>(realT(+3.0), realT(+2.0), realT(+1.0), realT(+0.0)));
+        return matrix_4X4<RT, ML>(
+          vector_4d<RT>(RT(+0.0), RT(+0.0), RT(+0.0), RT(+1.0)),
+          vector_4d<RT>(RT(+1.0), RT(+1.0), RT(+1.0), RT(+1.0)),
+          vector_4d<RT>(RT(+0.0), RT(+0.0), RT(+1.0), RT(+0.0)),
+          vector_4d<RT>(RT(+3.0), RT(+2.0), RT(+1.0), RT(+0.0)));
       }
     }
   }
@@ -136,7 +146,8 @@
   }
 
   template<typename realT, matrix_layout ML>
-  typename cubic_curve<realT, ML>::type cubic_curve<realT, ML>::get_type() const
+  typename cubic_curve<realT, ML>::type cubic_curve<realT, ML>::get_type()
+    const
   {
     return _impl;
   }
@@ -245,7 +256,8 @@
 
   template<typename realT, matrix_layout ML>
   std::vector<realT>
-  cubic_curve<realT, ML>::compute_sample_values(std::size_t sample_count) const
+  cubic_curve<realT, ML>::compute_sample_values(std::size_t sample_count)
+    const
   {
     sample_count = max<std::size_t>(sample_count, static_cast<size_t>(2));
 
@@ -253,7 +265,8 @@
     out_samples.reserve(sample_count);
     out_samples.push_back(realT(0.0f));
     for (size_t i = 1; i < sample_count - 1; ++i) {
-      out_samples.push_back(static_cast<realT>(i) / (sample_count - realT(1)));
+      out_samples.push_back(static_cast<realT>(i) /
+        (sample_count - realT(1)));
     }
     out_samples.push_back(realT(1.0));
 
@@ -271,7 +284,8 @@
     out_samples.reserve(sample_count);
 
     for (std::size_t i = 0; i < sample_count; ++i) {
-      realT t = static_cast<realT>(i) / static_cast<realT>(sample_count - 1);
+      realT t = static_cast<realT>(i) /
+        static_cast<realT>(sample_count - 1);
       curve_sample_3d<realT> sample = this->evaluate(t);
       out_samples.push_back(sample);
     }

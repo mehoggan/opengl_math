@@ -110,3 +110,14 @@ CMakeCache.txt
 CMakeFiles/
 CTestTestfile.cmake
 build/tests/
+*.trs
+*.log
+tests/check_math
+tests/check_numbers
+tests/check_operations
+tests/check_planes
+tests/check_type_color
+tests/check_type_matrix
+tests/check_type_point
+tests/check_type_texcoord
+tests/check_type_vector

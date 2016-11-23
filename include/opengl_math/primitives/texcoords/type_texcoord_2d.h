@@ -18,7 +18,9 @@
 #ifndef TEXCOORD2D_H_INCLUDED
 #define TEXCOORD2D_H_INCLUDED
 
+#include <algorithm>
 #include <cassert>
+#include <ostream>
 
 namespace opengl_math
 {
@@ -35,8 +37,8 @@ namespace opengl_math
     /// The second element in the ordered pair
     T _t;
 
-  public:
-    /*! \brief default constructor sets both elements using default constructor
+    /*! \brief default constructor sets both elements using default
+     * constructor
      */
     texcoord_2d();
 

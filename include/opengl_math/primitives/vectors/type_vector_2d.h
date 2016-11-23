@@ -41,7 +41,8 @@ namespace opengl_math
     T _y;
 
   public:
-    /*! \brief default constructor sets both elements using default constructor
+    /*! \brief default constructor sets both elements using default
+     * constructor.
      */
     vector_2d();
 

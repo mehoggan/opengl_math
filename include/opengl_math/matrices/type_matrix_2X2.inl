@@ -70,7 +70,8 @@ namespace opengl_math
   }
 
   template <typename T, matrix_layout ML>
-  const vector_2d<T> &matrix_2X2<T, ML>::operator[](unsigned short index) const
+  const vector_2d<T> &matrix_2X2<T, ML>::operator[](unsigned short index)
+    const
   {
     assert(index < 2);
 
@@ -363,7 +364,8 @@ namespace opengl_math
   }
 
   template<typename T, matrix_layout ML1, matrix_layout ML2>
-  bool operator==(const matrix_2X2<T, ML1> &lhs, const matrix_2X2<T, ML2> &rhs)
+  bool operator==(const matrix_2X2<T, ML1> &lhs,
+    const matrix_2X2<T, ML2> &rhs)
   {
     const matrix_2X2<T, ML2> rhs_t = rhs.transposed();
 

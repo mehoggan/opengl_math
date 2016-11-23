@@ -20,7 +20,9 @@
 
 #include "opengl_math/math/clamp.h"
 
+#include <algorithm>
 #include <cassert>
+#include <ostream>
 
 namespace opengl_math
 {
@@ -42,7 +44,8 @@ namespace opengl_math
     T _b;
 
   public:
-    /*! \brief default constructor sets both elements using default constructor
+    /*! \brief default constructor sets both elements using default
+     * constructor
      */
     color_rgb();
 

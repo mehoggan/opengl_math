@@ -18,6 +18,8 @@
 #ifndef POINT3D_H_INCLUDED
 #define POINT3D_H_INCLUDED
 
+#include <ostream>
+
 namespace opengl_math
 {
   /*! \class Point 3D class geometry based
@@ -37,7 +39,8 @@ namespace opengl_math
     T _z;
 
   public:
-    /*! \brief default constructor sets three elements using default constructor
+    /*! \brief default constructor sets three elements using default
+     * constructor.
      */
     point_3d();
 

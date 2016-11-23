@@ -18,7 +18,9 @@
 #ifndef TEXCOORD3D_H_INCLUDED
 #define TEXCOORD3D_H_INCLUDED
 
+#include <algorithm>
 #include <cassert>
+#include <ostream>
 
 namespace opengl_math
 {
@@ -39,7 +41,8 @@ namespace opengl_math
     T _r;
 
   public:
-    /*! \brief default constructor sets three elements using default constructor
+    /*! \brief default constructor sets three elements using default
+     * constructor
      */
     texcoord_3d();
 

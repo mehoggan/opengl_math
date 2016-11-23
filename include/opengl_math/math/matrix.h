@@ -93,7 +93,8 @@ namespace opengl_math
     T c = opengl_math::cos<T, (opengl_math::radians)>(a);
     T s = opengl_math::sin<T, (opengl_math::radians)>(a);
 
-    // Because of matrix indexing column and row matries are treated the same.
+    // Because of matrix indexing column and row matries are treated the
+    // same.
     matrix_3X3<T, ML> result(m);
     result[0][0] = c;
     result[0][1] = s;
@@ -108,7 +109,8 @@ namespace opengl_math
    */
   template <typename T, matrix_layout ML>
   matrix_4X4<T, ML> rotate_to(const matrix_4X4<T, ML> &m, const T &angle,
-    const vector_3d<T> &v, opengl_math::angle_mode mode = opengl_math::radians)
+    const vector_3d<T> &v, opengl_math::angle_mode mode =
+      opengl_math::radians)
   {
     T a = angle;
     if (mode == opengl_math::degrees) {
@@ -181,7 +183,8 @@ namespace opengl_math
    */
   template <typename T, matrix_layout ML>
   matrix_4X4<T, ML> rotate_by(const matrix_4X4<T, ML> &m, const T &angle,
-    const vector_3d<T> &v, opengl_math::angle_mode mode = opengl_math::radians)
+    const vector_3d<T> &v, opengl_math::angle_mode mode =
+      opengl_math::radians)
   {
     T a = angle;
     if (mode == opengl_math::degrees) {
@@ -223,7 +226,8 @@ namespace opengl_math
    *  x in the y direction by y
    */
   template <typename T, matrix_layout ML>
-  matrix_3X3<T, ML> scale_by(const matrix_3X3<T, ML> &m, const T &x, const T &y)
+  matrix_3X3<T, ML> scale_by(const matrix_3X3<T, ML> &m, const T &x,
+    const T &y)
   {
     matrix_3X3<T, ML> result(null);
     result[0] = m[0] * x;
@@ -236,8 +240,8 @@ namespace opengl_math
    *  x in the y direction by y and in the z direction by z
    */
   template <typename T, matrix_layout ML>
-  matrix_4X4<T, ML> scale_by(const matrix_4X4<T, ML> &m, const T &x, const T &y,
-    const T &z)
+  matrix_4X4<T, ML> scale_by(const matrix_4X4<T, ML> &m, const T &x,
+    const T &y, const T &z)
   {
     matrix_4X4<T, ML> result(null);
     result[0] = m[0] * x;
@@ -349,8 +353,8 @@ namespace opengl_math
 
   /*! \brief This function creates a inverse transformatin on the camera
    *  which moves all the objects away from the camera at (0, 0, 0) to
-   *  make it appear as if the camera was positioned at (at.x, at.y, at.z) and
-   *  looking at center.
+   *  make it appear as if the camera was positioned at (at.x, at.y, at.z)
+   * and looking at center.
    */
   template <typename T, matrix_layout ML>
   matrix_4X4<T, ML> look_at(const point_3d<T> &eye,

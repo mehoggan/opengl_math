@@ -33,8 +33,8 @@ namespace opengl_math
   }
 
   template <typename T, matrix_layout ML>
-  matrix_3X3<T, ML>::matrix_3X3(const vector_3d<T> &v0, const vector_3d<T> &v1,
-    const vector_3d<T> &v2) :
+  matrix_3X3<T, ML>::matrix_3X3(const vector_3d<T> &v0,
+    const vector_3d<T> &v1, const vector_3d<T> &v2) :
     _v0(v0),
     _v1(v1),
     _v2(v2)
@@ -76,7 +76,8 @@ namespace opengl_math
   }
 
   template <typename T, matrix_layout ML>
-  const vector_3d<T> &matrix_3X3<T, ML>::operator[](unsigned short index) const
+  const vector_3d<T> &matrix_3X3<T, ML>::operator[](unsigned short index)
+    const
   {
     assert(index < 3);
 
@@ -294,9 +295,9 @@ namespace opengl_math
     }
   }
 
-  /*! \brief This function returns the product of a 3 X 3 matrix multiplied by a
-  * 3d vector
-  */
+  /*! \brief This function returns the product of a 3 X 3 matrix multiplied
+   * by a 3d vector
+   */
   template <typename T, matrix_layout ML>
   vector_3d<T> operator*(const vector_3d<T> &v, const matrix_3X3<T, ML> &m)
   {
@@ -494,7 +495,8 @@ namespace opengl_math
   }
 
   template<typename T, matrix_layout ML1, matrix_layout ML2>
-  bool operator==(const matrix_3X3<T, ML1> &lhs, const matrix_3X3<T, ML2> &rhs)
+  bool operator==(const matrix_3X3<T, ML1> &lhs,
+    const matrix_3X3<T, ML2> &rhs)
   {
     const matrix_3X3<T, ML2> rhs_t = rhs.transposed();
 

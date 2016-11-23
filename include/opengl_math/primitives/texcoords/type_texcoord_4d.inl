@@ -39,7 +39,8 @@ namespace opengl_math
   {}
 
   template <typename T>
-  texcoord_4d<T>::texcoord_4d(const T &s, const T &t, const T &r, const T &q) :
+  texcoord_4d<T>::texcoord_4d(const T &s, const T &t, const T &r,
+    const T &q) :
     _s(clamp_texcoord_4d<T>(s)),
     _t(clamp_texcoord_4d<T>(t)),
     _r(clamp_texcoord_4d<T>(r)),

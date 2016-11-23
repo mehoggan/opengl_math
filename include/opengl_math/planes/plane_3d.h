@@ -21,6 +21,7 @@
 #include "opengl_math/combinatorics/algorithms.h"
 #include "opengl_math/primitives/points/type_point_3d.h"
 #include "opengl_math/primitives/vectors/type_vector_2d.h"
+#include "opengl_math/primitives/vectors/type_vector_3d.h"
 #include "opengl_math/primitives/vectors/type_vector_4d.h"
 
 namespace opengl_math

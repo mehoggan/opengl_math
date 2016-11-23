@@ -50,7 +50,8 @@
 
 #elif (defined __gnu_linux__) || (defined __linux__)
   #define OPENGL_MATH_API
-  #define EXTERN_OPENGL_MATH_API extern __attribute__ ((visibility("default")))
+  #define EXTERN_OPENGL_MATH_API extern __attribute__ \
+    ((visibility("default")))
 
   #include <stddef.h>
   #include <stdint.h>

@@ -21,7 +21,8 @@
     #define __OPENGL_MATH_16_BIT__ 1
   #elif defined(_WIN32)
     #define __OPENGL_MATH_32_BIT__ 1
-  #elif defined(_M_IA64) || defined(_M_AMD64) || defined(__x86_64__) || defined(__x86_64)
+  #elif defined(_M_IA64) || defined(_M_AMD64) || defined(__x86_64__) || \
+    defined(__x86_64)
     #define __OPENGL_MATH_64_BIT__ 1
   #else
     #define __OPENGL_MATH_32_BIT__ 1

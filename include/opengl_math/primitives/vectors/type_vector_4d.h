@@ -20,6 +20,7 @@
 
 #include "opengl_math/math/sqrt.h"
 
+#include <algorithm>
 #include <cassert>
 
 namespace opengl_math
@@ -44,7 +45,8 @@ namespace opengl_math
     T _w;
 
   public:
-    /*! \brief default constructor sets three elements using default constructor
+    /*! \brief default constructor sets three elements using default
+     * constructor.
      */
     vector_4d();
 
