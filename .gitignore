@@ -121,3 +121,4 @@ tests/check_type_matrix
 tests/check_type_point
 tests/check_type_texcoord
 tests/check_type_vector
+test-driver
