@@ -8,12 +8,11 @@
 
 START_TEST(test_n_cr_k)
 {
-  const std::size_t N = 5;
-  int array[N] = {0, 1, 2, 3, 4};
+  std::vector<int> array = {0, 1, 2, 3, 4};
   const std::size_t k = 3;
 
   int x = 0;
-  std::vector<int [k]> choices(10);
+  std::vector<std::vector<int>> choices(10);
   std::vector<std::vector<int>> expected;
   expected.push_back({0, 1, 2});
   expected.push_back({0, 1, 3});
@@ -36,12 +35,13 @@ START_TEST(test_n_cr_k)
       ck_assert(expect[i] == actual[i]);
     }
     ++x;
-  } while (opengl_math::combinatorics::n_cr_k<int [N], 5>(array, k));
+  } while (opengl_math::combinatorics::n_cr_k<
+    std::vector<int>, 5>(array, k));
 
   x = 0;
-  int array_oo[N] = {9, 8, 4, 6, 0}; // {0, 4, 6, 8, 9}
-  std::sort(&array_oo[0], &array_oo[N]); // Sort required here
-  std::vector<int [k]> choices_oo(10);
+  std::vector<int> array_oo = {9, 8, 4, 6, 0}; // {0, 4, 6, 8, 9}
+  std::sort(array_oo.begin(), array_oo.end()); // Sort required here
+  std::vector<std::vector<int>> choices_oo(10);
   std::vector<std::vector<int>> expected_oo;
   expected_oo.push_back({0, 4, 6});
   expected_oo.push_back({0, 4, 8});
@@ -63,7 +63,8 @@ START_TEST(test_n_cr_k)
       ck_assert(expect[i] == actual[i]);
     }
     ++x;
-  } while (opengl_math::combinatorics::n_cr_k<int [N], 5>(array_oo, k));
+  } while (opengl_math::combinatorics::n_cr_k<
+    std::vector<int>, 5>(array_oo, k));
 }
 END_TEST
 
