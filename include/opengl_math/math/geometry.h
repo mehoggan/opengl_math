@@ -23,32 +23,38 @@
 
 #include <cmath>
 #include <limits>
-#include <vector>
+#include <unordered_map>
 
 namespace opengl_math
 {
+  template<typename T>
+  struct triangle
+  {
+    triangle(const point_3d<T> &p1, const point_3d<T> &p2,
+      const point_3d<T> &p3);
+
+    point_3d<T> _p1;
+    point_3d<T> _p2;
+    point_3d<T> _p3;
+  };
+
   template<typename T, typename I>
   struct subdivided_tessellated_triangle_data
   {
-    std::vector<opengl_math::point_3d<T>> points_3d_;
-    std::vector<I> indices_;
+    std::vector<point_3d<T>> _points;
+    std::vector<I> _indices;
   };
 
   template<typename T>
   bool points_of_triangle_are_collinear(
-    const opengl_math::point_3d<T> &p1,
-    const opengl_math::point_3d<T> &p2,
-    const opengl_math::point_3d<T> &p3,
+    const triangle<T> &tri,
     float epsilon = std::numeric_limits<float>::epsilon());
 
   template<typename T, typename I>
-  subdivided_tessellated_triangle_data<T, I>
-  tessellate_triangle_by_subdivision(
-    const opengl_math::point_3d<T> &p1,
-    const opengl_math::point_3d<T> &p2,
-    const opengl_math::point_3d<T> &p3,
-    std::size_t subdivision_count
-  );
+  void tessellate_triangle_by_subdivision(
+    const triangle<T> &tri,
+    std::size_t subdivision_count,
+    subdivided_tessellated_triangle_data<T, I> &out);
 }
 #include "geometry.inl"
 #endif

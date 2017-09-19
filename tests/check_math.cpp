@@ -2962,56 +2962,80 @@ START_TEST(test_scale_by_3d)
 }
 END_TEST
 
+START_TEST(test_ctor_triangle)
+{
+  opengl_math::point_3d<float> p1;
+  opengl_math::point_3d<float> p2;
+  opengl_math::point_3d<float> p3;
+  opengl_math::triangle<float> tri(p1, p2, p3);
+  ck_assert(tri._p1 == opengl_math::point_3d<float>());
+  ck_assert(tri._p2 == opengl_math::point_3d<float>());
+  ck_assert(tri._p3 == opengl_math::point_3d<float>());
+}
+END_TEST
+
 START_TEST(test_points_of_triangle_are_not_collinear)
 {
   { // point
     ck_assert(opengl_math::points_of_triangle_are_collinear<float>(
-      opengl_math::point_3d<float>(),
-      opengl_math::point_3d<float>(),
-      opengl_math::point_3d<float>()));
+      opengl_math::triangle<float>(
+        opengl_math::point_3d<float>(),
+        opengl_math::point_3d<float>(),
+        opengl_math::point_3d<float>())));
   }
 
   { // x-y plane
     ck_assert(!opengl_math::points_of_triangle_are_collinear<float>(
-      opengl_math::point_3d<float>(0.0f, 0.0f, 0.0f),
-      opengl_math::point_3d<float>(2.0f, 0.0f, 0.0f),
-      opengl_math::point_3d<float>(1.0f, 2.0f, 0.0f)));
+      opengl_math::triangle<float>(
+        opengl_math::point_3d<float>(0.0f, 0.0f, 0.0f),
+        opengl_math::point_3d<float>(2.0f, 0.0f, 0.0f),
+        opengl_math::point_3d<float>(1.0f, 2.0f, 0.0f))));
   }
 
   { // x-z plane
     ck_assert(!opengl_math::points_of_triangle_are_collinear<float>(
-      opengl_math::point_3d<float>(0.0f, 0.0f, 0.0f),
-      opengl_math::point_3d<float>(0.0f, 0.0f, 1.0f),
-      opengl_math::point_3d<float>(1.0f, 0.0f, 0.0f)));
+      opengl_math::triangle<float>(
+        opengl_math::point_3d<float>(0.0f, 0.0f, 0.0f),
+        opengl_math::point_3d<float>(0.0f, 0.0f, 1.0f),
+        opengl_math::point_3d<float>(1.0f, 0.0f, 0.0f))));
   }
 
   { // arbitrary plane
     ck_assert(!opengl_math::points_of_triangle_are_collinear<float>(
-      opengl_math::point_3d<float>(+0.0f, -1.0f, +0.0f),
-      opengl_math::point_3d<float>(+0.0f, +1.0f, +1.0f),
-      opengl_math::point_3d<float>(+1.0f, +0.0f, +0.0f)));
+      opengl_math::triangle<float>(
+        opengl_math::point_3d<float>(+0.0f, -1.0f, +0.0f),
+        opengl_math::point_3d<float>(+0.0f, +1.0f, +1.0f),
+        opengl_math::point_3d<float>(+1.0f, +0.0f, +0.0f))));
   }
 
   { // line
     ck_assert(opengl_math::points_of_triangle_are_collinear<float>(
-      opengl_math::point_3d<float>(+0.0f, +0.0f, +0.0f),
-      opengl_math::point_3d<float>(+1.0f, +0.0f, +0.0f),
-      opengl_math::point_3d<float>(+2.0f, +0.0f, +0.0f)));
+      opengl_math::triangle<float>(
+        opengl_math::point_3d<float>(+0.0f, +0.0f, +0.0f),
+        opengl_math::point_3d<float>(+1.0f, +0.0f, +0.0f),
+        opengl_math::point_3d<float>(+2.0f, +0.0f, +0.0f))));
   }
 
   { // almost line
     ck_assert(!opengl_math::points_of_triangle_are_collinear<float>(
-      opengl_math::point_3d<float>(+0.0f, +0.0f, +0.0f),
-      opengl_math::point_3d<float>(+1.0f, +0.0000001f, +0.0f),
-      opengl_math::point_3d<float>(+2.0f, +0.0f, +0.0f)));
+      opengl_math::triangle<float>(
+        opengl_math::point_3d<float>(+0.0f, +0.0f, +0.0f),
+        opengl_math::point_3d<float>(+1.0f, +0.0000001f, +0.0f),
+        opengl_math::point_3d<float>(+2.0f, +0.0f, +0.0f))));
   }
 
   { // very close to a line
     ck_assert(opengl_math::points_of_triangle_are_collinear<float>(
-      opengl_math::point_3d<float>(+0.0f, +0.0f, +0.0f),
-      opengl_math::point_3d<float>(+1.0f, +0.000000000001f, +0.0f),
-      opengl_math::point_3d<float>(+2.0f, +0.0f, +0.0f)));
+      opengl_math::triangle<float>(
+        opengl_math::point_3d<float>(+0.0f, +0.0f, +0.0f),
+        opengl_math::point_3d<float>(+1.0f, +0.000000000001f, +0.0f),
+        opengl_math::point_3d<float>(+2.0f, +0.0f, +0.0f))));
   }
+}
+END_TEST
+
+START_TEST(test_tessellate_triangle_by_subdivision)
+{
 }
 END_TEST
 
@@ -3041,7 +3065,9 @@ main(int argc, char *argv[])
   tcase_add_test(tc, test_rotate_by_3d_about_standard_basis);
   tcase_add_test(tc, test_scale_by_2d);
   tcase_add_test(tc, test_scale_by_3d);
+  tcase_add_test(tc, test_ctor_triangle);
   tcase_add_test(tc, test_points_of_triangle_are_not_collinear);
+  tcase_add_test(tc, test_tessellate_triangle_by_subdivision);
 
   suite_add_tcase(s, tc);
   sr = suite_runner_create(s);
