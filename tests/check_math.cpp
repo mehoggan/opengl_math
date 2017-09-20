@@ -3036,6 +3036,16 @@ END_TEST
 
 START_TEST(test_tessellate_triangle_by_subdivision)
 {
+  { // zero tessellation
+    opengl_math::point_3d<float> p1;
+    opengl_math::point_3d<float> p2;
+    opengl_math::point_3d<float> p3;
+    std::uint32_t current_index = 0;
+    opengl_math::subdivided_tessellated_triangle_data<float, std::uint32_t>
+      output;
+    opengl_math::tessellate_triangle_by_subdivision<float>(
+      opengl_math::triangle<float>(p1, p2, p3), 0, current_index, output);
+  }
 }
 END_TEST
 

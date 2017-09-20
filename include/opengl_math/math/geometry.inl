@@ -43,17 +43,44 @@ namespace opengl_math
   namespace detail
   {
     template<typename T, typename I>
+    void update_tessellated_triangle_data(const point_3d<T> &p,
+      I &current_index,
+      std::unordered_map<point_3d<T>, I> &point_to_index_map,
+      subdivided_tessellated_triangle_data<T, I> &out)
+    {
+      auto it_p = point_to_index_map.find(p);
+      if (it_p == point_to_index_map.end()) {
+        point_to_index_map[p] = current_index;
+        out._points.push_back(p);
+        out._indices.push_back(current_index);
+        ++current_index;
+      } else {
+        out._indices.push_back(it_p->second);
+      }
+    }
+
+    template<typename T, typename I>
     void tessellate_triangle_by_subdivision(
       const triangle<T> &tri,
       std::size_t subdivision_count,
-      std::size_t &current_index,
+      I &current_index,
       std::unordered_map<point_3d<T>, I> &point_to_index_map,
       subdivided_tessellated_triangle_data<T, I> &out)
     {
       if (subdivision_count == 0) {
+        update_tessellated_triangle_data<T, I>(tri._p1, current_index,
+          point_to_index_map, out);
+        update_tessellated_triangle_data<T, I>(tri._p2, current_index,
+          point_to_index_map, out);
+        update_tessellated_triangle_data<T, I>(tri._p3, current_index,
+          point_to_index_map, out);
       }
 
       if (!points_of_triangle_are_collinear<T>(tri)) {
+        // TODO: Calculate centroid.
+        // TODO: Instantiate 3 triangles with the centroid
+        // TODO: Recursivlly call tessellate_triangle_by_subdivision on each
+        // new triangle subtracting 1 from subdivision each time.
       }
     }
   }
@@ -62,7 +89,7 @@ namespace opengl_math
   void tessellate_triangle_by_subdivision(
     const triangle<T> &tri,
     std::size_t subdivision_count,
-    std::size_t current_index,
+    I &current_index,
     subdivided_tessellated_triangle_data<T, I> &out)
   {
     std::unordered_map<point_3d<T>, I> point_to_index_map;

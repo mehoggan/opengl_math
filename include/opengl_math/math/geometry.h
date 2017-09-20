@@ -54,7 +54,22 @@ namespace opengl_math
   void tessellate_triangle_by_subdivision(
     const triangle<T> &tri,
     std::size_t subdivision_count,
+    I &current_index,
     subdivided_tessellated_triangle_data<T, I> &out);
 }
+
+namespace std
+{
+  template <typename T>
+  struct hash<opengl_math::point_3d<T>>
+  {
+    std::size_t operator()(const opengl_math::point_3d<T> &k) const
+    {
+      return ((std::hash<T>()(k._x) ^ (std::hash<T>()(k._y) << 1)) >> 1) ^
+        (hash<float>()(k._z) << 1);
+    }
+  };
+}
+
 #include "geometry.inl"
 #endif
