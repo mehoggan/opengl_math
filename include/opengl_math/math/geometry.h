@@ -22,8 +22,10 @@
 #include "opengl_math/primitives/vectors/type_vector_3d.h"
 
 #include <cmath>
+#include <iterator>
 #include <limits>
 #include <unordered_map>
+#include <vector>
 
 namespace opengl_math
 {
@@ -45,6 +47,21 @@ namespace opengl_math
     std::vector<I> _indices;
   };
 
+  template<typename T, typename I>
+  inline std::ostream &operator<<(std::ostream &out,
+    const subdivided_tessellated_triangle_data<T, I> &data)
+  {
+    out << "points = ";
+    std::copy(data._points.begin(), data._points.end(),
+      std::ostream_iterator<point_3d<T>>(out, " "));
+
+    out << std::endl << "indices = ";
+    std::copy(data._indices.begin(), data._indices.end(),
+      std::ostream_iterator<I>(out, " "));
+
+    return out;
+  }
+
   template<typename T>
   bool points_of_triangle_are_collinear(
     const triangle<T> &tri,
@@ -56,6 +73,9 @@ namespace opengl_math
     std::size_t subdivision_count,
     I &current_index,
     subdivided_tessellated_triangle_data<T, I> &out);
+
+  template<typename T>
+  point_3d<T> centroid_of_triangle(const triangle<T> &tri);
 }
 
 namespace std

@@ -1,9 +1,12 @@
 #include "opengl_math/core/enumerations.h"
+#include "opengl_math/math/numbers.h"
 #include "opengl_math/math/matrix.h"
 #include "opengl_math/math/geometry.h"
 #include "opengl_math/matrices/type_matrix_4X4.h"
 
 #include "suite.h"
+
+#include <limits>
 
 #include <check.h>
 
@@ -3045,6 +3048,28 @@ START_TEST(test_tessellate_triangle_by_subdivision)
       output;
     opengl_math::tessellate_triangle_by_subdivision<float>(
       opengl_math::triangle<float>(p1, p2, p3), 0, current_index, output);
+
+    std::cout << output << std::endl;
+  }
+}
+END_TEST
+
+START_TEST(test_centroid_of_triangle)
+{
+  {
+    opengl_math::triangle<float> right_tri(
+      opengl_math::point_3d<float>(+0.0f, +0.0f, +0.0f),
+      opengl_math::point_3d<float>(+1.0f, +0.0f, +0.0f),
+      opengl_math::point_3d<float>(+0.0f, +1.0f, +0.0f));
+
+    opengl_math::point_3d<float> centroid =
+      opengl_math::centroid_of_triangle(right_tri);
+    ck_assert(opengl_math::float_equals(0.3333333333333333f, centroid._x,
+      std::numeric_limits<float>::epsilon()));
+    ck_assert(opengl_math::float_equals(0.3333333333333333f, centroid._y,
+      std::numeric_limits<float>::epsilon()));
+    ck_assert(opengl_math::float_equals(0.0f, centroid._z,
+      std::numeric_limits<float>::epsilon()));
   }
 }
 END_TEST
@@ -3078,6 +3103,7 @@ main(int argc, char *argv[])
   tcase_add_test(tc, test_ctor_triangle);
   tcase_add_test(tc, test_points_of_triangle_are_not_collinear);
   tcase_add_test(tc, test_tessellate_triangle_by_subdivision);
+  tcase_add_test(tc, test_centroid_of_triangle);
 
   suite_add_tcase(s, tc);
   sr = suite_runner_create(s);

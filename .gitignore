@@ -128,3 +128,4 @@ tests/check_axis_aligned_2d
 tests/check_combinatorics
 tests/check_curves
 cmake_build/
+cmake-build/

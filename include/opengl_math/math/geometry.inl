@@ -77,10 +77,18 @@ namespace opengl_math
       }
 
       if (!points_of_triangle_are_collinear<T>(tri)) {
-        // TODO: Calculate centroid.
-        // TODO: Instantiate 3 triangles with the centroid
-        // TODO: Recursivlly call tessellate_triangle_by_subdivision on each
-        // new triangle subtracting 1 from subdivision each time.
+        point_3d<T> centroid = centroid_of_triangle(tri);
+
+        triangle<T> tri_0(tri._p1, centroid, tri._p3);
+        triangle<T> tri_1(tri._p1, tri._p2, centroid);
+        triangle<T> tri_2(tri._p2, tri._p3, centroid);
+
+        tessellate_triangle_by_subdivision(tri_0, subdivision_count,
+          current_index, point_to_index_map, out);
+        tessellate_triangle_by_subdivision(tri_1, subdivision_count,
+          current_index, point_to_index_map, out);
+        tessellate_triangle_by_subdivision(tri_2, subdivision_count,
+          current_index, point_to_index_map, out);
       }
     }
   }
@@ -95,5 +103,26 @@ namespace opengl_math
     std::unordered_map<point_3d<T>, I> point_to_index_map;
     detail::tessellate_triangle_by_subdivision(tri, subdivision_count,
       current_index, point_to_index_map, out);
+  }
+
+  template<typename T>
+  point_3d<T> centroid_of_triangle(const triangle<T> &tri)
+  {
+    const T x1 = tri._p1._x;
+    const T x2 = tri._p2._x;
+    const T x3 = tri._p3._x;
+
+    const T y1 = tri._p1._y;
+    const T y2 = tri._p2._y;
+    const T y3 = tri._p3._y;
+
+    const T z1 = tri._p1._z;
+    const T z2 = tri._p2._z;
+    const T z3 = tri._p3._z;
+
+    const point_3d<T> centroid((x1 + x2 + x3) / 3.0, (y1 + y2 + y3) / 3.0,
+      (z1 + z2 + z3) / 3.0);
+
+    return centroid;
   }
 }
