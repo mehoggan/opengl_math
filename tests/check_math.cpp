@@ -3048,8 +3048,73 @@ START_TEST(test_tessellate_triangle_by_subdivision)
       output;
     opengl_math::tessellate_triangle_by_subdivision<float>(
       opengl_math::triangle<float>(p1, p2, p3), 0, current_index, output);
+    ck_assert(output._points.empty());
+    ck_assert(output._indices.empty());
+    ck_assert(current_index == 0);
+  }
 
-    std::cout << output << std::endl;
+  { // equilateral triangle subdivide zero times.
+    opengl_math::point_3d<float> p1(0.0f, 0.0f, 0.0f);
+    opengl_math::point_3d<float> p2(1.0f, 0.0f, 1.0f);
+    opengl_math::point_3d<float> p3(0.0f, 1.125f, 0.0f);
+    std::uint32_t current_index = 0;
+    opengl_math::subdivided_tessellated_triangle_data<float, std::uint32_t>
+      output;
+    opengl_math::tessellate_triangle_by_subdivision<float>(
+      opengl_math::triangle<float>(p1, p2, p3), 0, current_index, output);
+    ck_assert(output._points.size() == 3);
+    ck_assert(output._points[0] == p1);
+    ck_assert(output._points[1] == p2);
+    ck_assert(output._points[2] == p3);
+    ck_assert(output._indices.size() == 3);
+    ck_assert(output._indices[0] == 0u);
+    ck_assert(output._indices[1] == 1u);
+    ck_assert(output._indices[2] == 2u);
+  }
+
+  { // equilateral triangle subdivide once.
+    opengl_math::point_3d<float> p1(0.0f, 0.0f, 0.0f);
+    opengl_math::point_3d<float> p2(1.0f, 0.0f, 1.0f);
+    opengl_math::point_3d<float> p3(0.0f, 1.125f, 0.0f);
+    std::uint32_t current_index = 0;
+    opengl_math::subdivided_tessellated_triangle_data<float, std::uint32_t>
+      output;
+    opengl_math::triangle<float> tri(p1, p2, p3);
+    opengl_math::tessellate_triangle_by_subdivision<float>(
+      tri, 1, current_index, output);
+    std::size_t points_count = output._points.size();
+    ck_assert(points_count == 4u);
+    ck_assert(output._points[0] == p1);
+    ck_assert(output._points[1] == opengl_math::centroid_of_triangle(tri));
+    ck_assert(output._points[2] == p3);
+    ck_assert(output._points[3] == p2);
+    std::size_t indices_count = output._indices.size();
+    ck_assert(indices_count == 9u);
+    ck_assert(output._indices[0] == 0u);
+    ck_assert(output._indices[1] == 1u);
+    ck_assert(output._indices[2] == 2u);
+    ck_assert(output._indices[3] == 0u);
+    ck_assert(output._indices[4] == 3u);
+    ck_assert(output._indices[5] == 1u);
+    ck_assert(output._indices[6] == 3u);
+    ck_assert(output._indices[7] == 2u);
+    ck_assert(output._indices[8] == 1u);
+  }
+
+    { // equilateral triangle subdivide twice.
+    opengl_math::point_3d<float> p1(0.0f, 0.0f, 0.0f);
+    opengl_math::point_3d<float> p2(1.0f, 0.0f, 1.0f);
+    opengl_math::point_3d<float> p3(0.0f, 1.125f, 0.0f);
+    std::uint32_t current_index = 0;
+    opengl_math::subdivided_tessellated_triangle_data<float, std::uint32_t>
+      output;
+    opengl_math::triangle<float> tri(p1, p2, p3);
+    opengl_math::tessellate_triangle_by_subdivision<float>(
+      tri, 2, current_index, output);
+    std::size_t points_count = output._points.size();
+    ck_assert(points_count == 7u);
+    std::size_t indices_count = output._indices.size();
+    ck_assert(indices_count == 27u);
   }
 }
 END_TEST

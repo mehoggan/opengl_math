@@ -67,27 +67,25 @@ namespace opengl_math
       std::unordered_map<point_3d<T>, I> &point_to_index_map,
       subdivided_tessellated_triangle_data<T, I> &out)
     {
-      if (subdivision_count == 0) {
+      if (subdivision_count == 0 && !points_of_triangle_are_collinear<T>(tri)) {
         update_tessellated_triangle_data<T, I>(tri._p1, current_index,
           point_to_index_map, out);
         update_tessellated_triangle_data<T, I>(tri._p2, current_index,
           point_to_index_map, out);
         update_tessellated_triangle_data<T, I>(tri._p3, current_index,
           point_to_index_map, out);
-      }
-
-      if (!points_of_triangle_are_collinear<T>(tri)) {
+      } else if (!points_of_triangle_are_collinear<T>(tri)) {
         point_3d<T> centroid = centroid_of_triangle(tri);
 
         triangle<T> tri_0(tri._p1, centroid, tri._p3);
         triangle<T> tri_1(tri._p1, tri._p2, centroid);
         triangle<T> tri_2(tri._p2, tri._p3, centroid);
 
-        tessellate_triangle_by_subdivision(tri_0, subdivision_count,
+        tessellate_triangle_by_subdivision(tri_0, subdivision_count - 1,
           current_index, point_to_index_map, out);
-        tessellate_triangle_by_subdivision(tri_1, subdivision_count,
+        tessellate_triangle_by_subdivision(tri_1, subdivision_count - 1,
           current_index, point_to_index_map, out);
-        tessellate_triangle_by_subdivision(tri_2, subdivision_count,
+        tessellate_triangle_by_subdivision(tri_2, subdivision_count - 1,
           current_index, point_to_index_map, out);
       }
     }

@@ -129,3 +129,4 @@ tests/check_combinatorics
 tests/check_curves
 cmake_build/
 cmake-build/
+cmake-build-*/
