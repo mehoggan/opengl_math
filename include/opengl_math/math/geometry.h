@@ -74,6 +74,13 @@ namespace opengl_math
     I &current_index,
     subdivided_tessellated_triangle_data<T, I> &out);
 
+  template<typename T, typename I>
+  void tessellate_triangles_by_subdivision(
+    std::vector<triangle<T>> &tris,
+    std::size_t subdivision_count,
+    I &current_index,
+    subdivided_tessellated_triangle_data<T, I> &out);
+
   template<typename T>
   point_3d<T> centroid_of_triangle(const triangle<T> &tri);
 }

@@ -3101,7 +3101,7 @@ START_TEST(test_tessellate_triangle_by_subdivision)
     ck_assert(output._indices[8] == 1u);
   }
 
-    { // equilateral triangle subdivide twice.
+  { // equilateral triangle subdivide twice.
     opengl_math::point_3d<float> p1(0.0f, 0.0f, 0.0f);
     opengl_math::point_3d<float> p2(1.0f, 0.0f, 1.0f);
     opengl_math::point_3d<float> p3(0.0f, 1.125f, 0.0f);
@@ -3115,6 +3115,37 @@ START_TEST(test_tessellate_triangle_by_subdivision)
     ck_assert(points_count == 7u);
     std::size_t indices_count = output._indices.size();
     ck_assert(indices_count == 27u);
+  }
+}
+END_TEST
+
+START_TEST(test_tessellate_triangles_by_subdivision)
+{
+  opengl_math::point_3d<float> points[6] = {
+    opengl_math::point_3d<float>(+0.0f, -1.0f, +0.0f),
+    opengl_math::point_3d<float>(+0.0f, +0.0f, +1.0f),
+    opengl_math::point_3d<float>(+1.0f, +0.0f, +0.0f),
+    opengl_math::point_3d<float>(+0.0f, +0.0f, -1.0f),
+    opengl_math::point_3d<float>(-1.0f, +0.0f, +0.0f),
+    opengl_math::point_3d<float>(+0.0f, +1.0f, +0.0f)
+  };
+  std::vector<opengl_math::triangle<float>> dodecahedron_tris = {
+    opengl_math::triangle<float>(points[0], points[1], points[2]),
+    opengl_math::triangle<float>(points[5], points[1], points[2]),
+    opengl_math::triangle<float>(points[0], points[3], points[2]),
+    opengl_math::triangle<float>(points[5], points[2], points[3]),
+    opengl_math::triangle<float>(points[0], points[3], points[4]),
+    opengl_math::triangle<float>(points[5], points[3], points[4]),
+    opengl_math::triangle<float>(points[0], points[4], points[1]),
+    opengl_math::triangle<float>(points[5], points[4], points[1])
+  };
+  {
+    std::uint32_t current_index = 0;
+    opengl_math::subdivided_tessellated_triangle_data<float, std::uint32_t>
+      output;
+    opengl_math::tessellate_triangles_by_subdivision<float>(
+      dodecahedron_tris, 0, current_index, output);
+    std::cout << output << std::endl;
   }
 }
 END_TEST
@@ -3168,6 +3199,7 @@ main(int argc, char *argv[])
   tcase_add_test(tc, test_ctor_triangle);
   tcase_add_test(tc, test_points_of_triangle_are_not_collinear);
   tcase_add_test(tc, test_tessellate_triangle_by_subdivision);
+  tcase_add_test(tc, test_tessellate_triangles_by_subdivision);
   tcase_add_test(tc, test_centroid_of_triangle);
 
   suite_add_tcase(s, tc);

@@ -67,7 +67,8 @@ namespace opengl_math
       std::unordered_map<point_3d<T>, I> &point_to_index_map,
       subdivided_tessellated_triangle_data<T, I> &out)
     {
-      if (subdivision_count == 0 && !points_of_triangle_are_collinear<T>(tri)) {
+      if (subdivision_count == 0 &&
+        !points_of_triangle_are_collinear<T>(tri)) {
         update_tessellated_triangle_data<T, I>(tri._p1, current_index,
           point_to_index_map, out);
         update_tessellated_triangle_data<T, I>(tri._p2, current_index,
@@ -101,6 +102,20 @@ namespace opengl_math
     std::unordered_map<point_3d<T>, I> point_to_index_map;
     detail::tessellate_triangle_by_subdivision(tri, subdivision_count,
       current_index, point_to_index_map, out);
+  }
+
+  template<typename T, typename I>
+  void tessellate_triangles_by_subdivision(
+    std::vector<triangle<T>> &tris,
+    std::size_t subdivision_count,
+    I &current_index,
+    subdivided_tessellated_triangle_data<T, I> &out)
+  {
+    std::unordered_map<point_3d<T>, I> point_to_index_map;
+    for (const auto &tri : tris) {
+      detail::tessellate_triangle_by_subdivision(tri, subdivision_count,
+        current_index, point_to_index_map, out);
+    }
   }
 
   template<typename T>
