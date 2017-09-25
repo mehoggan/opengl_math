@@ -18,6 +18,7 @@
 #ifndef MATH_GEOMETRY_H_INCLUDED
 #define MATH_GEOMETRY_H_INCLUDED
 
+#include "opengl_math/math/vector.h"
 #include "opengl_math/primitives/points/type_point_3d.h"
 #include "opengl_math/primitives/vectors/type_vector_3d.h"
 
