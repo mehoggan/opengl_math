@@ -81,17 +81,18 @@ namespace opengl_math
   /*! \brief given two points it returns a vector_2d
    */
   template <typename T>
-  vector_2d<T> operator-(const point_2d<T> &p1, const point_2d<T> &p2)
+  vector_2d<T> operator-(const point_2d<T> &to, const point_2d<T> &from)
   {
-    return vector_2d<T>(p1.x() - p2.x(), p1.y() - p2.y());
+    return vector_2d<T>(to.x() - from.x(), to.y() - from.y());
   }
 
   /*! \brief given two points it returns a vector_3d
    */
   template <typename T>
-  vector_3d<T> operator-(const point_3d<T> &p1, const point_3d<T> &p2)
+  vector_3d<T> operator-(const point_3d<T> &to, const point_3d<T> &from)
   {
-    return vector_3d<T>(p1.x() - p2.x(), p1.y() - p2.y(), p1.z() - p2.z());
+    return vector_3d<T>(to.x() - from.x(), to.y() - from.y(),
+      to.z() - from.z());
   }
 
   /*!\brief compute the euclidean distance between two vectors.

@@ -1,5 +1,7 @@
 #include "opengl_math/math/numbers.h"
 #include "opengl_math/primitives/vectors/type_vector_2d.h"
+#include "opengl_math/primitives/points/type_point_2d.h"
+#include "opengl_math/primitives/points/type_point_3d.h"
 
 #include "suite.h"
 
