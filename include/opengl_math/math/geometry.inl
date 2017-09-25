@@ -26,6 +26,12 @@ namespace opengl_math
   {}
 
   template<typename T>
+  line<T>::line(const point_3d<T> &p1, const point_3d<T> &p2) :
+    _p1(p1),
+    _p2(p2)
+  {}
+
+  template<typename T>
   bool points_of_triangle_are_collinear(
     const triangle<T> &tri,
     float epsilon)
@@ -90,6 +96,47 @@ namespace opengl_math
           current_index, point_to_index_map, out);
       }
     }
+
+    template<typename T, typename I>
+    void tessellate_triangle_by_midpoint_subdivision(
+      const triangle<T> &tri,
+      std::size_t subdivision_count,
+      I &current_index,
+      std::unordered_map<point_3d<T>, I> &point_to_index_map,
+      subdivided_tessellated_triangle_data<T, I> &out)
+    {
+      if (subdivision_count == 0 &&
+        !points_of_triangle_are_collinear<T>(tri)) {
+        update_tessellated_triangle_data<T, I>(tri._p1, current_index,
+          point_to_index_map, out);
+        update_tessellated_triangle_data<T, I>(tri._p2, current_index,
+          point_to_index_map, out);
+        update_tessellated_triangle_data<T, I>(tri._p3, current_index,
+          point_to_index_map, out);
+      } else if (!points_of_triangle_are_collinear<T>(tri)) {
+        line<T> side_0(tri._p1, tri._p2);
+        line<T> side_1(tri._p2, tri._p3);
+        line<T> side_2(tri._p3, tri._p1);
+
+        point_3d<T> midpoint_0 = midpoint_of_line(side_0);
+        point_3d<T> midpoint_1 = midpoint_of_line(side_1);
+        point_3d<T> midpoint_2 = midpoint_of_line(side_2);
+
+        triangle<T> tri_0(tri._p1, midpoint_0, midpoint_2);
+        triangle<T> tri_1(midpoint_0, tri._p2, midpoint_1);
+        triangle<T> tri_2(midpoint_0, midpoint_1, midpoint_2);
+        triangle<T> tri_3(midpoint_2, midpoint_1, tri._p3);
+
+        tessellate_triangle_by_midpoint_subdivision(tri_0,
+          subdivision_count - 1, current_index, point_to_index_map, out);
+        tessellate_triangle_by_midpoint_subdivision(tri_1,
+          subdivision_count - 1, current_index, point_to_index_map, out);
+        tessellate_triangle_by_midpoint_subdivision(tri_2,
+          subdivision_count - 1, current_index, point_to_index_map, out);
+        tessellate_triangle_by_midpoint_subdivision(tri_3,
+          subdivision_count - 1, current_index, point_to_index_map, out);
+      }
+    }
   }
 
   template<typename T, typename I>
@@ -118,6 +165,32 @@ namespace opengl_math
     }
   }
 
+  template<typename T, typename I>
+  void tessellate_triangle_by_midpoint_subdivision(
+    const triangle<T> &tri,
+    std::size_t subdivision_count,
+    I &current_index,
+    subdivided_tessellated_triangle_data<T, I> &out)
+  {
+    std::unordered_map<point_3d<T>, I> point_to_index_map;
+    detail::tessellate_triangle_by_midpoint_subdivision(tri,
+      subdivision_count, current_index, point_to_index_map, out);
+  }
+
+  template<typename T, typename I>
+  void tessellate_triangles_by_midpoint_subdivision(
+    std::vector<triangle<T>> &tris,
+    std::size_t subdivision_count,
+    I &current_index,
+    subdivided_tessellated_triangle_data<T, I> &out)
+  {
+    std::unordered_map<point_3d<T>, I> point_to_index_map;
+    for (const auto &tri : tris) {
+      detail::tessellate_triangle_by_midpoint_subdivision(
+        tri, subdivision_count, current_index, point_to_index_map, out);
+    }
+  }
+
   template<typename T>
   point_3d<T> centroid_of_triangle(const triangle<T> &tri)
   {
@@ -134,8 +207,17 @@ namespace opengl_math
     const T z3 = tri._p3._z;
 
     const point_3d<T> centroid((x1 + x2 + x3) / 3.0, (y1 + y2 + y3) / 3.0,
-      (z1 + z2 + z3) / 3.0);
+      (z1 + z2 + z3) / T(3.0));
 
     return centroid;
+  }
+
+  template<typename T>
+  point_3d<T> midpoint_of_line(const line<T> &line)
+  {
+    return point_3d<T>(
+      (line._p1._x + line._p2._x) / T(2.0),
+      (line._p1._y + line._p2._y) / T(2.0),
+      (line._p1._z + line._p2._z) / T(2.0));
   }
 }

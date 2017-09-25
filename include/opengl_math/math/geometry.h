@@ -41,6 +41,15 @@ namespace opengl_math
     point_3d<T> _p3;
   };
 
+  template<typename T>
+  struct line
+  {
+    line(const point_3d<T> &p1, const point_3d<T> &p2);
+
+    point_3d<T> _p1;
+    point_3d<T> _p2;
+  };
+
   template<typename T, typename I>
   struct subdivided_tessellated_triangle_data
   {
@@ -82,8 +91,25 @@ namespace opengl_math
     I &current_index,
     subdivided_tessellated_triangle_data<T, I> &out);
 
+  template<typename T, typename I>
+  void tessellate_triangle_by_midpoint_subdivision(
+    const triangle<T> &tri,
+    std::size_t subdivision_count,
+    I &current_index,
+    subdivided_tessellated_triangle_data<T, I> &out);
+
+  template<typename T, typename I>
+  void tessellate_triangles_by_midpoint_subdivision(
+    std::vector<triangle<T>> &tris,
+    std::size_t subdivision_count,
+    I &current_index,
+    subdivided_tessellated_triangle_data<T, I> &out);
+
   template<typename T>
   point_3d<T> centroid_of_triangle(const triangle<T> &tri);
+
+  template<typename T>
+  point_3d<T> midpoint_of_line(const line<T> &line);
 }
 
 namespace std
