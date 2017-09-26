@@ -15,29 +15,26 @@
  * limitations under the License.
  *
  */
+#ifndef LINE_H_INCLUDED
+#define LINE_H_INCLUDED
+
+#include "opengl_math/primitives/points/type_point_3d.h"
+
 namespace opengl_math
 {
-  template<typename realT>
-  curve_sample_3d<realT>::curve_sample_3d() :
-    _position(),
-    _tangent(),
-    _parameter(realT(0))
-  {}
-
-  template<typename realT>
-  curve_sample_3d<realT>::curve_sample_3d(const point_3d<realT> &position,
-    const vector_3d<realT>& tangent, realT parameter) :
-    _position(position),
-    _tangent(tangent),
-    _parameter(parameter)
-  {}
-
-  template<typename realT>
-  void curve_sample_3d<realT>::normalize_tangent()
+  template<typename T>
+  class line
   {
-    if (!float_equals(_tangent.magnitude(), realT(0),
-      std::numeric_limits<float>::epsilon())) {
-      _tangent.normalize();
-    }
-  }
+  public:
+    line(const point_3d<T> &p0, const point_3d<T> &p1);
+
+    const point_3d<T> p0() const;
+    const point_3d<T> p1() const;
+
+  private:
+    point_3d<T> _p0;
+    point_3d<T> _p1;
+  };
 }
+#include "line.inl"
+#endif

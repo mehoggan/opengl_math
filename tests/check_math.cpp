@@ -3,6 +3,9 @@
 #include "opengl_math/math/matrix.h"
 #include "opengl_math/math/geometry.h"
 #include "opengl_math/matrices/type_matrix_4X4.h"
+#include "opengl_math/shapes/line.h"
+#include "opengl_math/shapes/sphere.h"
+#include "opengl_math/shapes/triangle.h"
 
 #include "suite.h"
 
@@ -2971,9 +2974,9 @@ START_TEST(test_ctor_triangle)
   opengl_math::point_3d<float> p2;
   opengl_math::point_3d<float> p3;
   opengl_math::triangle<float> tri(p1, p2, p3);
-  ck_assert(tri._p1 == opengl_math::point_3d<float>());
-  ck_assert(tri._p2 == opengl_math::point_3d<float>());
-  ck_assert(tri._p3 == opengl_math::point_3d<float>());
+  ck_assert(tri.p0() == opengl_math::point_3d<float>());
+  ck_assert(tri.p1() == opengl_math::point_3d<float>());
+  ck_assert(tri.p2() == opengl_math::point_3d<float>());
 }
 END_TEST
 

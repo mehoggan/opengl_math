@@ -7,6 +7,7 @@ TESTS = check_axis_aligned_2d \
 	check_numbers \
 	check_operations \
 	check_planes \
+	check_shapes \
 	check_type_color \
 	check_type_matrix \
 	check_type_point \
@@ -20,6 +21,7 @@ check_PROGRAMS = check_axis_aligned_2d \
 	check_numbers \
 	check_operations \
 	check_planes \
+	check_shapes \
 	check_type_color \
 	check_type_matrix \
 	check_type_point \
@@ -109,6 +111,17 @@ check_planes_LDADD = $(top_builddir)/lib/libopengl_math.la \
 	-lcheck -lsubunit -lm -lrt
 else
 check_planes_LDADD = $(top_builddir)/lib/libopengl_math.la \
+	-lcheck
+endif
+
+check_shapes_SOURCES = suite.cpp check_shapes.cpp
+check_shapes_CXXFLAGS = -I$(top_builddir)/include/ \
+	-I$(top_builddir)/tests/include -std=c++11 -Wall -Werror -pedantic
+if LINUX
+check_shapes_LDADD = $(top_builddir)/lib/libopengl_math.la \
+	-lcheck -lsubunit -lm -lrt
+else
+check_shapes_LDADD = $(top_builddir)/lib/libopengl_math.la \
 	-lcheck
 endif
 

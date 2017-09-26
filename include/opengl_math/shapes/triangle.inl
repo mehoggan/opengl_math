@@ -17,27 +17,29 @@
  */
 namespace opengl_math
 {
-  template<typename realT>
-  curve_sample_3d<realT>::curve_sample_3d() :
-    _position(),
-    _tangent(),
-    _parameter(realT(0))
+  template<typename T>
+  triangle<T>::triangle(const point_3d<T> &p0, const point_3d<T> &p1,
+    const point_3d<T> &p2) :
+    _p0(p0),
+    _p1(p1),
+    _p2(p2)
   {}
 
-  template<typename realT>
-  curve_sample_3d<realT>::curve_sample_3d(const point_3d<realT> &position,
-    const vector_3d<realT>& tangent, realT parameter) :
-    _position(position),
-    _tangent(tangent),
-    _parameter(parameter)
-  {}
-
-  template<typename realT>
-  void curve_sample_3d<realT>::normalize_tangent()
+  template<typename T>
+  const point_3d<T> triangle<T>::p0() const
   {
-    if (!float_equals(_tangent.magnitude(), realT(0),
-      std::numeric_limits<float>::epsilon())) {
-      _tangent.normalize();
-    }
+    return _p0;
+  }
+
+  template<typename T>
+  const point_3d<T> triangle<T>::p1() const
+  {
+    return _p1;
+  }
+
+  template<typename T>
+  const point_3d<T> triangle<T>::p2() const
+  {
+    return _p2;
   }
 }

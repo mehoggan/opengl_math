@@ -18,26 +18,12 @@
 namespace opengl_math
 {
   template<typename T>
-  triangle<T>::triangle(const point_3d<T> &p1, const point_3d<T> &p2,
-    const point_3d<T> &p3) :
-    _p1(p1),
-    _p2(p2),
-    _p3(p3)
-  {}
-
-  template<typename T>
-  line<T>::line(const point_3d<T> &p1, const point_3d<T> &p2) :
-    _p1(p1),
-    _p2(p2)
-  {}
-
-  template<typename T>
   bool points_of_triangle_are_collinear(
     const triangle<T> &tri,
     float epsilon)
   {
-    vector_3d<T> v1 = tri._p2 - tri._p1;
-    vector_3d<T> v2 = tri._p3 - tri._p1;
+    vector_3d<T> v1 = tri.p1() - tri.p0();
+    vector_3d<T> v2 = tri.p2() - tri.p0();
 
     T area = v1.cross(v2).magnitude();
 
@@ -75,18 +61,18 @@ namespace opengl_math
     {
       if (subdivision_count == 0 &&
         !points_of_triangle_are_collinear<T>(tri)) {
-        update_tessellated_triangle_data<T, I>(tri._p1, current_index,
+        update_tessellated_triangle_data<T, I>(tri.p0(), current_index,
           point_to_index_map, out);
-        update_tessellated_triangle_data<T, I>(tri._p2, current_index,
+        update_tessellated_triangle_data<T, I>(tri.p1(), current_index,
           point_to_index_map, out);
-        update_tessellated_triangle_data<T, I>(tri._p3, current_index,
+        update_tessellated_triangle_data<T, I>(tri.p2(), current_index,
           point_to_index_map, out);
       } else if (!points_of_triangle_are_collinear<T>(tri)) {
         point_3d<T> centroid = centroid_of_triangle(tri);
 
-        triangle<T> tri_0(tri._p1, centroid, tri._p3);
-        triangle<T> tri_1(tri._p1, tri._p2, centroid);
-        triangle<T> tri_2(tri._p2, tri._p3, centroid);
+        triangle<T> tri_0(tri.p0(), centroid, tri.p2());
+        triangle<T> tri_1(tri.p0(), tri.p1(), centroid);
+        triangle<T> tri_2(tri.p1(), tri.p2(), centroid);
 
         tessellate_triangle_by_subdivision(tri_0, subdivision_count - 1,
           current_index, point_to_index_map, out);
@@ -107,25 +93,25 @@ namespace opengl_math
     {
       if (subdivision_count == 0 &&
         !points_of_triangle_are_collinear<T>(tri)) {
-        update_tessellated_triangle_data<T, I>(tri._p1, current_index,
+        update_tessellated_triangle_data<T, I>(tri.p0(), current_index,
           point_to_index_map, out);
-        update_tessellated_triangle_data<T, I>(tri._p2, current_index,
+        update_tessellated_triangle_data<T, I>(tri.p1(), current_index,
           point_to_index_map, out);
-        update_tessellated_triangle_data<T, I>(tri._p3, current_index,
+        update_tessellated_triangle_data<T, I>(tri.p2(), current_index,
           point_to_index_map, out);
       } else if (!points_of_triangle_are_collinear<T>(tri)) {
-        line<T> side_0(tri._p1, tri._p2);
-        line<T> side_1(tri._p2, tri._p3);
-        line<T> side_2(tri._p3, tri._p1);
+        line<T> side_0(tri.p0(), tri.p1());
+        line<T> side_1(tri.p1(), tri.p2());
+        line<T> side_2(tri.p2(), tri.p0());
 
         point_3d<T> midpoint_0 = midpoint_of_line(side_0);
         point_3d<T> midpoint_1 = midpoint_of_line(side_1);
         point_3d<T> midpoint_2 = midpoint_of_line(side_2);
 
-        triangle<T> tri_0(tri._p1, midpoint_0, midpoint_2);
-        triangle<T> tri_1(midpoint_0, tri._p2, midpoint_1);
+        triangle<T> tri_0(tri.p0(), midpoint_0, midpoint_2);
+        triangle<T> tri_1(midpoint_0, tri.p1(), midpoint_1);
         triangle<T> tri_2(midpoint_0, midpoint_1, midpoint_2);
-        triangle<T> tri_3(midpoint_2, midpoint_1, tri._p3);
+        triangle<T> tri_3(midpoint_2, midpoint_1, tri.p2());
 
         tessellate_triangle_by_midpoint_subdivision(tri_0,
           subdivision_count - 1, current_index, point_to_index_map, out);
@@ -194,17 +180,17 @@ namespace opengl_math
   template<typename T>
   point_3d<T> centroid_of_triangle(const triangle<T> &tri)
   {
-    const T x1 = tri._p1._x;
-    const T x2 = tri._p2._x;
-    const T x3 = tri._p3._x;
+    const T x1 = tri.p0()._x;
+    const T x2 = tri.p1()._x;
+    const T x3 = tri.p2()._x;
 
-    const T y1 = tri._p1._y;
-    const T y2 = tri._p2._y;
-    const T y3 = tri._p3._y;
+    const T y1 = tri.p0()._y;
+    const T y2 = tri.p1()._y;
+    const T y3 = tri.p2()._y;
 
-    const T z1 = tri._p1._z;
-    const T z2 = tri._p2._z;
-    const T z3 = tri._p3._z;
+    const T z1 = tri.p0()._z;
+    const T z2 = tri.p1()._z;
+    const T z3 = tri.p2()._z;
 
     const point_3d<T> centroid((x1 + x2 + x3) / 3.0, (y1 + y2 + y3) / 3.0,
       (z1 + z2 + z3) / T(3.0));
@@ -216,8 +202,8 @@ namespace opengl_math
   point_3d<T> midpoint_of_line(const line<T> &line)
   {
     return point_3d<T>(
-      (line._p1._x + line._p2._x) / T(2.0),
-      (line._p1._y + line._p2._y) / T(2.0),
-      (line._p1._z + line._p2._z) / T(2.0));
+      (line.p0()._x + line.p1()._x) / T(2.0),
+      (line.p0()._y + line.p1()._y) / T(2.0),
+      (line.p0()._z + line.p1()._z) / T(2.0));
   }
 }
