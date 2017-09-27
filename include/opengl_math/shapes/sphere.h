@@ -19,16 +19,27 @@
 #define SPHERE_H_INCLUDED
 
 #include "opengl_math/primitives/points/type_point_3d.h"
+#include "opengl_math/shapes/enumerations.h"
 
+#include <iterator>
 #include <vector>
 
 namespace opengl_math
 {
   template<typename T, typename I>
-  struct subdivided_tessellated_triangle_data
+  class subdivided_tessellated_triangle_data
   {
+  public:
+    subdivided_tessellated_triangle_data(generator_mode mode = fill);
+
+    std::vector<point_3d<T>> &points();
+    std::vector<I> &indices();
+    generator_mode mode() const;
+
+  private:
     std::vector<point_3d<T>> _points;
     std::vector<I> _indices;
+    generator_mode _mode;
   };
 
   template<typename T, typename I>
@@ -94,8 +105,7 @@ namespace opengl_math
     explicit sphere(realT radius);
 
     void generate(
-      subdivided_tessellated_triangle_data<realT, indexT> &output,
-      std::size_t subdivisions = 8) const;
+      subdivided_tessellated_triangle_data<realT, indexT> &output) const;
 
     realT radius() const;
 

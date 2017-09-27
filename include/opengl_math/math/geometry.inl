@@ -43,11 +43,11 @@ namespace opengl_math
       auto it_p = point_to_index_map.find(p);
       if (it_p == point_to_index_map.end()) {
         point_to_index_map[p] = current_index;
-        out._points.push_back(p);
-        out._indices.push_back(current_index);
+        out.points().push_back(p);
+        out.indices().push_back(current_index);
         ++current_index;
       } else {
-        out._indices.push_back(it_p->second);
+        out.indices().push_back(it_p->second);
       }
     }
 

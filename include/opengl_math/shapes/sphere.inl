@@ -17,6 +17,33 @@
  */
 namespace opengl_math
 {
+
+  template<typename T, typename I>
+  subdivided_tessellated_triangle_data<T, I>::
+    subdivided_tessellated_triangle_data(generator_mode mode) :
+    _mode(mode)
+  {}
+
+  template<typename T, typename I>
+  std::vector<point_3d<T>> &
+  subdivided_tessellated_triangle_data<T, I>::points()
+  {
+    return _points;
+  }
+
+  template<typename T, typename I>
+  std::vector<I> &
+  subdivided_tessellated_triangle_data<T, I>::indices()
+  {
+    return _indices;
+  }
+
+  template<typename T, typename I>
+  generator_mode subdivided_tessellated_triangle_data<T, I>::mode() const
+  {
+    return _mode;
+  }
+
   template<typename realT, typename indexT>
   sphere_generator<realT, indexT>::sphere_generator()
   {}
@@ -80,9 +107,11 @@ namespace opengl_math
     template<typename, typename> class genT
   >
   void sphere<realT, indexT, genT>::generate(
-    subdivided_tessellated_triangle_data<realT, indexT> &output,
-    std::size_t subdivisions) const
-  {}
+    subdivided_tessellated_triangle_data<realT, indexT> &output) const
+  {
+    genT<realT, indexT> generator;
+    generator.generate(output);
+  }
 
   template
   <
