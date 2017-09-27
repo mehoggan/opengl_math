@@ -13,6 +13,7 @@ set(unit_tests
   "operations"
   "planes"
   "shapes"
+  "tessellation"
   "type_color"
   "type_matrix"
   "type_point"

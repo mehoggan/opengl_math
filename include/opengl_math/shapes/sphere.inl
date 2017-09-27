@@ -17,33 +17,6 @@
  */
 namespace opengl_math
 {
-
-  template<typename T, typename I>
-  subdivided_tessellated_triangle_data<T, I>::
-    subdivided_tessellated_triangle_data(generator_mode mode) :
-    _mode(mode)
-  {}
-
-  template<typename T, typename I>
-  std::vector<point_3d<T>> &
-  subdivided_tessellated_triangle_data<T, I>::points()
-  {
-    return _points;
-  }
-
-  template<typename T, typename I>
-  std::vector<I> &
-  subdivided_tessellated_triangle_data<T, I>::indices()
-  {
-    return _indices;
-  }
-
-  template<typename T, typename I>
-  generator_mode subdivided_tessellated_triangle_data<T, I>::mode() const
-  {
-    return _mode;
-  }
-
   template<typename realT, typename indexT>
   sphere_generator<realT, indexT>::sphere_generator()
   {}
@@ -53,7 +26,11 @@ namespace opengl_math
   {}
 
   template<typename realT, typename indexT>
-  octahedron_generator<realT, indexT>::octahedron_generator()
+  octahedron_generator<realT, indexT>::octahedron_generator(
+    realT radius,
+    std::size_t subdivision_count) :
+    _radius(radius),
+    _subdivision_count(subdivision_count)
   {}
 
   template<typename realT, typename indexT>
@@ -62,15 +39,47 @@ namespace opengl_math
 
   template<typename realT, typename indexT>
   void octahedron_generator<realT, indexT>::generate(
-    subdivided_tessellated_triangle_data<realT, indexT> &output) const
-  {}
+    tessellated_triangle_data<realT, indexT> &output) const
+  {
+    const opengl_math::point_3d<realT> points[6] = {
+      opengl_math::point_3d<realT>(realT(+0.0), -_radius, realT(+0.0)),
+      opengl_math::point_3d<realT>(realT(+0.0), realT(+0.0), +_radius),
+      opengl_math::point_3d<realT>(+_radius, realT(+0.0), realT(+0.0)),
+      opengl_math::point_3d<realT>(realT(+0.0), realT(+0.0), -_radius),
+      opengl_math::point_3d<realT>(-_radius, realT(+0.0), realT(+0.0)),
+      opengl_math::point_3d<realT>(realT(+0.0), +_radius, realT(+0.0))
+    };
+    const std::vector<opengl_math::triangle<realT>> octahedron_tris = {
+      opengl_math::triangle<realT>(points[0], points[1], points[2]),
+      opengl_math::triangle<realT>(points[5], points[1], points[2]),
+      opengl_math::triangle<realT>(points[0], points[3], points[2]),
+      opengl_math::triangle<realT>(points[5], points[2], points[3]),
+      opengl_math::triangle<realT>(points[0], points[3], points[4]),
+      opengl_math::triangle<realT>(points[5], points[3], points[4]),
+      opengl_math::triangle<realT>(points[0], points[4], points[1]),
+      opengl_math::triangle<realT>(points[5], points[4], points[1])
+    };
+    std::uint32_t current_index = 0;
+    opengl_math::tessellate_triangles_by_midpoint_subdivision<float>(
+      octahedron_tris, 0, current_index, output);
+  }
+
+  template<typename realT, typename indexT>
+  realT octahedron_generator<realT, indexT>::radius() const
+  {
+    return _radius;
+  }
 
   template<typename realT, typename indexT>
   spherical_coordinate_generator
   <
     realT,
     indexT
-  >::spherical_coordinate_generator()
+  >::spherical_coordinate_generator(realT radius,
+    realT horizontal_angle_delta, realT vertical_angle_delta) :
+    _horizontal_angle_delta(horizontal_angle_delta),
+    _vertical_angle_delta(vertical_angle_delta),
+    _radius(radius)
   {}
 
   template<typename realT, typename indexT>
@@ -86,9 +95,15 @@ namespace opengl_math
   <
     realT,
     indexT
-  >::generate(subdivided_tessellated_triangle_data<realT, indexT> &output)
+  >::generate(tessellated_triangle_data<realT, indexT> &output)
   const
   {}
+
+  template<typename realT, typename indexT>
+  realT spherical_coordinate_generator<realT, indexT>::radius() const
+  {
+    return _radius;
+  }
 
   template
   <
@@ -96,8 +111,8 @@ namespace opengl_math
     typename indexT,
     template<typename, typename> class genT
   >
-  sphere<realT, indexT, genT>::sphere(realT radius) :
-    _radius(radius)
+  sphere<realT, indexT, genT>::sphere(const genT<realT, indexT> &generator) :
+    _generator(generator)
   {}
 
   template
@@ -107,10 +122,9 @@ namespace opengl_math
     template<typename, typename> class genT
   >
   void sphere<realT, indexT, genT>::generate(
-    subdivided_tessellated_triangle_data<realT, indexT> &output) const
+    tessellated_triangle_data<realT, indexT> &output) const
   {
-    genT<realT, indexT> generator;
-    generator.generate(output);
+    _generator.generate(output);
   }
 
   template
@@ -121,6 +135,6 @@ namespace opengl_math
   >
   realT sphere<realT, indexT, genT>::radius() const
   {
-    return _radius;
+    return _generator.radius();
   }
 }

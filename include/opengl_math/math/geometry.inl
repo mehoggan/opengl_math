@@ -32,151 +32,6 @@ namespace opengl_math
     return !is_polygon;
   }
 
-  namespace detail
-  {
-    template<typename T, typename I>
-    void update_tessellated_triangle_data(const point_3d<T> &p,
-      I &current_index,
-      std::unordered_map<point_3d<T>, I> &point_to_index_map,
-      subdivided_tessellated_triangle_data<T, I> &out)
-    {
-      auto it_p = point_to_index_map.find(p);
-      if (it_p == point_to_index_map.end()) {
-        point_to_index_map[p] = current_index;
-        out.points().push_back(p);
-        out.indices().push_back(current_index);
-        ++current_index;
-      } else {
-        out.indices().push_back(it_p->second);
-      }
-    }
-
-    template<typename T, typename I>
-    void tessellate_triangle_by_subdivision(
-      const triangle<T> &tri,
-      std::size_t subdivision_count,
-      I &current_index,
-      std::unordered_map<point_3d<T>, I> &point_to_index_map,
-      subdivided_tessellated_triangle_data<T, I> &out)
-    {
-      if (subdivision_count == 0 &&
-        !points_of_triangle_are_collinear<T>(tri)) {
-        update_tessellated_triangle_data<T, I>(tri.p0(), current_index,
-          point_to_index_map, out);
-        update_tessellated_triangle_data<T, I>(tri.p1(), current_index,
-          point_to_index_map, out);
-        update_tessellated_triangle_data<T, I>(tri.p2(), current_index,
-          point_to_index_map, out);
-      } else if (!points_of_triangle_are_collinear<T>(tri)) {
-        point_3d<T> centroid = centroid_of_triangle(tri);
-
-        triangle<T> tri_0(tri.p0(), centroid, tri.p2());
-        triangle<T> tri_1(tri.p0(), tri.p1(), centroid);
-        triangle<T> tri_2(tri.p1(), tri.p2(), centroid);
-
-        tessellate_triangle_by_subdivision(tri_0, subdivision_count - 1,
-          current_index, point_to_index_map, out);
-        tessellate_triangle_by_subdivision(tri_1, subdivision_count - 1,
-          current_index, point_to_index_map, out);
-        tessellate_triangle_by_subdivision(tri_2, subdivision_count - 1,
-          current_index, point_to_index_map, out);
-      }
-    }
-
-    template<typename T, typename I>
-    void tessellate_triangle_by_midpoint_subdivision(
-      const triangle<T> &tri,
-      std::size_t subdivision_count,
-      I &current_index,
-      std::unordered_map<point_3d<T>, I> &point_to_index_map,
-      subdivided_tessellated_triangle_data<T, I> &out)
-    {
-      if (subdivision_count == 0 &&
-        !points_of_triangle_are_collinear<T>(tri)) {
-        update_tessellated_triangle_data<T, I>(tri.p0(), current_index,
-          point_to_index_map, out);
-        update_tessellated_triangle_data<T, I>(tri.p1(), current_index,
-          point_to_index_map, out);
-        update_tessellated_triangle_data<T, I>(tri.p2(), current_index,
-          point_to_index_map, out);
-      } else if (!points_of_triangle_are_collinear<T>(tri)) {
-        line<T> side_0(tri.p0(), tri.p1());
-        line<T> side_1(tri.p1(), tri.p2());
-        line<T> side_2(tri.p2(), tri.p0());
-
-        point_3d<T> midpoint_0 = midpoint_of_line(side_0);
-        point_3d<T> midpoint_1 = midpoint_of_line(side_1);
-        point_3d<T> midpoint_2 = midpoint_of_line(side_2);
-
-        triangle<T> tri_0(tri.p0(), midpoint_0, midpoint_2);
-        triangle<T> tri_1(midpoint_0, tri.p1(), midpoint_1);
-        triangle<T> tri_2(midpoint_0, midpoint_1, midpoint_2);
-        triangle<T> tri_3(midpoint_2, midpoint_1, tri.p2());
-
-        tessellate_triangle_by_midpoint_subdivision(tri_0,
-          subdivision_count - 1, current_index, point_to_index_map, out);
-        tessellate_triangle_by_midpoint_subdivision(tri_1,
-          subdivision_count - 1, current_index, point_to_index_map, out);
-        tessellate_triangle_by_midpoint_subdivision(tri_2,
-          subdivision_count - 1, current_index, point_to_index_map, out);
-        tessellate_triangle_by_midpoint_subdivision(tri_3,
-          subdivision_count - 1, current_index, point_to_index_map, out);
-      }
-    }
-  }
-
-  template<typename T, typename I>
-  void tessellate_triangle_by_subdivision(
-    const triangle<T> &tri,
-    std::size_t subdivision_count,
-    I &current_index,
-    subdivided_tessellated_triangle_data<T, I> &out)
-  {
-    std::unordered_map<point_3d<T>, I> point_to_index_map;
-    detail::tessellate_triangle_by_subdivision(tri, subdivision_count,
-      current_index, point_to_index_map, out);
-  }
-
-  template<typename T, typename I>
-  void tessellate_triangles_by_subdivision(
-    std::vector<triangle<T>> &tris,
-    std::size_t subdivision_count,
-    I &current_index,
-    subdivided_tessellated_triangle_data<T, I> &out)
-  {
-    std::unordered_map<point_3d<T>, I> point_to_index_map;
-    for (const auto &tri : tris) {
-      detail::tessellate_triangle_by_subdivision(tri, subdivision_count,
-        current_index, point_to_index_map, out);
-    }
-  }
-
-  template<typename T, typename I>
-  void tessellate_triangle_by_midpoint_subdivision(
-    const triangle<T> &tri,
-    std::size_t subdivision_count,
-    I &current_index,
-    subdivided_tessellated_triangle_data<T, I> &out)
-  {
-    std::unordered_map<point_3d<T>, I> point_to_index_map;
-    detail::tessellate_triangle_by_midpoint_subdivision(tri,
-      subdivision_count, current_index, point_to_index_map, out);
-  }
-
-  template<typename T, typename I>
-  void tessellate_triangles_by_midpoint_subdivision(
-    std::vector<triangle<T>> &tris,
-    std::size_t subdivision_count,
-    I &current_index,
-    subdivided_tessellated_triangle_data<T, I> &out)
-  {
-    std::unordered_map<point_3d<T>, I> point_to_index_map;
-    for (const auto &tri : tris) {
-      detail::tessellate_triangle_by_midpoint_subdivision(
-        tri, subdivision_count, current_index, point_to_index_map, out);
-    }
-  }
-
   template<typename T>
   point_3d<T> centroid_of_triangle(const triangle<T> &tri)
   {
@@ -205,5 +60,77 @@ namespace opengl_math
       (line.p0()._x + line.p1()._x) / T(2.0),
       (line.p0()._y + line.p1()._y) / T(2.0),
       (line.p0()._z + line.p1()._z) / T(2.0));
+  }
+
+  template<typename T, angle_mode AM>
+  spherical_coordinates<T, AM>::spherical_coordinates(T theta, T phi,
+    T radius) :
+    _theta(theta),
+    _phi(phi),
+    _radius(radius)
+  {};
+
+  template<typename T, angle_mode AM>
+  T spherical_coordinates<T, AM>::theta() const
+  {
+    return _theta;
+  }
+
+  template<typename T, angle_mode AM>
+  T spherical_coordinates<T, AM>::phi() const
+  {
+    return _phi;
+  }
+
+  template<typename T, angle_mode AM>
+  T spherical_coordinates<T, AM>::radius() const
+  {
+    return _radius;
+  }
+
+  template<typename T, angle_mode AM>
+  angle_mode spherical_coordinates<T, AM>::get_angle_mode() const
+  {
+    return AM;
+  }
+
+  template<typename T, angle_mode AM>
+  point_3d<T> spherical_coordinates_to_cartesian(
+    const spherical_coordinates<T, AM> &coords)
+  {
+    T theta;
+    T phi;
+    if (AM == degrees) {
+      theta = degrees_to_radians(coords.theta());
+      phi = degrees_to_radians(coords.phi());
+    } else {
+      theta = coords.theta();
+      phi = coords.phi();
+    }
+    T x = coords.radius() * std::cos(phi) * std::cos(theta);
+    T y = coords.radius() * std::sin(phi);
+    T z = coords.radius() * std::cos(phi) * std::sin(theta);
+    point_3d<T> ret(x, y, z);
+
+    return ret;
+  }
+
+  template<typename T, angle_mode AM>
+  spherical_coordinates<T, AM> cartesian_coordinates_to_spherical(
+    const point_3d<T> p)
+  {
+    T x_squared = p.x() * p.x();
+    T y_squared = p.y() * p.y();
+    T z_squared = p.z() * p.z();
+    T radius = std::sqrt(x_squared + y_squared + z_squared);
+    T phi = std::asin(p.y() / radius);
+    T theta = std::acos(p.x() / (radius * std::cos(phi)));
+
+    if (AM == degrees) {
+      theta = radians_to_degrees(theta);
+      phi = radians_to_degrees(phi);
+    }
+
+    return spherical_coordinates<T, AM>(theta, phi, radius);
   }
 }

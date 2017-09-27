@@ -37,8 +37,10 @@ START_TEST(test_default_sphere_ctor)
 {
   {
     float radius = 0.0f;
-    opengl_math::sphere<float, std::uint32_t> sphere(radius);
-    ck_assert(sphere.radius() == radius);
+    opengl_math::octahedron_generator<float, std::uint32_t> generator(
+      radius, 8);
+    opengl_math::sphere<float, std::uint32_t> sphere(generator);
+    ck_assert(generator.radius() == sphere.radius());
   }
 }
 END_TEST
@@ -47,23 +49,43 @@ START_TEST(test_generator_sphere_ctor)
 {
   {
     float radius = 0.0f;
+    opengl_math::spherical_coordinate_generator<float, std::uint32_t>
+      generator(radius, 1.0, 1.0);
     opengl_math::sphere<float, std::uint32_t,
-      opengl_math::spherical_coordinate_generator> sphere(radius);
-    ck_assert(sphere.radius() == radius);
+      opengl_math::spherical_coordinate_generator> sphere(generator);
+    ck_assert(generator.radius() == sphere.radius());
   }
 }
 END_TEST
 
 START_TEST(test_generator_sphere_generate_octahedron)
 {
-  {
-    float radius = 0.0f;
-    opengl_math::subdivided_tessellated_triangle_data<float, std::uint32_t>
+  { // Fill
+    float radius = 1.0f;
+    opengl_math::tessellated_triangle_data<float, std::uint32_t>
       output;
-    opengl_math::sphere<float, std::uint32_t,
-      opengl_math::octahedron_generator> sphere(radius);
+    opengl_math::octahedron_generator<float, std::uint32_t> generator(radius,
+      0u);
+    opengl_math::sphere<float, std::uint32_t> sphere(generator);
     sphere.generate(output);
-    // TODO: Validate output
+    std::size_t points_count = output.points().size();
+    ck_assert(points_count == 6u);
+    std::size_t indices_count = output.indices().size();
+    ck_assert(indices_count == 24u);
+  }
+
+  { // Wireframe
+    float radius = 1.0f;
+    opengl_math::tessellated_triangle_data<float, std::uint32_t>
+      output(opengl_math::wireframe);
+    opengl_math::octahedron_generator<float, std::uint32_t> generator(radius,
+      0u);
+    opengl_math::sphere<float, std::uint32_t> sphere(generator);
+    sphere.generate(output);
+    std::size_t points_count = output.points().size();
+    ck_assert(points_count == 6u);
+    std::size_t indices_count = output.indices().size();
+    ck_assert(indices_count == 48u);
   }
 }
 END_TEST
@@ -71,13 +93,6 @@ END_TEST
 START_TEST(test_generator_sphere_generate_spherical)
 {
   {
-    float radius = 0.0f;
-    opengl_math::subdivided_tessellated_triangle_data<float, std::uint32_t>
-      output;
-    opengl_math::sphere<float, std::uint32_t,
-      opengl_math::spherical_coordinate_generator> sphere(radius);
-    sphere.generate(output);
-    // TODO: Validate output.
   }
 }
 END_TEST

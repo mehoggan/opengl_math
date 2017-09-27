@@ -3,7 +3,7 @@
 
 namespace opengl_math
 {
-  enum generator_mode {fill = 0, wire_frame = 0};
+  enum generator_mode {fill = 0, wireframe = 1};
 }
 
 #endif

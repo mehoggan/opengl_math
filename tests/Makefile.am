@@ -8,6 +8,7 @@ TESTS = check_axis_aligned_2d \
 	check_operations \
 	check_planes \
 	check_shapes \
+	check_tessellation \
 	check_type_color \
 	check_type_matrix \
 	check_type_point \
@@ -22,6 +23,7 @@ check_PROGRAMS = check_axis_aligned_2d \
 	check_operations \
 	check_planes \
 	check_shapes \
+	check_tessellation \
 	check_type_color \
 	check_type_matrix \
 	check_type_point \

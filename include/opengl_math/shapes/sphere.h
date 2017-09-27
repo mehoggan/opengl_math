@@ -19,44 +19,14 @@
 #define SPHERE_H_INCLUDED
 
 #include "opengl_math/primitives/points/type_point_3d.h"
-#include "opengl_math/shapes/enumerations.h"
+#include "opengl_math/tessellation/tessellated_triangle_data.h"
+#include "opengl_math/tessellation/tessellation_ops.h"
 
 #include <iterator>
 #include <vector>
 
 namespace opengl_math
 {
-  template<typename T, typename I>
-  class subdivided_tessellated_triangle_data
-  {
-  public:
-    subdivided_tessellated_triangle_data(generator_mode mode = fill);
-
-    std::vector<point_3d<T>> &points();
-    std::vector<I> &indices();
-    generator_mode mode() const;
-
-  private:
-    std::vector<point_3d<T>> _points;
-    std::vector<I> _indices;
-    generator_mode _mode;
-  };
-
-  template<typename T, typename I>
-  inline std::ostream &operator<<(std::ostream &out,
-    const subdivided_tessellated_triangle_data<T, I> &data)
-  {
-    out << "points = ";
-    std::copy(data._points.begin(), data._points.end(),
-      std::ostream_iterator<point_3d<T>>(out, " "));
-
-    out << std::endl << "indices = ";
-    std::copy(data._indices.begin(), data._indices.end(),
-      std::ostream_iterator<I>(out, " "));
-
-    return out;
-  }
-
   template<typename realT, typename indexT>
   class sphere_generator
   {
@@ -65,19 +35,26 @@ namespace opengl_math
     virtual ~sphere_generator();
 
     virtual void generate(
-      subdivided_tessellated_triangle_data<realT, indexT> &output) const = 0;
+      tessellated_triangle_data<realT, indexT> &output) const = 0;
   };
 
   template<typename realT, typename indexT>
   class octahedron_generator : public sphere_generator<realT, indexT>
   {
   public:
-    octahedron_generator();
+    explicit octahedron_generator(realT radius,
+      std::size_t subdivision_count);
     virtual ~octahedron_generator();
 
     virtual void generate(
-      subdivided_tessellated_triangle_data<realT, indexT> &output) const
+      tessellated_triangle_data<realT, indexT> &output) const
         override;
+
+    realT radius() const;
+
+  private:
+    realT _radius;
+    std::size_t _subdivision_count;
   };
 
   template<typename realT, typename indexT>
@@ -85,12 +62,20 @@ namespace opengl_math
     public sphere_generator<realT, indexT>
   {
   public:
-    spherical_coordinate_generator();
+    spherical_coordinate_generator(realT radius_,
+      realT horizontal_angle_delta, realT vertical_angle_delta);
     virtual ~spherical_coordinate_generator();
 
     virtual void generate(
-      subdivided_tessellated_triangle_data<realT, indexT> &output) const
+      tessellated_triangle_data<realT, indexT> &output) const
         override;
+
+    realT radius() const;
+
+  private:
+    realT _horizontal_angle_delta;
+    realT _vertical_angle_delta;
+    realT _radius;
   };
 
   template
@@ -102,15 +87,15 @@ namespace opengl_math
   class sphere
   {
   public:
-    explicit sphere(realT radius);
+    explicit sphere(const genT<realT, indexT> &generator);
 
     void generate(
-      subdivided_tessellated_triangle_data<realT, indexT> &output) const;
+      tessellated_triangle_data<realT, indexT> &output) const;
 
     realT radius() const;
 
   private:
-    realT _radius;
+    genT<realT, indexT> _generator;
   };
 }
 #include "sphere.inl"

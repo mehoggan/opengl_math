@@ -18,11 +18,11 @@
 #ifndef MATH_GEOMETRY_H_INCLUDED
 #define MATH_GEOMETRY_H_INCLUDED
 
+#include "opengl_math/math/trig.h"
 #include "opengl_math/math/vector.h"
 #include "opengl_math/primitives/points/type_point_3d.h"
 #include "opengl_math/primitives/vectors/type_vector_3d.h"
 #include "opengl_math/shapes/line.h"
-#include "opengl_math/shapes/sphere.h"
 #include "opengl_math/shapes/triangle.h"
 
 #include <cmath>
@@ -38,53 +38,39 @@ namespace opengl_math
     const triangle<T> &tri,
     float epsilon = std::numeric_limits<float>::epsilon());
 
-  template<typename T, typename I>
-  void tessellate_triangle_by_subdivision(
-    const triangle<T> &tri,
-    std::size_t subdivision_count,
-    I &current_index,
-    subdivided_tessellated_triangle_data<T, I> &out);
-
-  template<typename T, typename I>
-  void tessellate_triangles_by_subdivision(
-    std::vector<triangle<T>> &tris,
-    std::size_t subdivision_count,
-    I &current_index,
-    subdivided_tessellated_triangle_data<T, I> &out);
-
-  template<typename T, typename I>
-  void tessellate_triangle_by_midpoint_subdivision(
-    const triangle<T> &tri,
-    std::size_t subdivision_count,
-    I &current_index,
-    subdivided_tessellated_triangle_data<T, I> &out);
-
-  template<typename T, typename I>
-  void tessellate_triangles_by_midpoint_subdivision(
-    std::vector<triangle<T>> &tris,
-    std::size_t subdivision_count,
-    I &current_index,
-    subdivided_tessellated_triangle_data<T, I> &out);
-
   template<typename T>
   point_3d<T> centroid_of_triangle(const triangle<T> &tri);
 
   template<typename T>
   point_3d<T> midpoint_of_line(const line<T> &line);
-}
 
-namespace std
-{
-  template <typename T>
-  struct hash<opengl_math::point_3d<T>>
+  template<typename T>
+  point_3d<T> spherical_coordinates_to_cartesian(T theta, T phi, T radius);
+
+  template<typename T, angle_mode AM>
+  struct spherical_coordinates
   {
-    std::size_t operator()(const opengl_math::point_3d<T> &k) const
-    {
-      return ((std::hash<T>()(k._x) ^ (std::hash<T>()(k._y) << 1)) >> 1) ^
-        (hash<float>()(k._z) << 1);
-    }
-  };
-}
+    public:
+    spherical_coordinates(T theta, T phi, T radius);
 
+    T theta() const;
+    T phi() const;
+    T radius() const;
+    angle_mode get_angle_mode() const;
+
+    private:
+    T _theta;
+    T _phi;
+    T _radius;
+  };
+
+  template<typename T, angle_mode AM>
+  point_3d<T> spherical_coordinates_to_cartesian(
+    const spherical_coordinates<T, AM> &coords);
+
+  template<typename T, angle_mode AM>
+  spherical_coordinates<T, AM> cartesian_coordinates_to_spherical(
+    const point_3d<T> p);
+}
 #include "geometry.inl"
 #endif

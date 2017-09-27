@@ -1,14 +1,11 @@
 set(HEADERS
-  enumerations.h
-  line.h
-  sphere.h
-  triangle.h
+  tessellated_triangle_data.h
+  tessellation_ops.h
 )
 
 set(INLINE_HEADERS
-  line.inl
-  sphere.inl
-  triangle.inl
+  tessellated_triangle_data.inl
+  tessellation_ops.inl
 )
 
 install(FILES
