@@ -1,5 +1,5 @@
+#include "opengl_math/math/trig.h"
 #include "opengl_math/primitives/points/type_point_3d.h"
-
 #include "opengl_math/shapes/line.h"
 #include "opengl_math/shapes/sphere.h"
 #include "opengl_math/shapes/triangle.h"
@@ -50,7 +50,7 @@ START_TEST(test_generator_sphere_ctor)
   {
     float radius = 0.0f;
     opengl_math::spherical_coordinate_generator<float, std::uint32_t>
-      generator(radius, 1.0, 1.0);
+      generator(radius, 1.0, 1.0, opengl_math::degrees);
     opengl_math::sphere<float, std::uint32_t,
       opengl_math::spherical_coordinate_generator> sphere(generator);
     ck_assert(generator.radius() == sphere.radius());
@@ -92,7 +92,34 @@ END_TEST
 
 START_TEST(test_generator_sphere_generate_spherical)
 {
-  {
+  { // Fill
+    float radius = 1.0f;
+    opengl_math::tessellated_triangle_data<float, std::uint32_t>
+      output;
+    opengl_math::spherical_coordinate_generator<float, std::uint32_t>
+      generator(radius, 360.0f, 180.0f, opengl_math::degrees);
+    opengl_math::sphere<float, std::uint32_t,
+      opengl_math::spherical_coordinate_generator> sphere(generator);
+    sphere.generate(output);
+    std::size_t points_count = output.points().size();
+    ck_assert(points_count == 0u);
+    std::size_t indices_count = output.indices().size();
+    ck_assert(indices_count == 0u);
+  }
+
+  { // Wireframe
+    float radius = 1.0f;
+    opengl_math::tessellated_triangle_data<float, std::uint32_t>
+      output(opengl_math::wireframe);
+    opengl_math::spherical_coordinate_generator<float, std::uint32_t>
+      generator(radius, 360.0f, 180.0f, opengl_math::degrees);
+    opengl_math::sphere<float, std::uint32_t,
+      opengl_math::spherical_coordinate_generator> sphere(generator);
+    sphere.generate(output);
+    std::size_t points_count = output.points().size();
+    ck_assert(points_count == 0u);
+    std::size_t indices_count = output.indices().size();
+    ck_assert(indices_count == 0u);
   }
 }
 END_TEST

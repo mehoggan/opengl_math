@@ -44,9 +44,6 @@ namespace opengl_math
   template<typename T>
   point_3d<T> midpoint_of_line(const line<T> &line);
 
-  template<typename T>
-  point_3d<T> spherical_coordinates_to_cartesian(T theta, T phi, T radius);
-
   template<typename T, angle_mode AM>
   struct spherical_coordinates
   {
