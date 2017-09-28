@@ -241,7 +241,7 @@ namespace opengl_math
   template <typename T>
   std::ostream &operator<<(std::ostream &out, const vector_2d<T> &rhs)
   {
-    return out << rhs.x() << ", " << rhs.y();
+    return out << "<" << rhs.x() << ", " << rhs.y() << ">";
   }
 
   typedef vector_2d<float> vec2f;

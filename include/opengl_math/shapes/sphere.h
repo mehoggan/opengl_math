@@ -18,12 +18,17 @@
 #ifndef SPHERE_H_INCLUDED
 #define SPHERE_H_INCLUDED
 
+#include "opengl_math/math/numbers.h"
 #include "opengl_math/math/trig.h"
 #include "opengl_math/primitives/points/type_point_3d.h"
+#include "opengl_math/primitives/vectors/type_vector_3d.h"
 #include "opengl_math/tessellation/tessellated_triangle_data.h"
 #include "opengl_math/tessellation/tessellation_ops.h"
 
 #include <iterator>
+#include <iostream>
+#include <functional>
+#include <set>
 #include <vector>
 
 namespace opengl_math
@@ -64,8 +69,7 @@ namespace opengl_math
   {
   public:
     spherical_coordinate_generator(realT radius_,
-      realT horizontal_angle_delta, realT vertical_angle_delta,
-      angle_mode mode);
+      realT theta_angle_delta, realT phi_angle_delta, angle_mode mode);
     virtual ~spherical_coordinate_generator();
 
     virtual void generate(
@@ -75,8 +79,8 @@ namespace opengl_math
     realT radius() const;
 
   private:
-    realT _horizontal_angle_delta;
-    realT _vertical_angle_delta;
+    realT _theta_angle_delta;
+    realT _phi_angle_delta;
     realT _radius;
     angle_mode _mode;
   };

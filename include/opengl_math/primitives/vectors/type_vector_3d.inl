@@ -278,7 +278,8 @@ namespace opengl_math
   template <typename T>
   std::ostream &operator<<(std::ostream &out, const vector_3d<T> &rhs)
   {
-    return out << rhs.x() << ", " << rhs.y() << ", " << rhs.z();
+    return out << "<" << rhs.x() << ", " << rhs.y() << ", " << rhs.z() <<
+      ">";
   }
 
   typedef vector_3d<float> vec3f;

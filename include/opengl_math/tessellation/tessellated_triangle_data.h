@@ -34,6 +34,10 @@ namespace opengl_math
 
     std::vector<point_3d<T>> &points();
     std::vector<I> &indices();
+
+    const std::vector<point_3d<T>> &points() const;
+    const std::vector<I> &indices() const;
+
     generator_mode mode() const;
 
   private:
@@ -47,11 +51,11 @@ namespace opengl_math
     const tessellated_triangle_data<T, I> &data)
   {
     out << "points = ";
-    std::copy(data._points.begin(), data._points.end(),
+    std::copy(data.points().begin(), data.points().end(),
       std::ostream_iterator<point_3d<T>>(out, " "));
 
     out << std::endl << "indices = ";
-    std::copy(data._indices.begin(), data._indices.end(),
+    std::copy(data.indices().begin(), data.indices().end(),
       std::ostream_iterator<I>(out, " "));
 
     return out;

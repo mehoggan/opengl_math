@@ -307,8 +307,8 @@ namespace opengl_math
   template <typename T>
   std::ostream &operator<<(std::ostream &out, const vector_4d<T> &rhs)
   {
-    return out << rhs.x() << ", " << rhs.y() << ", " << rhs.z() <<
-      ", " << rhs.w();
+    return out << "<" << rhs.x() << ", " << rhs.y() << ", " << rhs.z() <<
+      ", " << rhs.w() << ">";
   }
 
   typedef vector_4d<float> vec4f;

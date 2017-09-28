@@ -37,7 +37,8 @@ namespace opengl_math
     }
 
     template<typename T, typename I>
-    void update_tessellated_wireframe_triangle_data(const line<T> &l,
+    void update_tessellated_wireframe_triangle_data(
+      const line<T> &l,
       I &current_index,
       std::unordered_map<point_3d<T>, I> &point_to_index_map,
       tessellated_triangle_data<T, I> &out)
@@ -47,6 +48,33 @@ namespace opengl_math
       update_tessellated_triangle_data(l.p1(), current_index,
         point_to_index_map, out);
     };
+
+    template<typename realT, typename indexT>
+    void update_tessellated_triangle_data_from_triangle(
+      const triangle<realT> &tri,
+      indexT &current_index,
+      std::unordered_map<point_3d<realT>, indexT> &point_to_index_map,
+      tessellated_triangle_data<realT, indexT> &out)
+    {
+      if (out.mode() == fill) {
+        update_tessellated_triangle_data(tri.p0(), current_index,
+          point_to_index_map, out);
+        update_tessellated_triangle_data(tri.p1(), current_index,
+          point_to_index_map, out);
+        update_tessellated_triangle_data(tri.p2(), current_index,
+          point_to_index_map, out);
+      } else {
+        line<realT> l0(tri.p0(), tri.p1());
+        line<realT> l1(tri.p1(), tri.p2());
+        line<realT> l2(tri.p2(), tri.p0());
+        update_tessellated_wireframe_triangle_data<realT, indexT>(l0,
+          current_index, point_to_index_map, out);
+        update_tessellated_wireframe_triangle_data<realT, indexT>(l1,
+          current_index, point_to_index_map, out);
+        update_tessellated_wireframe_triangle_data<realT, indexT>(l2,
+          current_index, point_to_index_map, out);
+      }
+    }
 
     template<typename T, typename I>
     void handle_base_case(

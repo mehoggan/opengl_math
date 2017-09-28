@@ -75,19 +75,16 @@ namespace opengl_math
   <
     realT,
     indexT
-  >::spherical_coordinate_generator(realT radius,
-    realT horizontal_angle_delta, realT vertical_angle_delta,
-    angle_mode mode) :
-    _horizontal_angle_delta(horizontal_angle_delta),
-    _vertical_angle_delta(vertical_angle_delta),
+  >::spherical_coordinate_generator(realT radius, realT theta_angle_delta,
+    realT phi_angle_delta, angle_mode mode) :
+    _theta_angle_delta(theta_angle_delta),
+    _phi_angle_delta(phi_angle_delta),
     _radius(radius),
     _mode(mode)
   {
     if (mode == radians) {
-      _horizontal_angle_delta = radians_to_degrees<realT>(
-        _horizontal_angle_delta);
-      _vertical_angle_delta = radians_to_degrees<realT>(
-        _vertical_angle_delta);
+      _theta_angle_delta = radians_to_degrees<realT>(_theta_angle_delta);
+      _phi_angle_delta = radians_to_degrees<realT>(_phi_angle_delta);
     }
   }
 
@@ -101,62 +98,24 @@ namespace opengl_math
 
   namespace detail
   {
-    template<typename realT, typename indexT>
-    void update_tessellated_spherical_triangle_data(
-      const point_3d<realT> &p,
-      indexT &current_index,
-      std::unordered_map<point_3d<realT>, indexT> &point_to_index_map,
-      tessellated_triangle_data<realT, indexT> &out)
+    template<typename realT>
+    bool vector_contains_point(const std::vector<point_3d<realT>> &points,
+      const point_3d<realT> &p)
     {
-      auto it_p = point_to_index_map.find(p);
-      if (it_p == point_to_index_map.end()) {
-        point_to_index_map[p] = current_index;
-        out.points().push_back(p);
-        out.indices().push_back(current_index);
-        ++current_index;
-      } else {
-        out.indices().push_back(it_p->second);
-      }
-    }
+      auto it = std::find_if(points.begin(), points.end(),
+        [&](const point_3d<realT> &p_0) {
+          vector_3d<realT> v(p.x(), p.y(), p.z());
+          vector_3d<realT> v_0(p_0.x(), p_0.y(), p_0.z());
+          bool ret = false;
+          // epsilon based on precesion of std trig functions.
+          if (vector_3d_float_equals(v, v_0, realT(0.000001))) {
+            ret = true;
+          }
+          return ret;
+        }
+      );
 
-    template<typename realT, typename indexT>
-    void update_tessellated_wireframe_spherical_triangle_data(
-      const line<realT> &l,
-      indexT &current_index,
-      std::unordered_map<point_3d<realT>, indexT> &point_to_index_map,
-      tessellated_triangle_data<realT, indexT> &out)
-    {
-      update_tessellated_triangle_data(l.p0(), current_index,
-        point_to_index_map, out);
-      update_tessellated_triangle_data(l.p1(), current_index,
-        point_to_index_map, out);
-    };
-
-    template<typename realT, typename indexT>
-    void update_tessellated_spherical_triangle_data_from_triangle(
-      const triangle<realT> &tri,
-      indexT &current_index,
-      std::unordered_map<point_3d<realT>, indexT> &point_to_index_map,
-      tessellated_triangle_data<realT, indexT> &out)
-    {
-      if (out.mode() == fill) {
-        update_tessellated_spherical_triangle_data(tri.p0(),
-          current_index, point_to_index_map, out);
-        update_tessellated_spherical_triangle_data(tri.p1(),
-          current_index, point_to_index_map, out);
-        update_tessellated_spherical_triangle_data(tri.p2(),
-          current_index, point_to_index_map, out);
-      } else {
-        line<realT> l0(tri.p0(), tri.p1());
-        line<realT> l1(tri.p1(), tri.p2());
-        line<realT> l2(tri.p2(), tri.p0());
-        update_tessellated_wireframe_spherical_triangle_data<realT, indexT>(
-          l0, current_index, point_to_index_map, out);
-        update_tessellated_wireframe_spherical_triangle_data<realT, indexT>(
-          l1, current_index, point_to_index_map, out);
-        update_tessellated_wireframe_spherical_triangle_data<realT, indexT>(
-          l2, current_index, point_to_index_map, out);
-      }
+      return (it == std::end(points));
     }
   }
 
@@ -167,63 +126,24 @@ namespace opengl_math
     indexT
   >::generate(tessellated_triangle_data<realT, indexT> &output) const
   {
-    realT vertical_angle(-90.0);
-    realT horizontal_angle(+0.0);
-
-    std::unordered_map<point_3d<realT>, indexT> point_to_index_map;
-
-    indexT current_index;
-
-    while (vertical_angle <= (realT(+90.0) - _vertical_angle_delta)) {
-      while (horizontal_angle <= (realT(+360.0) - _horizontal_angle_delta)) {
-
-        spherical_coordinates<realT, degrees> ll(
-          horizontal_angle,
-          vertical_angle,
+    // Set used for faster lookups
+    realT phi_angle(-90.0);
+    while (phi_angle <= realT(+90.0)) {
+      realT theta_angle(+0.0);
+      while (theta_angle <= realT(+360.0)) {
+        spherical_coordinates<realT, degrees> sc(theta_angle, phi_angle,
           _radius);
-        spherical_coordinates<realT, degrees> lr(
-          horizontal_angle + _horizontal_angle_delta,
-          vertical_angle,
-          _radius);
-        spherical_coordinates<realT, degrees> ur(
-          horizontal_angle + _horizontal_angle_delta,
-          vertical_angle + _vertical_angle_delta,
-          _radius);
-        spherical_coordinates<realT, degrees> ul(
-          horizontal_angle,
-          vertical_angle + _vertical_angle_delta,
-          _radius);
+        point_3d<realT> p =
+          spherical_coordinates_to_cartesian<realT, degrees>(sc);
 
-        point_3d<realT> ll_p =
-          spherical_coordinates_to_cartesian<realT, degrees>(ll);
-        point_3d<realT> lr_p =
-          spherical_coordinates_to_cartesian<realT, degrees>(lr);
-        point_3d<realT> ur_p =
-          spherical_coordinates_to_cartesian<realT, degrees>(ur);
-        point_3d<realT> ul_p =
-          spherical_coordinates_to_cartesian<realT, degrees>(ul);
-
-        // At bottom and top of sphere there is only one triangle.
-        if (ll_p == lr_p) {
-          triangle<realT> tri(ll_p, ur_p, ul_p);
-          detail::update_tessellated_spherical_triangle_data_from_triangle(
-            tri, current_index, point_to_index_map, output);
-        } else if (ur_p == ul_p) {
-          triangle<realT> tri(ll_p, lr_p, ur_p);
-          detail::update_tessellated_spherical_triangle_data_from_triangle(
-            tri, current_index, point_to_index_map, output);
-        } else {
-          triangle<realT> left_tri(ll_p, ur_p, ul_p);
-          detail::update_tessellated_spherical_triangle_data_from_triangle(
-            left_tri, current_index, point_to_index_map, output);
-          triangle<realT> right_tri(ll_p, lr_p, ur_p);
-          detail::update_tessellated_spherical_triangle_data_from_triangle(
-            right_tri, current_index, point_to_index_map, output);
+        if (detail::vector_contains_point(output.points(), p)) {
+          std::cout << "Inserting " << p << std::endl;
+          output.points().push_back(p);
         }
 
-        horizontal_angle += _horizontal_angle_delta;
+        theta_angle += _theta_angle_delta;
       }
-      vertical_angle += _vertical_angle_delta;
+      phi_angle += _phi_angle_delta;
     }
   }
 

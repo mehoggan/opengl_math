@@ -38,6 +38,20 @@ namespace opengl_math
   }
 
   template<typename T, typename I>
+  const std::vector<point_3d<T>> &
+  tessellated_triangle_data<T, I>::points() const
+  {
+    return _points;
+  }
+
+  template<typename T, typename I>
+  const std::vector<I> &
+  tessellated_triangle_data<T, I>::indices() const
+  {
+    return _indices;
+  }
+
+  template<typename T, typename I>
   generator_mode tessellated_triangle_data<T, I>::mode() const
   {
     return _mode;
