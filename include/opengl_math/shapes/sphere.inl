@@ -99,9 +99,10 @@ namespace opengl_math
   namespace detail
   {
     template<typename realT>
-    bool vector_contains_point(const std::vector<point_3d<realT>> &points,
-      const point_3d<realT> &p)
+    std::tuple<bool, std::size_t> vector_contains_point(
+      const std::vector<point_3d<realT>> &points, const point_3d<realT> &p)
     {
+      std::size_t index = 0;
       auto it = std::find_if(points.begin(), points.end(),
         [&](const point_3d<realT> &p_0) {
           vector_3d<realT> v(p.x(), p.y(), p.z());
@@ -111,9 +112,16 @@ namespace opengl_math
           if (vector_3d_float_equals(v, v_0, realT(0.000001))) {
             ret = true;
           }
+          ++index;
           return ret;
         }
       );
+
+      if (it == std::end(points)) {
+        assert(index == points.size());
+      } else {
+        assert(points[index] == (*it));
+      }
 
       return (it == std::end(points));
     }
@@ -126,7 +134,7 @@ namespace opengl_math
     indexT
   >::generate(tessellated_triangle_data<realT, indexT> &output) const
   {
-    // Set used for faster lookups
+    indexT current_index = 0;
     realT phi_angle(-90.0);
     while (phi_angle <= realT(+90.0)) {
       realT theta_angle(+0.0);
@@ -136,9 +144,14 @@ namespace opengl_math
         point_3d<realT> p =
           spherical_coordinates_to_cartesian<realT, degrees>(sc);
 
-        if (detail::vector_contains_point(output.points(), p)) {
-          std::cout << "Inserting " << p << std::endl;
+        std::tuple<bool, std::size_t> find_data =
+          detail::vector_contains_point(output.points(), p);
+        if (!std::get<0>(find_data)) {
           output.points().push_back(p);
+          output.indices().push_back(current_index);
+          ++current_index;
+        } else {
+          output.indices().push_back(indexT(std::get<1>(find_data)));
         }
 
         theta_angle += _theta_angle_delta;
