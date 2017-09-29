@@ -98,11 +98,11 @@ namespace opengl_math
 
   namespace detail
   {
-    template<typename realT>
-    std::tuple<bool, std::size_t> vector_contains_point(
+    template<typename realT, typename indexT>
+    std::tuple<bool, indexT> vector_contains_point(
       const std::vector<point_3d<realT>> &points, const point_3d<realT> &p)
     {
-      std::size_t index = 0;
+      indexT index = 0;
       auto it = std::find_if(points.begin(), points.end(),
         [&](const point_3d<realT> &p_0) {
           vector_3d<realT> v(p.x(), p.y(), p.z());
@@ -111,19 +111,23 @@ namespace opengl_math
           // epsilon based on precesion of std trig functions.
           if (vector_3d_float_equals(v, v_0, realT(0.000001))) {
             ret = true;
+          } else {
+            ++index;
           }
-          ++index;
           return ret;
         }
       );
 
+      std::tuple<bool, indexT> ret;
       if (it == std::end(points)) {
+        ret = std::make_tuple(false, realT(-1));
         assert(index == points.size());
       } else {
+        ret = std::make_tuple(true, index);
         assert(points[index] == (*it));
       }
 
-      return (it == std::end(points));
+      return ret;
     }
   }
 
@@ -145,13 +149,13 @@ namespace opengl_math
           spherical_coordinates_to_cartesian<realT, degrees>(sc);
 
         std::tuple<bool, std::size_t> find_data =
-          detail::vector_contains_point(output.points(), p);
+          detail::vector_contains_point<realT, indexT>(output.points(), p);
         if (!std::get<0>(find_data)) {
           output.points().push_back(p);
           output.indices().push_back(current_index);
           ++current_index;
         } else {
-          output.indices().push_back(indexT(std::get<1>(find_data)));
+          //output.indices().push_back(indexT(std::get<1>(find_data)));
         }
 
         theta_angle += _theta_angle_delta;
